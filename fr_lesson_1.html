@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法文第1課：打招呼與基本禮貌用語</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .card { transition: transform 0.2s; }
+  .card:hover { transform: translateY(-2px); }
+  .speak-btn { cursor: pointer; }
+  .match-btn { transition: all 0.2s; }
+  .match-btn.selected { background-color: #3b82f6; color: white; }
+  .match-btn.correct { background-color: #22c55e; color: white; pointer-events: none; }
+  .match-btn.wrong { background-color: #ef4444; color: white; }
+  .quiz-option { transition: all 0.2s; cursor: pointer; }
+  .quiz-option:hover { transform: scale(1.02); }
+  .quiz-option.correct { background-color: #22c55e !important; color: white !important; }
+  .quiz-option.wrong { background-color: #ef4444 !important; color: white !important; }
+  .quiz-option.disabled { pointer-events: none; opacity: 0.7; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- 標題區 -->
+<div class="bg-gradient-to-r from-blue-900 via-white to-red-600 p-8 text-center shadow-lg">
+  <div class="max-w-4xl mx-auto">
+    <p class="text-blue-900 font-semibold text-sm mb-1">🇫🇷 每日法文課程</p>
+    <h1 class="text-3xl font-bold text-blue-900 mb-2">第1課：打招呼與基本禮貌用語</h1>
+    <p class="text-gray-600 text-sm">Leçon 1 · Les salutations et les formules de politesse</p>
+  </div>
+</div>
+
+<div class="max-w-4xl mx-auto p-4 space-y-8">
+
+<!-- 今日單字 -->
+<section class="bg-white rounded-2xl shadow p-6">
+  <h2 class="text-2xl font-bold text-blue-800 mb-4">📚 今日單字（10個）</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">bonjour</p>
+          <p class="text-gray-500 text-sm">[bɔ̃.ʒuʁ] · interj.</p>
+          <p class="text-gray-700 font-medium">早安／你好</p>
+        </div>
+        <button onclick="speak(this)" data-text="bonjour" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Bonjour, madame !</p>
+      <button onclick="speak(this)" data-text="Bonjour, madame !" class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">bonsoir</p>
+          <p class="text-gray-500 text-sm">[bɔ̃.swaʁ] · interj.</p>
+          <p class="text-gray-700 font-medium">晚安／晚上好</p>
+        </div>
+        <button onclick="speak(this)" data-text="bonsoir" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Bonsoir, tout le monde !</p>
+      <button onclick="speak(this)" data-text="Bonsoir, tout le monde !" class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">merci</p>
+          <p class="text-gray-500 text-sm">[mɛʁ.si] · interj.</p>
+          <p class="text-gray-700 font-medium">謝謝</p>
+        </div>
+        <button onclick="speak(this)" data-text="merci" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Merci beaucoup !</p>
+      <button onclick="speak(this)" data-text="Merci beaucoup !" class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">s'il vous plaît</p>
+          <p class="text-gray-500 text-sm">[sil.vu.plɛ] · phrase</p>
+          <p class="text-gray-700 font-medium">請（您）</p>
+        </div>
+        <button onclick="speak(this)" data-text="s'il vous plaît" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Un café, s'il vous plaît.</p>
+      <button onclick="speak(this)" data-text="Un café, s'il vous plaît." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">de rien</p>
+          <p class="text-gray-500 text-sm">[də.ʁjɛ̃] · phrase</p>
+          <p class="text-gray-700 font-medium">不客氣</p>
+        </div>
+        <button onclick="speak(this)" data-text="de rien" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">— Merci ! — De rien !</p>
+      <button onclick="speak(this)" data-text="De rien !" class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">excusez-moi</p>
+          <p class="text-gray-500 text-sm">[ɛk.sky.ze.mwa] · phrase</p>
+          <p class="text-gray-700 font-medium">對不起／打擾一下</p>
+        </div>
+        <button onclick="speak(this)" data-text="excusez-moi" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Excusez-moi, où est la gare ?</p>
+      <button onclick="speak(this)" data-text="Excusez-moi, où est la gare ?" class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">pardon</p>
+          <p class="text-gray-500 text-sm">[paʁ.dɔ̃] · interj.</p>
+          <p class="text-gray-700 font-medium">抱歉／對不起</p>
+        </div>
+        <button onclick="speak(this)" data-text="pardon" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Pardon, je n'ai pas compris.</p>
+      <button onclick="speak(this)" data-text="Pardon, je n'ai pas compris." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">au revoir</p>
+          <p class="text-gray-500 text-sm">[o.ʁə.vwaʁ] · phrase</p>
+          <p class="text-gray-700 font-medium">再見</p>
+        </div>
+        <button onclick="speak(this)" data-text="au revoir" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Au revoir et bonne journée !</p>
+      <button onclick="speak(this)" data-text="Au revoir et bonne journée !" class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">oui</p>
+          <p class="text-gray-500 text-sm">[wi] · adv.</p>
+          <p class="text-gray-700 font-medium">是的</p>
+        </div>
+        <button onclick="speak(this)" data-text="oui" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Oui, je comprends.</p>
+      <button onclick="speak(this)" data-text="Oui, je comprends." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="card bg-blue-50 rounded-xl p-4 border border-blue-100">
+      <div class="flex justify-between items-start">
+        <div>
+          <p class="text-xl font-bold text-blue-800">non</p>
+          <p class="text-gray-500 text-sm">[nɔ̃] · adv.</p>
+          <p class="text-gray-700 font-medium">不／不是</p>
+        </div>
+        <button onclick="speak(this)" data-text="non" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+      <p class="text-gray-600 text-sm mt-2 italic">Non, merci.</p>
+      <button onclick="speak(this)" data-text="Non, merci." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- 基礎語句 -->
+<section class="bg-white rounded-2xl shadow p-6">
+  <h2 class="text-2xl font-bold text-blue-800 mb-4">💬 基礎語句（5句）</h2>
+  <div class="space-y-4">
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-lg font-semibold text-indigo-800">Bonjour, comment allez-vous ?</p>
+          <p class="text-gray-500 text-sm">[bɔ̃.ʒuʁ kɔ.mɑ̃ a.le.vu]</p>
+          <p class="text-gray-700">你好，您好嗎？</p>
+        </div>
+        <button onclick="speak(this)" data-text="Bonjour, comment allez-vous ?" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+    </div>
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-lg font-semibold text-indigo-800">Je vais bien, merci.</p>
+          <p class="text-gray-500 text-sm">[ʒə vɛ bjɛ̃ mɛʁ.si]</p>
+          <p class="text-gray-700">我很好，謝謝。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Je vais bien, merci." class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+    </div>
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-lg font-semibold text-indigo-800">Je m'appelle Marie.</p>
+          <p class="text-gray-500 text-sm">[ʒə ma.pɛl ma.ʁi]</p>
+          <p class="text-gray-700">我叫瑪麗。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Je m'appelle Marie." class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+    </div>
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-lg font-semibold text-indigo-800">Enchanté de vous rencontrer.</p>
+          <p class="text-gray-500 text-sm">[ɑ̃.ʃɑ̃.te də vu ʁɑ̃.kɔ̃.tʁe]</p>
+          <p class="text-gray-700">很高興認識您。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Enchanté de vous rencontrer." class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+    </div>
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-lg font-semibold text-indigo-800">À bientôt !</p>
+          <p class="text-gray-500 text-sm">[a bjɛ̃.to]</p>
+          <p class="text-gray-700">再見！（不久後見）</p>
+        </div>
+        <button onclick="speak(this)" data-text="À bientôt !" class="speak-btn text-2xl ml-2">🔊</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 文法小提示 -->
+<section class="bg-white rounded-2xl shadow p-6">
+  <h2 class="text-2xl font-bold text-blue-800 mb-4">📝 文法小提示</h2>
+  <div class="space-y-3">
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl">
+      <p class="font-semibold text-yellow-800">vous vs. tu（您 vs. 你）</p>
+      <p class="text-gray-700 text-sm mt-1">「vous」用於正式場合或不熟識的人；「tu」用於朋友、家人或小孩。初次見面時使用 vous 更有禮貌。</p>
+    </div>
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-xl">
+      <p class="font-semibold text-yellow-800">s'il vous plaît vs. s'il te plaît</p>
+      <p class="text-gray-700 text-sm mt-1">「s'il vous plaît」（正式）對應「vous」；「s'il te plaît」（非正式）對應「tu」。兩者都表示「請」。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 配對遊戲 -->
+<section class="bg-white rounded-2xl shadow p-6">
+  <h2 class="text-2xl font-bold text-blue-800 mb-2">🎮 配對遊戲</h2>
+  <p class="text-gray-500 text-sm mb-4">先點左邊的法文，再點右邊的中文配對</p>
+  <div id="match-score" class="text-center text-blue-700 font-semibold mb-3">0 / 10</div>
+  <div class="grid grid-cols-2 gap-3" id="match-container">
+    <div class="space-y-2" id="left-col"></div>
+    <div class="space-y-2" id="right-col"></div>
+  </div>
+  <button onclick="resetMatch()" class="mt-4 w-full bg-blue-100 text-blue-700 py-2 rounded-xl font-semibold hover:bg-blue-200">🔄 重新開始</button>
+</section>
+
+<!-- 快問快答 -->
+<section class="bg-white rounded-2xl shadow p-6">
+  <h2 class="text-2xl font-bold text-blue-800 mb-2">⚡ 快問快答</h2>
+  <div id="quiz-progress" class="text-gray-500 text-sm mb-4">第 1 題 / 共 15 題</div>
+  <div id="quiz-score-display" class="text-blue-700 font-semibold mb-3">得分：0</div>
+  <div id="quiz-container"></div>
+  <div id="quiz-result" class="hidden text-center p-6">
+    <p class="text-3xl font-bold text-blue-800 mb-2" id="result-score"></p>
+    <p class="text-gray-600 mb-4" id="result-msg"></p>
+    <button onclick="resetQuiz()" class="bg-blue-500 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-600">🔄 再挑戰一次</button>
+  </div>
+</section>
+
+</div>
+
+<script>
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+// ===== 配對遊戲 =====
+var matchData = [
+  ['bonjour', '早安／你好'],
+  ['bonsoir', '晚安／晚上好'],
+  ['merci', '謝謝'],
+  ['s\'il vous plaît', '請（您）'],
+  ['de rien', '不客氣'],
+  ['excusez-moi', '對不起／打擾一下'],
+  ['pardon', '抱歉'],
+  ['au revoir', '再見'],
+  ['oui', '是的'],
+  ['non', '不／不是']
+];
+var selectedLeft = null;
+var matchCorrect = 0;
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function initMatch() {
+  selectedLeft = null;
+  matchCorrect = 0;
+  document.getElementById('match-score').textContent = '0 / 10';
+  var leftCol = document.getElementById('left-col');
+  var rightCol = document.getElementById('right-col');
+  leftCol.innerHTML = '';
+  rightCol.innerHTML = '';
+  var leftItems = shuffle(matchData.map(function(d) { return d[0]; }));
+  var rightItems = shuffle(matchData.map(function(d) { return d[1]; }));
+  leftItems.forEach(function(word) {
+    var btn = document.createElement('button');
+    btn.className = 'match-btn w-full text-left px-3 py-2 rounded-lg border-2 border-blue-200 bg-white text-blue-800 font-medium text-sm';
+    btn.textContent = word;
+    btn.dataset.value = word;
+    btn.dataset.side = 'left';
+    btn.onclick = function() { selectLeft(this); };
+    leftCol.appendChild(btn);
+  });
+  rightItems.forEach(function(word) {
+    var btn = document.createElement('button');
+    btn.className = 'match-btn w-full text-left px-3 py-2 rounded-lg border-2 border-gray-200 bg-white text-gray-700 text-sm';
+    btn.textContent = word;
+    btn.dataset.value = word;
+    btn.dataset.side = 'right';
+    btn.onclick = function() { selectRight(this); };
+    rightCol.appendChild(btn);
+  });
+}
+
+function selectLeft(btn) {
+  if (btn.classList.contains('correct')) return;
+  document.querySelectorAll('#left-col .match-btn').forEach(function(b) {
+    if (!b.classList.contains('correct')) b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+  selectedLeft = btn;
+}
+
+function selectRight(btn) {
+  if (!selectedLeft) return;
+  if (btn.classList.contains('correct')) return;
+  var leftVal = selectedLeft.dataset.value;
+  var rightVal = btn.dataset.value;
+  var correct = matchData.find(function(d) { return d[0] === leftVal && d[1] === rightVal; });
+  if (correct) {
+    selectedLeft.classList.remove('selected');
+    selectedLeft.classList.add('correct');
+    btn.classList.add('correct');
+    matchCorrect++;
+    document.getElementById('match-score').textContent = matchCorrect + ' / 10';
+    selectedLeft = null;
+    if (matchCorrect === 10) {
+      setTimeout(function() { alert('🎉 全部配對正確！'); }, 300);
+    }
+  } else {
+    btn.classList.add('wrong');
+    selectedLeft.classList.add('wrong');
+    var lb = selectedLeft;
+    setTimeout(function() {
+      lb.classList.remove('wrong', 'selected');
+      btn.classList.remove('wrong');
+      selectedLeft = null;
+    }, 600);
+  }
+}
+
+function resetMatch() { initMatch(); }
+initMatch();
+
+// ===== 快問快答 =====
+var quizData = [
+  // 題型1：中法互譯
+  { type: 1, q: '「謝謝」法文是？', options: ['merci', 'pardon', 'bonjour', 'oui'], ans: 0 },
+  { type: 1, q: '「au revoir」中文是？', options: ['再見', '謝謝', '你好', '對不起'], ans: 0 },
+  { type: 1, q: '「bonsoir」中文是？', options: ['晚安／晚上好', '早安', '再見', '不客氣'], ans: 0 },
+  { type: 1, q: '「不客氣」法文是？', options: ['de rien', 'pardon', 'merci', 'oui'], ans: 0 },
+  // 題型2：拼字題
+  { type: 2, q: '「早安／你好」法文正確拼法？', options: ['bonjour', 'bonjore', 'bonjoure', 'bonjoura'], ans: 0 },
+  { type: 2, q: '「打擾一下」法文正確拼法？', options: ['excusez-moi', 'excusé-moi', 'excuser-moi', 'excuze-moi'], ans: 0 },
+  { type: 2, q: '填空：「___, comment allez-vous ?」', options: ['Bonjour', 'Bonsoir', 'Au revoir', 'Pardon'], ans: 0 },
+  // 題型3：用法辨析
+  { type: 3, q: '正式場合對長輩說「請」，應該用？', options: ['s\'il vous plaît', 's\'il te plaît', 'pardon', 'de rien'], ans: 0 },
+  { type: 3, q: '對朋友說「謝謝很多」，應該說？', options: ['Merci beaucoup', 'Bonjour beaucoup', 'Pardon beaucoup', 'Oui beaucoup'], ans: 0 },
+  { type: 3, q: '「oui」和「non」的意思分別是？', options: ['是的 / 不是', '不是 / 是的', '謝謝 / 對不起', '你好 / 再見'], ans: 0 },
+  // 題型4：發音選擇題
+  { type: 4, q: '請聽音，選出「謝謝」的法文發音', speaks: ['merci', 'pardon', 'bonjour', 'bonsoir'], ans: 0 },
+  { type: 4, q: '請聽音，選出「再見」的法文發音', speaks: ['au revoir', 'de rien', 'oui', 'non'], ans: 0 },
+  { type: 4, q: '請聽音，選出「對不起／打擾一下」的法文發音', speaks: ['excusez-moi', 'merci', 'bonjour', 'bonsoir'], ans: 0 },
+  { type: 1, q: '「pardon」中文是？', options: ['抱歉／對不起', '謝謝', '再見', '晚安'], ans: 0 },
+  { type: 2, q: '「不久後見」法文正確說法？', options: ['À bientôt', 'Au revoir', 'Bonsoir', 'À demain'], ans: 0 },
+];
+
+var quizCurrent = 0;
+var quizScore = 0;
+
+function renderQuiz() {
+  var container = document.getElementById('quiz-container');
+  var result = document.getElementById('quiz-result');
+  if (quizCurrent >= quizData.length) {
+    container.innerHTML = '';
+    result.classList.remove('hidden');
+    var pct = Math.round(quizScore / quizData.length * 100);
+    document.getElementById('result-score').textContent = quizScore + ' / ' + quizData.length + ' (' + pct + '%)';
+    var msg = pct >= 90 ? '🏆 優秀！你的法文打招呼已經很流利了！' :
+              pct >= 70 ? '👍 不錯！再多練習就能更流利。' :
+              pct >= 50 ? '💪 繼續加油，多複習幾遍吧！' : '📖 建議再看一遍單字和語句再挑戰！';
+    document.getElementById('result-msg').textContent = msg;
+    return;
+  }
+  document.getElementById('quiz-progress').textContent = '第 ' + (quizCurrent + 1) + ' 題 / 共 ' + quizData.length + ' 題';
+  var q = quizData[quizCurrent];
+  var html = '<div class="bg-gray-50 rounded-xl p-4 mb-4"><p class="font-semibold text-gray-800 mb-4">' + (quizCurrent + 1) + '. ' + q.q + '</p>';
+  if (q.type === 4) {
+    html += '<div class="grid grid-cols-2 gap-3">';
+    q.speaks.forEach(function(s, i) {
+      html += '<div class="border-2 border-gray-200 rounded-lg p-3 text-center" id="audio-opt-' + i + '">' +
+        '<button onclick="speak(this)" data-text="' + s + '" class="speak-btn text-3xl block mx-auto mb-2">🔊</button>' +
+        '<button class="quiz-option w-full py-2 rounded-lg bg-blue-100 text-blue-800 font-medium text-sm" onclick="answerQuiz(this,' + i + ',' + q.ans + ')">選這個</button>' +
+        '</div>';
+    });
+    html += '</div>';
+  } else {
+    html += '<div class="grid grid-cols-2 gap-3">';
+    q.options.forEach(function(opt, i) {
+      html += '<button class="quiz-option bg-white border-2 border-gray-200 rounded-xl py-3 px-4 text-gray-700 font-medium hover:border-blue-400" onclick="answerQuiz(this,' + i + ',' + q.ans + ')">' + opt + '</button>';
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function answerQuiz(btn, chosen, correct) {
+  var allBtns = document.querySelectorAll('.quiz-option');
+  allBtns.forEach(function(b) { b.classList.add('disabled'); });
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    quizScore++;
+    document.getElementById('quiz-score-display').textContent = '得分：' + quizScore;
+  } else {
+    btn.classList.add('wrong');
+    allBtns[correct] && allBtns[correct].classList.add('correct');
+  }
+  setTimeout(function() {
+    quizCurrent++;
+    renderQuiz();
+  }, 1000);
+}
+
+function resetQuiz() {
+  quizCurrent = 0;
+  quizScore = 0;
+  document.getElementById('quiz-score-display').textContent = '得分：0';
+  document.getElementById('quiz-result').classList.add('hidden');
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>

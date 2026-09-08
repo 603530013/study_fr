@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4課：家庭成員</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .card { transition: transform 0.2s; }
+  .card:hover { transform: translateY(-2px); }
+  .match-btn { transition: all 0.2s; cursor: pointer; }
+  .match-btn.selected { background-color: #3b82f6; color: white; border-color: #2563eb; }
+  .match-btn.correct { background-color: #22c55e; color: white; border-color: #16a34a; pointer-events: none; }
+  .match-btn.wrong { background-color: #ef4444; color: white; border-color: #dc2626; }
+  .quiz-option { transition: all 0.2s; cursor: pointer; }
+  .quiz-option:hover { background-color: #fef3c7; }
+  .quiz-option.correct { background-color: #dcfce7 !important; border-color: #22c55e !important; }
+  .quiz-option.wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; }
+  .speak-btn { transition: all 0.15s; }
+  .speak-btn:hover { transform: scale(1.1); }
+  .speak-btn:active { transform: scale(0.95); }
+</style>
+</head>
+<body class="bg-amber-50 min-h-screen">
+
+<!-- 標題區 -->
+<header style="background: linear-gradient(135deg, #002395 0%, #ffffff 50%, #ED2939 100%);" class="text-center py-10 px-4 shadow-lg">
+  <h1 class="text-4xl font-bold text-indigo-900 drop-shadow">🇫🇷 法文每日課程</h1>
+  <h2 class="text-2xl font-semibold text-indigo-800 mt-2">第4課・家庭成員</h2>
+  <p class="text-indigo-700 mt-1">2026-09-08（修正版）・La Famille</p>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
+
+<!-- 單字卡 -->
+<section>
+  <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b-2 border-amber-300 pb-2">📚 今日單字</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👨</div>
+      <span class="text-2xl font-bold text-amber-700">le père</span>
+      <button onclick="speak(this)" data-text="le père" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə pɛʁ/ · n.m. · 父親</div>
+      <div class="mt-2 text-gray-700 text-sm">Mon père est médecin.
+        <button onclick="speak(this)" data-text="Mon père est médecin." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我的父親是醫生。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👩</div>
+      <span class="text-2xl font-bold text-amber-700">la mère</span>
+      <button onclick="speak(this)" data-text="la mère" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/la mɛʁ/ · n.f. · 母親</div>
+      <div class="mt-2 text-gray-700 text-sm">Ma mère est professeure.
+        <button onclick="speak(this)" data-text="Ma mère est professeure." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我的母親是老師。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👦</div>
+      <span class="text-2xl font-bold text-amber-700">le fils</span>
+      <button onclick="speak(this)" data-text="le fils" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə fis/ · n.m. · 兒子</div>
+      <div class="mt-2 text-gray-700 text-sm">J'ai un fils.
+        <button onclick="speak(this)" data-text="J'ai un fils." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我有一個兒子。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👧</div>
+      <span class="text-2xl font-bold text-amber-700">la fille</span>
+      <button onclick="speak(this)" data-text="la fille" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/la fij/ · n.f. · 女兒</div>
+      <div class="mt-2 text-gray-700 text-sm">C'est ma fille.
+        <button onclick="speak(this)" data-text="C'est ma fille." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">這是我的女兒。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👱</div>
+      <span class="text-2xl font-bold text-amber-700">le frère</span>
+      <button onclick="speak(this)" data-text="le frère" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə fʁɛʁ/ · n.m. · 兄弟</div>
+      <div class="mt-2 text-gray-700 text-sm">Mon frère a vingt ans.
+        <button onclick="speak(this)" data-text="Mon frère a vingt ans." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我的兄弟二十歲。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👱‍♀️</div>
+      <span class="text-2xl font-bold text-amber-700">la sœur</span>
+      <button onclick="speak(this)" data-text="la sœur" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/la sœʁ/ · n.f. · 姊妹</div>
+      <div class="mt-2 text-gray-700 text-sm">J'ai deux sœurs.
+        <button onclick="speak(this)" data-text="J'ai deux sœurs." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我有兩個姊妹。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👴</div>
+      <span class="text-2xl font-bold text-amber-700">le grand-père</span>
+      <button onclick="speak(this)" data-text="le grand-père" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə ɡʁɑ̃ pɛʁ/ · n.m. · 祖父</div>
+      <div class="mt-2 text-gray-700 text-sm">Mon grand-père habite à Paris.
+        <button onclick="speak(this)" data-text="Mon grand-père habite à Paris." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我的祖父住在巴黎。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👵</div>
+      <span class="text-2xl font-bold text-amber-700">la grand-mère</span>
+      <button onclick="speak(this)" data-text="la grand-mère" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/la ɡʁɑ̃ mɛʁ/ · n.f. · 祖母</div>
+      <div class="mt-2 text-gray-700 text-sm">Ma grand-mère fait la cuisine.
+        <button onclick="speak(this)" data-text="Ma grand-mère fait la cuisine." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我的祖母做菜。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">🧔</div>
+      <span class="text-2xl font-bold text-amber-700">l'oncle</span>
+      <button onclick="speak(this)" data-text="l'oncle" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lɔ̃kl/ · n.m. · 叔舅伯</div>
+      <div class="mt-2 text-gray-700 text-sm">Mon oncle est gentil.
+        <button onclick="speak(this)" data-text="Mon oncle est gentil." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我的叔叔很親切。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-amber-400">
+      <div class="text-3xl mb-1">👩‍🦰</div>
+      <span class="text-2xl font-bold text-amber-700">la tante</span>
+      <button onclick="speak(this)" data-text="la tante" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/la tɑ̃t/ · n.f. · 姑嬸阿姨</div>
+      <div class="mt-2 text-gray-700 text-sm">Ma tante habite à Lyon.
+        <button onclick="speak(this)" data-text="Ma tante habite à Lyon." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我的阿姨住在里昂。</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 所有格形容詞表 -->
+<section>
+  <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b-2 border-amber-300 pb-2">📋 所有格形容詞</h2>
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+    <table class="w-full text-center">
+      <thead class="bg-amber-600 text-white">
+        <tr>
+          <th class="py-2 px-3">人稱</th>
+          <th class="py-2 px-3">陽性名詞</th>
+          <th class="py-2 px-3">陰性名詞</th>
+          <th class="py-2 px-3">複數</th>
+          <th class="py-2 px-3">例子</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hover:bg-amber-50"><td class="py-2 border-b font-semibold text-amber-700">我的</td><td class="py-2 border-b font-bold">mon</td><td class="py-2 border-b font-bold">ma</td><td class="py-2 border-b font-bold">mes</td><td class="py-2 border-b text-sm text-gray-600">mon père / ma mère</td></tr>
+        <tr class="bg-gray-50 hover:bg-amber-50"><td class="py-2 border-b font-semibold text-amber-700">你的</td><td class="py-2 border-b font-bold">ton</td><td class="py-2 border-b font-bold">ta</td><td class="py-2 border-b font-bold">tes</td><td class="py-2 border-b text-sm text-gray-600">ton frère / ta sœur</td></tr>
+        <tr class="hover:bg-amber-50"><td class="py-2 font-semibold text-amber-700">他/她的</td><td class="py-2 font-bold">son</td><td class="py-2 font-bold">sa</td><td class="py-2 font-bold">ses</td><td class="py-2 text-sm text-gray-600">son fils / sa fille</td></tr>
+      </tbody>
+    </table>
+    <div class="p-3 bg-amber-50 text-sm text-amber-800">⚠️ 若陰性名詞以母音開頭，用 mon/ton/son：<strong>mon amie</strong>（不是 ma amie）</div>
+  </div>
+</section>
+
+<!-- 基礎語句 -->
+<section>
+  <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b-2 border-amber-300 pb-2">💬 基礎語句</h2>
+  <div class="space-y-3">
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-amber-700 text-lg">C'est ma famille.
+        <button onclick="speak(this)" data-text="C'est ma famille." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/sɛ ma famij/</div>
+      <div class="text-gray-700">這是我的家人。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-amber-700 text-lg">J'ai un frère et deux sœurs.
+        <button onclick="speak(this)" data-text="J'ai un frère et deux sœurs." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/ʒe œ̃ fʁɛʁ e dø sœʁ/</div>
+      <div class="text-gray-700">我有一個兄弟和兩個姊妹。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-amber-700 text-lg">Mon père travaille à Taipei.
+        <button onclick="speak(this)" data-text="Mon père travaille à Taipei." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/mɔ̃ pɛʁ tʁavaj a tajpɛ/</div>
+      <div class="text-gray-700">我父親在台北工作。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-amber-700 text-lg">Ma mère est très gentille.
+        <button onclick="speak(this)" data-text="Ma mère est très gentille." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/ma mɛʁ ɛ tʁɛ ʒɑ̃tij/</div>
+      <div class="text-gray-700">我母親非常親切。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-amber-700 text-lg">Nous sommes une famille de quatre.
+        <button onclick="speak(this)" data-text="Nous sommes une famille de quatre." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/nu sɔm yn famij də katʁ/</div>
+      <div class="text-gray-700">我們是四口之家。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 文法提示 -->
+<section>
+  <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b-2 border-amber-300 pb-2">📝 文法小提示</h2>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+      <div class="font-bold text-amber-700 mb-1">所有格配合名詞性別</div>
+      <div class="text-sm text-gray-700">mon père（陽性）<br>ma mère（陰性）<br>不是配合擁有者的性別</div>
+    </div>
+    <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+      <div class="font-bold text-amber-700 mb-1">母音前用 mon/ton/son</div>
+      <div class="text-sm text-gray-700">mon amie（我的女性朋友）<br>陰性名詞如母音開頭<br>ma/ta/sa → mon/ton/son</div>
+    </div>
+    <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+      <div class="font-bold text-amber-700 mb-1">複數統一用 mes</div>
+      <div class="text-sm text-gray-700">mes parents（我的父母）<br>mes frères（我的兄弟們）<br>複數不分陰陽</div>
+    </div>
+  </div>
+</section>
+
+<!-- 配對遊戲 -->
+<section>
+  <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b-2 border-amber-300 pb-2">🎮 配對遊戲</h2>
+  <div class="bg-white rounded-xl shadow p-6">
+    <div class="text-center mb-4"><span class="font-bold text-amber-700">進度：</span><span id="matchScore" class="font-bold text-green-600">0/10</span></div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-2">
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="pere" onclick="selectMatch(this,'left')">le père</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="grandmere" onclick="selectMatch(this,'left')">la grand-mère</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="fils" onclick="selectMatch(this,'left')">le fils</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="soeur" onclick="selectMatch(this,'left')">la sœur</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="mere" onclick="selectMatch(this,'left')">la mère</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="oncle" onclick="selectMatch(this,'left')">l'oncle</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="fille" onclick="selectMatch(this,'left')">la fille</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="grandpere" onclick="selectMatch(this,'left')">le grand-père</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="frere" onclick="selectMatch(this,'left')">le frère</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-amber-200 bg-amber-50 font-semibold text-amber-800" data-pair="tante" onclick="selectMatch(this,'left')">la tante</button>
+      </div>
+      <div class="space-y-2">
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="mere" onclick="selectMatch(this,'right')">母親</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="fils" onclick="selectMatch(this,'right')">兒子</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="grandpere" onclick="selectMatch(this,'right')">祖父</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="tante" onclick="selectMatch(this,'right')">姑嬸阿姨</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="pere" onclick="selectMatch(this,'right')">父親</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="frere" onclick="selectMatch(this,'right')">兄弟</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="grandmere" onclick="selectMatch(this,'right')">祖母</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="oncle" onclick="selectMatch(this,'right')">叔舅伯</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="soeur" onclick="selectMatch(this,'right')">姊妹</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="fille" onclick="selectMatch(this,'right')">女兒</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 快問快答 -->
+<section>
+  <h2 class="text-2xl font-bold text-amber-800 mb-4 border-b-2 border-amber-300 pb-2">⚡ 快問快答</h2>
+  <div class="bg-white rounded-xl shadow p-6">
+    <div id="quizProgress" class="text-sm text-gray-500 mb-2">第 1 / 10 題</div>
+    <div id="quizQuestion" class="text-xl font-bold text-amber-800 mb-4"></div>
+    <div id="quizOptions" class="grid grid-cols-2 gap-3"></div>
+    <div id="quizResult" class="hidden mt-4 text-center">
+      <div id="quizScore" class="text-3xl font-black text-amber-700 mb-2"></div>
+      <div id="quizComment" class="text-gray-600 mb-4"></div>
+      <button onclick="restartQuiz()" class="bg-amber-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-amber-700">重新挑戰</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="text-center py-6 text-gray-400 text-sm">法文每日課程 · 第4課 家庭成員 · 修正版</footer>
+
+<script>
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+var selectedLeft = null, selectedRight = null, matchCount = 0;
+function selectMatch(btn, side) {
+  if (btn.classList.contains('correct')) return;
+  btn.parentElement.querySelectorAll('.match-btn.selected').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  if (side === 'left') selectedLeft = btn; else selectedRight = btn;
+  if (selectedLeft && selectedRight) {
+    if (selectedLeft.dataset.pair === selectedRight.dataset.pair) {
+      selectedLeft.classList.remove('selected'); selectedLeft.classList.add('correct');
+      selectedRight.classList.remove('selected'); selectedRight.classList.add('correct');
+      matchCount++; document.getElementById('matchScore').textContent = matchCount + '/10';
+      selectedLeft = null; selectedRight = null;
+    } else {
+      var l = selectedLeft, r = selectedRight;
+      l.classList.add('wrong'); r.classList.add('wrong');
+      setTimeout(function(){ l.classList.remove('wrong','selected'); r.classList.remove('wrong','selected'); }, 600);
+      selectedLeft = null; selectedRight = null;
+    }
+  }
+}
+
+var questions = [
+  {q: '"mon ___"（父親）', opts: ['mère','père','sœur','fils'], ans: 1},
+  {q: '「我有兩個姊妹」', opts: ['J\'ai deux frères','J\'ai deux sœurs','J\'ai deux filles','J\'ai deux tantes'], ans: 1},
+  {q: '"la sœur" IPA？', opts: ['/la sœʁ/','/la sur/','/la sɔʁ/','/la soʁ/'], ans: 0},
+  {q: '祖父法文？', opts: ['père','oncle','grand-père','frère'], ans: 2},
+  {q: '"Ma ___ est professeure."（母親）', opts: ['père','frère','mère','fils'], ans: 2},
+  {q: '姑嬸阿姨法文？', opts: ['oncle','tante','sœur','fille'], ans: 1},
+  {q: 'mon/ma 如何選？', opts: ['看自己性別','隨便','看後面名詞性別','都用mon'], ans: 2},
+  {q: '"l\'oncle" 為什麼用 l\'？', opts: ['特例','母音開頭','複數','錯誤'], ans: 1},
+  {q: '女兒法文？', opts: ['fils','fille','sœur','tante'], ans: 1},
+  {q: '"J\'ai ___ sœurs."（兩個）', opts: ['un','une','deux','trois'], ans: 2}
+];
+var qIdx = 0, score = 0;
+
+function renderQuiz() {
+  if (qIdx >= questions.length) {
+    ['quizProgress','quizQuestion','quizOptions'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); });
+    document.getElementById('quizResult').classList.remove('hidden');
+    document.getElementById('quizScore').textContent = score + ' / ' + questions.length + ' 分';
+    var pct = score / questions.length;
+    document.getElementById('quizComment').textContent = pct >= 0.9 ? '完美！！🎉' : pct >= 0.7 ? '很不錯！👍' : pct >= 0.5 ? '繼續加油！💪' : '多多練習！📚';
+    return;
+  }
+  var q = questions[qIdx];
+  document.getElementById('quizProgress').textContent = '第 ' + (qIdx+1) + ' / ' + questions.length + ' 題';
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizOptions').innerHTML = q.opts.map(function(o,i){
+    return '<button class="quiz-option border-2 border-gray-200 rounded-lg py-3 px-4 text-left font-medium" onclick="answerQuiz(this,' + i + ',' + q.ans + ')">' + o + '</button>';
+  }).join('');
+}
+function answerQuiz(btn, chosen, correct) {
+  document.querySelectorAll('.quiz-option').forEach(function(b){ b.onclick = null; });
+  if (chosen === correct) { btn.classList.add('correct'); score++; }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.quiz-option')[correct].classList.add('correct'); }
+  setTimeout(function(){ qIdx++; renderQuiz(); }, 1500);
+}
+function restartQuiz() {
+  qIdx = 0; score = 0;
+  ['quizProgress','quizQuestion','quizOptions'].forEach(function(id){ document.getElementById(id).classList.remove('hidden'); });
+  document.getElementById('quizResult').classList.add('hidden');
+  renderQuiz();
+}
+renderQuiz();
+</script>
+</body>
+</html>

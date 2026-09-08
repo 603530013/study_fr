@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第2課：數字 0-20</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .card { transition: transform 0.2s; }
+  .card:hover { transform: translateY(-2px); }
+  .match-btn { transition: all 0.2s; cursor: pointer; }
+  .match-btn.selected { background-color: #3b82f6; color: white; }
+  .match-btn.correct { background-color: #22c55e; color: white; pointer-events: none; }
+  .match-btn.wrong { background-color: #ef4444; color: white; }
+  .quiz-option { transition: all 0.2s; cursor: pointer; }
+  .quiz-option:hover { background-color: #e0e7ff; }
+  .quiz-option.correct { background-color: #dcfce7; border-color: #22c55e; }
+  .quiz-option.wrong { background-color: #fee2e2; border-color: #ef4444; }
+  .speak-btn { transition: all 0.15s; }
+  .speak-btn:hover { transform: scale(1.1); }
+  .speak-btn:active { transform: scale(0.95); }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- 標題區 -->
+<header style="background: linear-gradient(135deg, #002395 0%, #ffffff 50%, #ED2939 100%);" class="text-center py-10 px-4 shadow-lg">
+  <h1 class="text-4xl font-bold text-indigo-900 drop-shadow">🇫🇷 法文每日課程</h1>
+  <h2 class="text-2xl font-semibold text-indigo-800 mt-2">第2課・數字 0-20</h2>
+  <p class="text-indigo-700 mt-1">2026-09-08（修正版）・Les Nombres</p>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
+
+<!-- 單字卡區 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">📚 今日單字</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">zéro</span>
+          <button onclick="speak(this)" data-text="zéro" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/zeʁo/ · n.m. · 零</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">0</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Il fait zéro degré.
+        <button onclick="speak(this)" data-text="Il fait zéro degré." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">氣溫零度。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">un</span>
+          <button onclick="speak(this)" data-text="un" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/œ̃/ · adj.num. · 一</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">1</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">J'ai un frère.
+        <button onclick="speak(this)" data-text="J'ai un frère." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我有一個兄弟。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">deux</span>
+          <button onclick="speak(this)" data-text="deux" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/dø/ · adj.num. · 二</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">2</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Il a deux enfants.
+        <button onclick="speak(this)" data-text="Il a deux enfants." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">他有兩個孩子。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">trois</span>
+          <button onclick="speak(this)" data-text="trois" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/tʁwɑ/ · adj.num. · 三</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">3</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Je prends trois cafés.
+        <button onclick="speak(this)" data-text="Je prends trois cafés." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我要三杯咖啡。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">cinq</span>
+          <button onclick="speak(this)" data-text="cinq" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/sɛ̃k/ · adj.num. · 五</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">5</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Elle a cinq ans.
+        <button onclick="speak(this)" data-text="Elle a cinq ans." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">她五歲。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">dix</span>
+          <button onclick="speak(this)" data-text="dix" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/dis/ · adj.num. · 十</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">10</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Dix plus dix font vingt.
+        <button onclick="speak(this)" data-text="Dix plus dix font vingt." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">十加十等於二十。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">onze</span>
+          <button onclick="speak(this)" data-text="onze" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/ɔ̃z/ · adj.num. · 十一</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">11</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Il est onze heures.
+        <button onclick="speak(this)" data-text="Il est onze heures." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">現在十一點。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">quinze</span>
+          <button onclick="speak(this)" data-text="quinze" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/kɛ̃z/ · adj.num. · 十五</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">15</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">J'ai quinze livres.
+        <button onclick="speak(this)" data-text="J'ai quinze livres." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我有十五本書。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">dix-huit</span>
+          <button onclick="speak(this)" data-text="dix-huit" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/diˈzɥit/ · adj.num. · 十八</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">18</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Elle a dix-huit ans.
+        <button onclick="speak(this)" data-text="Elle a dix-huit ans." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">她十八歲。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-indigo-400">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-2xl font-bold text-indigo-700">vingt</span>
+          <button onclick="speak(this)" data-text="vingt" class="speak-btn ml-2 text-lg">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/vɛ̃/ · adj.num. · 二十</div>
+        </div>
+        <span class="text-3xl font-black text-indigo-100">20</span>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Il y a vingt élèves.
+        <button onclick="speak(this)" data-text="Il y a vingt élèves." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">有二十個學生。</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 數字完整對照表 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">🔢 數字完整對照表（0–20）</h2>
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+    <table class="w-full text-center">
+      <thead class="bg-indigo-600 text-white">
+        <tr><th class="py-2 px-3">數字</th><th class="py-2 px-3">法文</th><th class="py-2 px-3">IPA</th><th class="py-2 px-3">發音</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">0</td><td class="py-2 border-b font-semibold text-indigo-700">zéro</td><td class="py-2 border-b text-gray-500 text-sm">/zeʁo/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="zéro" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">1</td><td class="py-2 border-b font-semibold text-indigo-700">un</td><td class="py-2 border-b text-gray-500 text-sm">/œ̃/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="un" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">2</td><td class="py-2 border-b font-semibold text-indigo-700">deux</td><td class="py-2 border-b text-gray-500 text-sm">/dø/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="deux" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">3</td><td class="py-2 border-b font-semibold text-indigo-700">trois</td><td class="py-2 border-b text-gray-500 text-sm">/tʁwɑ/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="trois" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">4</td><td class="py-2 border-b font-semibold text-indigo-700">quatre</td><td class="py-2 border-b text-gray-500 text-sm">/katʁ/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="quatre" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">5</td><td class="py-2 border-b font-semibold text-indigo-700">cinq</td><td class="py-2 border-b text-gray-500 text-sm">/sɛ̃k/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="cinq" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">6</td><td class="py-2 border-b font-semibold text-indigo-700">six</td><td class="py-2 border-b text-gray-500 text-sm">/sis/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="six" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">7</td><td class="py-2 border-b font-semibold text-indigo-700">sept</td><td class="py-2 border-b text-gray-500 text-sm">/sɛt/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="sept" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">8</td><td class="py-2 border-b font-semibold text-indigo-700">huit</td><td class="py-2 border-b text-gray-500 text-sm">/ɥit/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="huit" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">9</td><td class="py-2 border-b font-semibold text-indigo-700">neuf</td><td class="py-2 border-b text-gray-500 text-sm">/nœf/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="neuf" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">10</td><td class="py-2 border-b font-semibold text-indigo-700">dix</td><td class="py-2 border-b text-gray-500 text-sm">/dis/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="dix" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">11</td><td class="py-2 border-b font-semibold text-indigo-700">onze</td><td class="py-2 border-b text-gray-500 text-sm">/ɔ̃z/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="onze" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">12</td><td class="py-2 border-b font-semibold text-indigo-700">douze</td><td class="py-2 border-b text-gray-500 text-sm">/duz/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="douze" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">13</td><td class="py-2 border-b font-semibold text-indigo-700">treize</td><td class="py-2 border-b text-gray-500 text-sm">/tʁɛz/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="treize" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">14</td><td class="py-2 border-b font-semibold text-indigo-700">quatorze</td><td class="py-2 border-b text-gray-500 text-sm">/katɔʁz/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="quatorze" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">15</td><td class="py-2 border-b font-semibold text-indigo-700">quinze</td><td class="py-2 border-b text-gray-500 text-sm">/kɛ̃z/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="quinze" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">16</td><td class="py-2 border-b font-semibold text-indigo-700">seize</td><td class="py-2 border-b text-gray-500 text-sm">/sɛz/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="seize" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">17</td><td class="py-2 border-b font-semibold text-indigo-700">dix-sept</td><td class="py-2 border-b text-gray-500 text-sm">/disˈsɛt/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="dix-sept" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 border-b font-bold">18</td><td class="py-2 border-b font-semibold text-indigo-700">dix-huit</td><td class="py-2 border-b text-gray-500 text-sm">/diˈzɥit/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="dix-huit" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50 bg-gray-50"><td class="py-2 border-b font-bold">19</td><td class="py-2 border-b font-semibold text-indigo-700">dix-neuf</td><td class="py-2 border-b text-gray-500 text-sm">/dizˈnœf/</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="dix-neuf" class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-indigo-50"><td class="py-2 font-bold">20</td><td class="py-2 font-semibold text-indigo-700">vingt</td><td class="py-2 text-gray-500 text-sm">/vɛ̃/</td><td class="py-2"><button onclick="speak(this)" data-text="vingt" class="speak-btn">🔊</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 基礎語句 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">💬 基礎語句</h2>
+  <div class="space-y-3">
+    <div class="bg-white rounded-xl shadow p-4 flex flex-col md:flex-row md:items-center gap-2">
+      <div class="flex-1">
+        <div class="font-bold text-indigo-700 text-lg">J'ai vingt ans.
+          <button onclick="speak(this)" data-text="J'ai vingt ans." class="speak-btn ml-2">🔊</button>
+        </div>
+        <div class="text-gray-500 text-sm">/ʒe vɛ̃ ɑ̃/</div>
+        <div class="text-gray-700">我二十歲。</div>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">Il est trois heures.
+        <button onclick="speak(this)" data-text="Il est trois heures." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/il ɛ tʁwɑ zœʁ/</div>
+      <div class="text-gray-700">現在三點。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">Combien coûte ce livre ?
+        <button onclick="speak(this)" data-text="Combien coûte ce livre ?" class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/kɔ̃bjɛ̃ kut sə livʁ/</div>
+      <div class="text-gray-700">這本書多少錢？</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">Je voudrais deux cafés.
+        <button onclick="speak(this)" data-text="Je voudrais deux cafés." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/ʒə vudʁɛ dø kafe/</div>
+      <div class="text-gray-700">我想要兩杯咖啡。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">Nous sommes dix.
+        <button onclick="speak(this)" data-text="Nous sommes dix." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/nu sɔm dis/</div>
+      <div class="text-gray-700">我們有十個人。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 文法提示 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">📝 文法小提示</h2>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
+      <div class="font-bold text-indigo-700 mb-1">un / une 陰陽性</div>
+      <div class="text-sm text-gray-700">un homme（男）/ une femme（女）<br>數字1有性別之分</div>
+    </div>
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
+      <div class="font-bold text-indigo-700 mb-1">17、18、19 複合形式</div>
+      <div class="text-sm text-gray-700">dix-sept / dix-huit / dix-neuf<br>由 dix + 個位數組成</div>
+    </div>
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
+      <div class="font-bold text-indigo-700 mb-1">vingt 的 t</div>
+      <div class="text-sm text-gray-700">vingt 單獨使用時 t 不發音<br>/vɛ̃/，但 vingt et un 時連音</div>
+    </div>
+  </div>
+</section>
+
+<!-- 配對遊戲 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">🎮 配對遊戲</h2>
+  <div class="bg-white rounded-xl shadow p-6">
+    <div class="text-center mb-4">
+      <span class="font-bold text-indigo-700">進度：</span>
+      <span id="matchScore" class="font-bold text-green-600">0/10</span>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-2" id="leftCol">
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="vingt" onclick="selectMatch(this,'left')">vingt</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="cinq" onclick="selectMatch(this,'left')">cinq</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="zero" onclick="selectMatch(this,'left')">zéro</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="onze" onclick="selectMatch(this,'left')">onze</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="dix" onclick="selectMatch(this,'left')">dix</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="un" onclick="selectMatch(this,'left')">un</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="quinze" onclick="selectMatch(this,'left')">quinze</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="trois" onclick="selectMatch(this,'left')">trois</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="deux" onclick="selectMatch(this,'left')">deux</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="dixhuit" onclick="selectMatch(this,'left')">dix-huit</button>
+      </div>
+      <div class="space-y-2" id="rightCol">
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="un" onclick="selectMatch(this,'right')">一</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="deux" onclick="selectMatch(this,'right')">二</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="trois" onclick="selectMatch(this,'right')">三</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="cinq" onclick="selectMatch(this,'right')">五</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="dix" onclick="selectMatch(this,'right')">十</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="onze" onclick="selectMatch(this,'right')">十一</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="quinze" onclick="selectMatch(this,'right')">十五</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="dixhuit" onclick="selectMatch(this,'right')">十八</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="vingt" onclick="selectMatch(this,'right')">二十</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="zero" onclick="selectMatch(this,'right')">零</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 快問快答 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">⚡ 快問快答</h2>
+  <div class="bg-white rounded-xl shadow p-6" id="quizBox">
+    <div id="quizProgress" class="text-sm text-gray-500 mb-2">第 1 / 10 題</div>
+    <div id="quizQuestion" class="text-xl font-bold text-indigo-800 mb-4"></div>
+    <div id="quizOptions" class="grid grid-cols-2 gap-3"></div>
+    <div id="quizResult" class="hidden mt-4 text-center">
+      <div id="quizScore" class="text-3xl font-black text-indigo-700 mb-2"></div>
+      <div id="quizComment" class="text-gray-600 mb-4"></div>
+      <button onclick="restartQuiz()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700">重新挑戰</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="text-center py-6 text-gray-400 text-sm">法文每日課程 · 第2課 數字 0-20 · 修正版</footer>
+
+<script>
+// ===== 發音函數 =====
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+// ===== 配對遊戲 =====
+var selectedLeft = null, selectedRight = null, matchCount = 0;
+
+function selectMatch(btn, side) {
+  if (btn.classList.contains('correct')) return;
+  if (side === 'left') {
+    document.querySelectorAll('#leftCol .match-btn.selected').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedLeft = btn;
+  } else {
+    document.querySelectorAll('#rightCol .match-btn.selected').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedRight = btn;
+  }
+  if (selectedLeft && selectedRight) {
+    if (selectedLeft.dataset.pair === selectedRight.dataset.pair) {
+      selectedLeft.classList.remove('selected'); selectedLeft.classList.add('correct');
+      selectedRight.classList.remove('selected'); selectedRight.classList.add('correct');
+      matchCount++;
+      document.getElementById('matchScore').textContent = matchCount + '/10';
+      selectedLeft = null; selectedRight = null;
+    } else {
+      var l = selectedLeft, r = selectedRight;
+      l.classList.add('wrong'); r.classList.add('wrong');
+      setTimeout(function() {
+        l.classList.remove('wrong','selected'); r.classList.remove('wrong','selected');
+      }, 600);
+      selectedLeft = null; selectedRight = null;
+    }
+  }
+}
+
+// ===== 快問快答 =====
+var questions = [
+  {q: '"deux" 是什麼數字？', opts: ['一','二','三','四'], ans: 1},
+  {q: '法文「十五」怎麼說？', opts: ['cinq','dix','quinze','vingt'], ans: 2},
+  {q: '"vingt" 的 IPA 是？', opts: ['/vɛ̃/','/vɛt/','/vɑ̃/','/vɪnt/'], ans: 0},
+  {q: '"J\'ai ___ ans."（我二十歲）', opts: ['dix','deux','vingt','onze'], ans: 2},
+  {q: '哪個是「十八」？', opts: ['dix-sept','dix-huit','dix-neuf','dix'], ans: 1},
+  {q: '"trois" 怎麼發音？', opts: ['/trwa/','/tʁwɑ/','/tros/','/trois/'], ans: 1},
+  {q: '零的法文是？', opts: ['un','zéro','deux','neuf'], ans: 1},
+  {q: '11 的法文？', opts: ['dix','douze','onze','treize'], ans: 2},
+  {q: '"cinq" IPA？', opts: ['/sɛ̃k/','/sɪŋk/','/sink/','/sɑ̃/'], ans: 0},
+  {q: '"Il est ___ heures."（三點）', opts: ['deux','dix','trois','cinq'], ans: 2}
+];
+var qIdx = 0, score = 0;
+
+function renderQuiz() {
+  if (qIdx >= questions.length) {
+    document.getElementById('quizProgress').classList.add('hidden');
+    document.getElementById('quizQuestion').classList.add('hidden');
+    document.getElementById('quizOptions').classList.add('hidden');
+    document.getElementById('quizResult').classList.remove('hidden');
+    document.getElementById('quizScore').textContent = score + ' / ' + questions.length + ' 分';
+    var pct = score / questions.length;
+    var comments = ['加油！多多練習！', '不錯！繼續努力！', '很好！', '優秀！', '完美！滿分！'];
+    document.getElementById('quizComment').textContent = comments[Math.floor(pct * 4.99)];
+    return;
+  }
+  var q = questions[qIdx];
+  document.getElementById('quizProgress').textContent = '第 ' + (qIdx+1) + ' / ' + questions.length + ' 題';
+  document.getElementById('quizQuestion').textContent = q.q;
+  var html = '';
+  q.opts.forEach(function(o, i) {
+    html += '<button class="quiz-option border-2 border-gray-200 rounded-lg py-3 px-4 text-left font-medium hover:border-indigo-400" onclick="answerQuiz(this,' + i + ',' + q.ans + ')">' + o + '</button>';
+  });
+  document.getElementById('quizOptions').innerHTML = html;
+}
+
+function answerQuiz(btn, chosen, correct) {
+  var opts = document.querySelectorAll('.quiz-option');
+  opts.forEach(function(b) { b.onclick = null; });
+  if (chosen === correct) {
+    btn.classList.add('correct'); score++;
+  } else {
+    btn.classList.add('wrong');
+    opts[correct].classList.add('correct');
+  }
+  setTimeout(function() { qIdx++; renderQuiz(); }, 1500);
+}
+
+function restartQuiz() {
+  qIdx = 0; score = 0;
+  document.getElementById('quizProgress').classList.remove('hidden');
+  document.getElementById('quizQuestion').classList.remove('hidden');
+  document.getElementById('quizOptions').classList.remove('hidden');
+  document.getElementById('quizResult').classList.add('hidden');
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>

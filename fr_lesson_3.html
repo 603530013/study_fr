@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3課：顏色</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .card { transition: transform 0.2s; }
+  .card:hover { transform: translateY(-2px); }
+  .match-btn { transition: all 0.2s; cursor: pointer; }
+  .match-btn.selected { background-color: #3b82f6; color: white; border-color: #2563eb; }
+  .match-btn.correct { background-color: #22c55e; color: white; border-color: #16a34a; pointer-events: none; }
+  .match-btn.wrong { background-color: #ef4444; color: white; border-color: #dc2626; }
+  .quiz-option { transition: all 0.2s; cursor: pointer; }
+  .quiz-option:hover { background-color: #e0e7ff; }
+  .quiz-option.correct { background-color: #dcfce7 !important; border-color: #22c55e !important; }
+  .quiz-option.wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; }
+  .speak-btn { transition: all 0.15s; }
+  .speak-btn:hover { transform: scale(1.1); }
+  .speak-btn:active { transform: scale(0.95); }
+  .color-dot { display: inline-block; width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.15); vertical-align: middle; margin-right: 6px; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- 標題區 -->
+<header style="background: linear-gradient(135deg, #002395 0%, #ffffff 50%, #ED2939 100%);" class="text-center py-10 px-4 shadow-lg">
+  <h1 class="text-4xl font-bold text-indigo-900 drop-shadow">🇫🇷 法文每日課程</h1>
+  <h2 class="text-2xl font-semibold text-indigo-800 mt-2">第3課・顏色</h2>
+  <p class="text-indigo-700 mt-1">2026-09-08（修正版）・Les Couleurs</p>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
+
+<!-- 單字卡 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">📚 今日單字</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#ef4444">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#ef4444"></span>
+          <span class="text-2xl font-bold text-red-600">rouge</span>
+          <button onclick="speak(this)" data-text="rouge" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/ʁuʒ/ · adj. · 紅色（陰陽同形）</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">La rose est rouge.
+        <button onclick="speak(this)" data-text="La rose est rouge." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">玫瑰是紅色的。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#3b82f6">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#3b82f6"></span>
+          <span class="text-2xl font-bold text-blue-600">bleu / bleue</span>
+          <button onclick="speak(this)" data-text="bleu" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/blø/ · adj. · 藍色</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Le ciel est bleu.
+        <button onclick="speak(this)" data-text="Le ciel est bleu." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">天空是藍色的。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#22c55e">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#22c55e"></span>
+          <span class="text-2xl font-bold text-green-600">vert / verte</span>
+          <button onclick="speak(this)" data-text="vert" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/vɛʁ/ · /vɛʁt/ · adj. · 綠色</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">L'herbe est verte.
+        <button onclick="speak(this)" data-text="L'herbe est verte." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">草是綠色的。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#eab308">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#eab308"></span>
+          <span class="text-2xl font-bold text-yellow-600">jaune</span>
+          <button onclick="speak(this)" data-text="jaune" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/ʒon/ · adj. · 黃色（陰陽同形）</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Le soleil est jaune.
+        <button onclick="speak(this)" data-text="Le soleil est jaune." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">太陽是黃色的。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#1f2937">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#1f2937"></span>
+          <span class="text-2xl font-bold text-gray-800">noir / noire</span>
+          <button onclick="speak(this)" data-text="noir" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/nwaʁ/ · adj. · 黑色</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Le chat est noir.
+        <button onclick="speak(this)" data-text="Le chat est noir." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">貓是黑色的。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#d1d5db">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#f9fafb; border:2px solid #d1d5db"></span>
+          <span class="text-2xl font-bold text-gray-700">blanc / blanche</span>
+          <button onclick="speak(this)" data-text="blanc" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/blɑ̃/ · /blɑ̃ʃ/ · adj. · 白色</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">La neige est blanche.
+        <button onclick="speak(this)" data-text="La neige est blanche." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">雪是白色的。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#9ca3af">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#9ca3af"></span>
+          <span class="text-2xl font-bold text-gray-500">gris / grise</span>
+          <button onclick="speak(this)" data-text="gris" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/ɡʁi/ · /ɡʁiz/ · adj. · 灰色</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Le ciel est gris.
+        <button onclick="speak(this)" data-text="Le ciel est gris." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">天空是灰色的。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#f97316">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#f97316"></span>
+          <span class="text-2xl font-bold text-orange-500">orange</span>
+          <button onclick="speak(this)" data-text="orange" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/ɔʁɑ̃ʒ/ · adj. · 橘色（不變格）</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Une orange est orange.
+        <button onclick="speak(this)" data-text="Une orange est orange." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">橘子是橘色的。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#8b5cf6">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#8b5cf6"></span>
+          <span class="text-2xl font-bold text-purple-600">violet / violette</span>
+          <button onclick="speak(this)" data-text="violet" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/vjɔlɛ/ · /vjɔlɛt/ · adj. · 紫色</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">Elle aime le violet.
+        <button onclick="speak(this)" data-text="Elle aime le violet." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">她喜歡紫色。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4" style="border-color:#ec4899">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="color-dot" style="background:#ec4899"></span>
+          <span class="text-2xl font-bold text-pink-500">rose</span>
+          <button onclick="speak(this)" data-text="rose" class="speak-btn ml-2">🔊</button>
+          <div class="text-sm text-gray-500 mt-1">/ʁoz/ · adj. · 粉紅色（陰陽同形）</div>
+        </div>
+      </div>
+      <div class="mt-2 text-gray-700 text-sm">La fleur est rose.
+        <button onclick="speak(this)" data-text="La fleur est rose." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">花是粉紅色的。</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 陰陽性變化表 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">⚖️ 形容詞陰陽性變化</h2>
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+    <table class="w-full text-center">
+      <thead class="bg-indigo-600 text-white">
+        <tr>
+          <th class="py-2 px-3">顏色</th>
+          <th class="py-2 px-3">陽性（m.）</th>
+          <th class="py-2 px-3">陰性（f.）</th>
+          <th class="py-2 px-3">規則</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hover:bg-gray-50"><td class="py-2 border-b"><span class="color-dot" style="background:#ef4444"></span>紅</td><td class="py-2 border-b font-semibold text-red-600">rouge</td><td class="py-2 border-b font-semibold text-red-600">rouge</td><td class="py-2 border-b text-gray-500 text-sm">陰陽同形</td></tr>
+        <tr class="bg-gray-50 hover:bg-gray-100"><td class="py-2 border-b"><span class="color-dot" style="background:#3b82f6"></span>藍</td><td class="py-2 border-b font-semibold text-blue-600">bleu</td><td class="py-2 border-b font-semibold text-blue-600">bleue</td><td class="py-2 border-b text-gray-500 text-sm">+ e</td></tr>
+        <tr class="hover:bg-gray-50"><td class="py-2 border-b"><span class="color-dot" style="background:#22c55e"></span>綠</td><td class="py-2 border-b font-semibold text-green-600">vert</td><td class="py-2 border-b font-semibold text-green-600">verte</td><td class="py-2 border-b text-gray-500 text-sm">+ e（t發音）</td></tr>
+        <tr class="bg-gray-50 hover:bg-gray-100"><td class="py-2 border-b"><span class="color-dot" style="background:#1f2937"></span>黑</td><td class="py-2 border-b font-semibold text-gray-800">noir</td><td class="py-2 border-b font-semibold text-gray-800">noire</td><td class="py-2 border-b text-gray-500 text-sm">+ e</td></tr>
+        <tr class="hover:bg-gray-50"><td class="py-2 border-b"><span class="color-dot" style="background:#f9fafb; border:2px solid #d1d5db"></span>白</td><td class="py-2 border-b font-semibold text-gray-600">blanc</td><td class="py-2 border-b font-semibold text-gray-600">blanche</td><td class="py-2 border-b text-gray-500 text-sm">不規則 -che</td></tr>
+        <tr class="bg-gray-50 hover:bg-gray-100"><td class="py-2 border-b"><span class="color-dot" style="background:#9ca3af"></span>灰</td><td class="py-2 border-b font-semibold text-gray-500">gris</td><td class="py-2 border-b font-semibold text-gray-500">grise</td><td class="py-2 border-b text-gray-500 text-sm">+ e（s發音）</td></tr>
+        <tr class="hover:bg-gray-50"><td class="py-2"><span class="color-dot" style="background:#8b5cf6"></span>紫</td><td class="py-2 font-semibold text-purple-600">violet</td><td class="py-2 font-semibold text-purple-600">violette</td><td class="py-2 text-gray-500 text-sm">輔音雙寫 + e</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 基礎語句 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">💬 基礎語句</h2>
+  <div class="space-y-3">
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">De quelle couleur est ce livre ?
+        <button onclick="speak(this)" data-text="De quelle couleur est ce livre ?" class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/də kɛl kulœʁ ɛ sə livʁ/</div>
+      <div class="text-gray-700">這本書是什麼顏色？</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">Mon manteau est bleu.
+        <button onclick="speak(this)" data-text="Mon manteau est bleu." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/mɔ̃ mɑ̃to ɛ blø/</div>
+      <div class="text-gray-700">我的外套是藍色的。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">J'aime la couleur verte.
+        <button onclick="speak(this)" data-text="J'aime la couleur verte." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/ʒɛm la kulœʁ vɛʁt/</div>
+      <div class="text-gray-700">我喜歡綠色。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">Sa robe est rouge et blanche.
+        <button onclick="speak(this)" data-text="Sa robe est rouge et blanche." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/sa ʁɔb ɛ ʁuʒ e blɑ̃ʃ/</div>
+      <div class="text-gray-700">她的裙子是紅白色的。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-indigo-700 text-lg">Les yeux sont noirs.
+        <button onclick="speak(this)" data-text="Les yeux sont noirs." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/le zjø sɔ̃ nwaʁ/</div>
+      <div class="text-gray-700">眼睛是黑色的。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 文法提示 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">📝 文法小提示</h2>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
+      <div class="font-bold text-indigo-700 mb-1">形容詞配合名詞性別</div>
+      <div class="text-sm text-gray-700">un chat noir ✅<br>une robe noire ✅<br>形容詞要與名詞的性別一致</div>
+    </div>
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
+      <div class="font-bold text-indigo-700 mb-1">顏色形容詞放名詞後</div>
+      <div class="text-sm text-gray-700">un livre rouge（紅色的書）<br>une robe bleue（藍色的裙子）<br>顏色詞一般放在名詞之後</div>
+    </div>
+    <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
+      <div class="font-bold text-indigo-700 mb-1">不規則變化記住</div>
+      <div class="text-sm text-gray-700">blanc → blanche（加-che）<br>violet → violette（輔音雙寫）<br>orange / rose 陰陽同形</div>
+    </div>
+  </div>
+</section>
+
+<!-- 配對遊戲 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">🎮 配對遊戲</h2>
+  <div class="bg-white rounded-xl shadow p-6">
+    <div class="text-center mb-4">
+      <span class="font-bold text-indigo-700">進度：</span>
+      <span id="matchScore" class="font-bold text-green-600">0/10</span>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-2">
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="rouge" onclick="selectMatch(this,'left')">rouge</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="violet" onclick="selectMatch(this,'left')">violet</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="vert" onclick="selectMatch(this,'left')">vert</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="noir" onclick="selectMatch(this,'left')">noir</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="bleu" onclick="selectMatch(this,'left')">bleu</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="orange" onclick="selectMatch(this,'left')">orange</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="blanc" onclick="selectMatch(this,'left')">blanc</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="jaune" onclick="selectMatch(this,'left')">jaune</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="rose" onclick="selectMatch(this,'left')">rose</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-indigo-200 bg-indigo-50 font-semibold text-indigo-800" data-pair="gris" onclick="selectMatch(this,'left')">gris</button>
+      </div>
+      <div class="space-y-2">
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="bleu" onclick="selectMatch(this,'right')">藍色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="blanc" onclick="selectMatch(this,'right')">白色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="rouge" onclick="selectMatch(this,'right')">紅色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="gris" onclick="selectMatch(this,'right')">灰色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="jaune" onclick="selectMatch(this,'right')">黃色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="noir" onclick="selectMatch(this,'right')">黑色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="vert" onclick="selectMatch(this,'right')">綠色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="orange" onclick="selectMatch(this,'right')">橘色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="violet" onclick="selectMatch(this,'right')">紫色</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="rose" onclick="selectMatch(this,'right')">粉紅色</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 快問快答 -->
+<section>
+  <h2 class="text-2xl font-bold text-indigo-800 mb-4 border-b-2 border-indigo-200 pb-2">⚡ 快問快答</h2>
+  <div class="bg-white rounded-xl shadow p-6" id="quizBox">
+    <div id="quizProgress" class="text-sm text-gray-500 mb-2">第 1 / 10 題</div>
+    <div id="quizQuestion" class="text-xl font-bold text-indigo-800 mb-4"></div>
+    <div id="quizOptions" class="grid grid-cols-2 gap-3"></div>
+    <div id="quizResult" class="hidden mt-4 text-center">
+      <div id="quizScore" class="text-3xl font-black text-indigo-700 mb-2"></div>
+      <div id="quizComment" class="text-gray-600 mb-4"></div>
+      <button onclick="restartQuiz()" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700">重新挑戰</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="text-center py-6 text-gray-400 text-sm">法文每日課程 · 第3課 顏色 · 修正版</footer>
+
+<script>
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+var selectedLeft = null, selectedRight = null, matchCount = 0;
+function selectMatch(btn, side) {
+  if (btn.classList.contains('correct')) return;
+  if (side === 'left') {
+    document.querySelectorAll('#leftCol .match-btn.selected, .match-btn.selected').forEach(function(b) { if(!b.classList.contains('correct')) b.classList.remove('selected'); });
+    // deselect same side
+    btn.parentElement.querySelectorAll('.match-btn.selected').forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected'); selectedLeft = btn;
+  } else {
+    btn.parentElement.querySelectorAll('.match-btn.selected').forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected'); selectedRight = btn;
+  }
+  if (selectedLeft && selectedRight) {
+    if (selectedLeft.dataset.pair === selectedRight.dataset.pair) {
+      selectedLeft.classList.remove('selected'); selectedLeft.classList.add('correct');
+      selectedRight.classList.remove('selected'); selectedRight.classList.add('correct');
+      matchCount++; document.getElementById('matchScore').textContent = matchCount + '/10';
+      selectedLeft = null; selectedRight = null;
+    } else {
+      var l = selectedLeft, r = selectedRight;
+      l.classList.add('wrong'); r.classList.add('wrong');
+      setTimeout(function() { l.classList.remove('wrong','selected'); r.classList.remove('wrong','selected'); }, 600);
+      selectedLeft = null; selectedRight = null;
+    }
+  }
+}
+
+var questions = [
+  {q: '"vert" 的陰性是？', opts: ['verte','verts','verted','vertain'], ans: 0},
+  {q: '"Le ciel est ___"（藍色）', opts: ['rouge','bleu','vert','noir'], ans: 1},
+  {q: 'blanc 的陰性？', opts: ['blance','blanche','blanci','blancs'], ans: 1},
+  {q: '黑色法文？', opts: ['gris','blanc','noir','brun'], ans: 2},
+  {q: '"La rose est ___"（粉紅）', opts: ['rouge','rose','violet','jaune'], ans: 1},
+  {q: 'violet 陰性？', opts: ['violete','violets','violette','violet'], ans: 2},
+  {q: '黃色 IPA？', opts: ['/ʒon/','/jon/','/ʒɔn/','/jaun/'], ans: 0},
+  {q: 'gris 的陰性？', opts: ['grisse','grise','griset','gris'], ans: 1},
+  {q: '法文顏色形容詞放名詞', opts: ['前面','後面','都可以','以上皆非'], ans: 1},
+  {q: '橘色法文？', opts: ['jaune','rose','orange','violet'], ans: 2}
+];
+var qIdx = 0, score = 0;
+function renderQuiz() {
+  if (qIdx >= questions.length) {
+    document.getElementById('quizProgress').classList.add('hidden');
+    document.getElementById('quizQuestion').classList.add('hidden');
+    document.getElementById('quizOptions').classList.add('hidden');
+    document.getElementById('quizResult').classList.remove('hidden');
+    document.getElementById('quizScore').textContent = score + ' / ' + questions.length + ' 分';
+    var pct = score / questions.length;
+    document.getElementById('quizComment').textContent = pct >= 0.9 ? '完美！！🎉' : pct >= 0.7 ? '很不錯！👍' : pct >= 0.5 ? '繼續加油！💪' : '多多練習！📚';
+    return;
+  }
+  var q = questions[qIdx];
+  document.getElementById('quizProgress').textContent = '第 ' + (qIdx+1) + ' / ' + questions.length + ' 題';
+  document.getElementById('quizQuestion').textContent = q.q;
+  var html = '';
+  q.opts.forEach(function(o, i) {
+    html += '<button class="quiz-option border-2 border-gray-200 rounded-lg py-3 px-4 text-left font-medium" onclick="answerQuiz(this,' + i + ',' + q.ans + ')">' + o + '</button>';
+  });
+  document.getElementById('quizOptions').innerHTML = html;
+}
+function answerQuiz(btn, chosen, correct) {
+  document.querySelectorAll('.quiz-option').forEach(function(b){ b.onclick = null; });
+  if (chosen === correct) { btn.classList.add('correct'); score++; }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.quiz-option')[correct].classList.add('correct'); }
+  setTimeout(function(){ qIdx++; renderQuiz(); }, 1500);
+}
+function restartQuiz() {
+  qIdx = 0; score = 0;
+  ['quizProgress','quizQuestion','quizOptions'].forEach(function(id){ document.getElementById(id).classList.remove('hidden'); });
+  document.getElementById('quizResult').classList.add('hidden');
+  renderQuiz();
+}
+renderQuiz();
+</script>
+</body>
+</html>

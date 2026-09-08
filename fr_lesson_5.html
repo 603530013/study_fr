@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5課：食物與飲料</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .card { transition: transform 0.2s; }
+  .card:hover { transform: translateY(-2px); }
+  .match-btn { transition: all 0.2s; cursor: pointer; }
+  .match-btn.selected { background-color: #3b82f6; color: white; border-color: #2563eb; }
+  .match-btn.correct { background-color: #22c55e; color: white; border-color: #16a34a; pointer-events: none; }
+  .match-btn.wrong { background-color: #ef4444; color: white; border-color: #dc2626; }
+  .quiz-option { transition: all 0.2s; cursor: pointer; }
+  .quiz-option:hover { background-color: #fef9c3; }
+  .quiz-option.correct { background-color: #dcfce7 !important; border-color: #22c55e !important; }
+  .quiz-option.wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; }
+  .speak-btn { transition: all 0.15s; }
+  .speak-btn:hover { transform: scale(1.1); }
+  .speak-btn:active { transform: scale(0.95); }
+</style>
+</head>
+<body class="bg-orange-50 min-h-screen">
+
+<!-- 標題區 -->
+<header style="background: linear-gradient(135deg, #002395 0%, #ffffff 50%, #ED2939 100%);" class="text-center py-10 px-4 shadow-lg">
+  <h1 class="text-4xl font-bold text-indigo-900 drop-shadow">🇫🇷 法文每日課程</h1>
+  <h2 class="text-2xl font-semibold text-indigo-800 mt-2">第5課・食物與飲料</h2>
+  <p class="text-indigo-700 mt-1">2026-09-08（修正版）・La Nourriture et les Boissons</p>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
+
+<!-- 單字卡 -->
+<section>
+  <h2 class="text-2xl font-bold text-orange-800 mb-4 border-b-2 border-orange-300 pb-2">📚 今日單字</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">🍞</div>
+      <span class="text-2xl font-bold text-orange-700">le pain</span>
+      <button onclick="speak(this)" data-text="le pain" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə pɛ̃/ · n.m. · 麵包</div>
+      <div class="mt-2 text-gray-700 text-sm">Je mange du pain le matin.
+        <button onclick="speak(this)" data-text="Je mange du pain le matin." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我早上吃麵包。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">🧀</div>
+      <span class="text-2xl font-bold text-orange-700">le fromage</span>
+      <button onclick="speak(this)" data-text="le fromage" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə fʁɔmaʒ/ · n.m. · 起司</div>
+      <div class="mt-2 text-gray-700 text-sm">J'aime beaucoup le fromage.
+        <button onclick="speak(this)" data-text="J'aime beaucoup le fromage." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我非常喜歡起司。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">💧</div>
+      <span class="text-2xl font-bold text-orange-700">l'eau</span>
+      <button onclick="speak(this)" data-text="l'eau" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lo/ · n.f. · 水</div>
+      <div class="mt-2 text-gray-700 text-sm">Je bois de l'eau chaque jour.
+        <button onclick="speak(this)" data-text="Je bois de l'eau chaque jour." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我每天喝水。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">🥛</div>
+      <span class="text-2xl font-bold text-orange-700">le lait</span>
+      <button onclick="speak(this)" data-text="le lait" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə lɛ/ · n.m. · 牛奶</div>
+      <div class="mt-2 text-gray-700 text-sm">Je prends du lait dans mon café.
+        <button onclick="speak(this)" data-text="Je prends du lait dans mon café." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我在咖啡裡加牛奶。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">☕</div>
+      <span class="text-2xl font-bold text-orange-700">le café</span>
+      <button onclick="speak(this)" data-text="le café" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə kafe/ · n.m. · 咖啡</div>
+      <div class="mt-2 text-gray-700 text-sm">Un café, s'il vous plaît.
+        <button onclick="speak(this)" data-text="Un café, s'il vous plaît." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">請給我一杯咖啡。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">🍷</div>
+      <span class="text-2xl font-bold text-orange-700">le vin</span>
+      <button onclick="speak(this)" data-text="le vin" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə vɛ̃/ · n.m. · 葡萄酒</div>
+      <div class="mt-2 text-gray-700 text-sm">Ce vin est délicieux.
+        <button onclick="speak(this)" data-text="Ce vin est délicieux." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">這葡萄酒很好喝。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">🥩</div>
+      <span class="text-2xl font-bold text-orange-700">la viande</span>
+      <button onclick="speak(this)" data-text="la viande" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/la vjɑ̃d/ · n.f. · 肉</div>
+      <div class="mt-2 text-gray-700 text-sm">J'aime la viande rouge.
+        <button onclick="speak(this)" data-text="J'aime la viande rouge." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我喜歡紅肉。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">🥦</div>
+      <span class="text-2xl font-bold text-orange-700">le légume</span>
+      <button onclick="speak(this)" data-text="le légume" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə leɡym/ · n.m. · 蔬菜</div>
+      <div class="mt-2 text-gray-700 text-sm">Je mange des légumes chaque jour.
+        <button onclick="speak(this)" data-text="Je mange des légumes chaque jour." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">我每天吃蔬菜。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">🍎</div>
+      <span class="text-2xl font-bold text-orange-700">le fruit</span>
+      <button onclick="speak(this)" data-text="le fruit" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə fʁɥi/ · n.m. · 水果</div>
+      <div class="mt-2 text-gray-700 text-sm">Les fruits sont bons pour la santé.
+        <button onclick="speak(this)" data-text="Les fruits sont bons pour la santé." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">水果對健康有益。</div>
+    </div>
+
+    <div class="card bg-white rounded-xl shadow p-4 border-l-4 border-orange-400">
+      <div class="text-3xl mb-1">🎂</div>
+      <span class="text-2xl font-bold text-orange-700">le gâteau</span>
+      <button onclick="speak(this)" data-text="le gâteau" class="speak-btn ml-2">🔊</button>
+      <div class="text-sm text-gray-500 mt-1">/lə ɡɑto/ · n.m. · 蛋糕</div>
+      <div class="mt-2 text-gray-700 text-sm">Ce gâteau est très bon.
+        <button onclick="speak(this)" data-text="Ce gâteau est très bon." class="speak-btn ml-1">🔊</button>
+      </div>
+      <div class="text-gray-500 text-xs">這個蛋糕很好吃。</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 部分冠詞表 -->
+<section>
+  <h2 class="text-2xl font-bold text-orange-800 mb-4 border-b-2 border-orange-300 pb-2">📋 部分冠詞（Articles partitifs）</h2>
+  <div class="bg-white rounded-xl shadow overflow-hidden">
+    <table class="w-full text-center">
+      <thead class="bg-orange-500 text-white">
+        <tr>
+          <th class="py-2 px-3">情況</th>
+          <th class="py-2 px-3">冠詞</th>
+          <th class="py-2 px-3">例子</th>
+          <th class="py-2 px-3">發音</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="hover:bg-orange-50"><td class="py-2 border-b font-semibold text-orange-700">陽性名詞</td><td class="py-2 border-b font-bold text-lg">du</td><td class="py-2 border-b text-gray-600">Je mange du pain.</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="Je mange du pain." class="speak-btn">🔊</button></td></tr>
+        <tr class="bg-gray-50 hover:bg-orange-50"><td class="py-2 border-b font-semibold text-orange-700">陰性名詞</td><td class="py-2 border-b font-bold text-lg">de la</td><td class="py-2 border-b text-gray-600">Je mange de la viande.</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="Je mange de la viande." class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-orange-50"><td class="py-2 border-b font-semibold text-orange-700">母音開頭</td><td class="py-2 border-b font-bold text-lg">de l'</td><td class="py-2 border-b text-gray-600">Je bois de l'eau.</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="Je bois de l'eau." class="speak-btn">🔊</button></td></tr>
+        <tr class="bg-gray-50 hover:bg-orange-50"><td class="py-2 border-b font-semibold text-orange-700">複數</td><td class="py-2 border-b font-bold text-lg">des</td><td class="py-2 border-b text-gray-600">Je mange des légumes.</td><td class="py-2 border-b"><button onclick="speak(this)" data-text="Je mange des légumes." class="speak-btn">🔊</button></td></tr>
+        <tr class="hover:bg-orange-50"><td class="py-2 font-semibold text-orange-700">否定句</td><td class="py-2 font-bold text-lg">de / d'</td><td class="py-2 text-gray-600">Je ne mange pas de pain.</td><td class="py-2"><button onclick="speak(this)" data-text="Je ne mange pas de pain." class="speak-btn">🔊</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 基礎語句 -->
+<section>
+  <h2 class="text-2xl font-bold text-orange-800 mb-4 border-b-2 border-orange-300 pb-2">💬 基礎語句</h2>
+  <div class="space-y-3">
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-orange-700 text-lg">Je voudrais du pain, s'il vous plaît.
+        <button onclick="speak(this)" data-text="Je voudrais du pain, s'il vous plaît." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/ʒə vudʁɛ dy pɛ̃ sil vu plɛ/</div>
+      <div class="text-gray-700">請給我麵包。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-orange-700 text-lg">J'aime beaucoup le fromage.
+        <button onclick="speak(this)" data-text="J'aime beaucoup le fromage." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/ʒɛm boku lə fʁɔmaʒ/</div>
+      <div class="text-gray-700">我非常喜歡起司。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-orange-700 text-lg">Qu'est-ce que vous prenez ?
+        <button onclick="speak(this)" data-text="Qu'est-ce que vous prenez ?" class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/kɛs kə vu pʁəne/</div>
+      <div class="text-gray-700">您要點什麼？</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-orange-700 text-lg">Je ne mange pas de viande.
+        <button onclick="speak(this)" data-text="Je ne mange pas de viande." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/ʒə nə mɑ̃ʒ pa də vjɑ̃d/</div>
+      <div class="text-gray-700">我不吃肉。</div>
+    </div>
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="font-bold text-orange-700 text-lg">L'addition, s'il vous plaît.
+        <button onclick="speak(this)" data-text="L'addition, s'il vous plaît." class="speak-btn ml-2">🔊</button>
+      </div>
+      <div class="text-gray-500 text-sm">/ladisjɔ̃ sil vu plɛ/</div>
+      <div class="text-gray-700">請結帳。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 文法提示 -->
+<section>
+  <h2 class="text-2xl font-bold text-orange-800 mb-4 border-b-2 border-orange-300 pb-2">📝 文法小提示</h2>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="bg-orange-50 rounded-xl p-4 border border-orange-200">
+      <div class="font-bold text-orange-700 mb-1">部分冠詞表「一些」</div>
+      <div class="text-sm text-gray-700">Je bois du café.（我喝咖啡）<br>表示不定量的概念<br>不說 je bois le café（定冠詞）</div>
+    </div>
+    <div class="bg-orange-50 rounded-xl p-4 border border-orange-200">
+      <div class="font-bold text-orange-700 mb-1">否定句改成 de/d'</div>
+      <div class="text-sm text-gray-700">du café → pas de café<br>de la viande → pas de viande<br>de l'eau → pas d'eau</div>
+    </div>
+    <div class="bg-orange-50 rounded-xl p-4 border border-orange-200">
+      <div class="font-bold text-orange-700 mb-1">l'eau 是陰性</div>
+      <div class="text-sm text-gray-700">雖以母音開頭<br>仍需 de l'eau（部分冠詞）<br>pas d'eau（否定）</div>
+    </div>
+  </div>
+</section>
+
+<!-- 配對遊戲 -->
+<section>
+  <h2 class="text-2xl font-bold text-orange-800 mb-4 border-b-2 border-orange-300 pb-2">🎮 配對遊戲</h2>
+  <div class="bg-white rounded-xl shadow p-6">
+    <div class="text-center mb-4"><span class="font-bold text-orange-700">進度：</span><span id="matchScore" class="font-bold text-green-600">0/10</span></div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-2">
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="pain" onclick="selectMatch(this,'left')">le pain</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="vin" onclick="selectMatch(this,'left')">le vin</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="eau" onclick="selectMatch(this,'left')">l'eau</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="gateau" onclick="selectMatch(this,'left')">le gâteau</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="fromage" onclick="selectMatch(this,'left')">le fromage</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="legume" onclick="selectMatch(this,'left')">le légume</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="lait" onclick="selectMatch(this,'left')">le lait</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="viande" onclick="selectMatch(this,'left')">la viande</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="cafe" onclick="selectMatch(this,'left')">le café</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-orange-200 bg-orange-50 font-semibold text-orange-800" data-pair="fruit" onclick="selectMatch(this,'left')">le fruit</button>
+      </div>
+      <div class="space-y-2">
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="fromage" onclick="selectMatch(this,'right')">起司</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="lait" onclick="selectMatch(this,'right')">牛奶</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="pain" onclick="selectMatch(this,'right')">麵包</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="fruit" onclick="selectMatch(this,'right')">水果</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="viande" onclick="selectMatch(this,'right')">肉</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="cafe" onclick="selectMatch(this,'right')">咖啡</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="vin" onclick="selectMatch(this,'right')">葡萄酒</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="gateau" onclick="selectMatch(this,'right')">蛋糕</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="eau" onclick="selectMatch(this,'right')">水</button>
+        <button class="match-btn w-full py-2 px-3 rounded-lg border-2 border-rose-200 bg-rose-50 font-semibold text-rose-800" data-pair="legume" onclick="selectMatch(this,'right')">蔬菜</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 快問快答 -->
+<section>
+  <h2 class="text-2xl font-bold text-orange-800 mb-4 border-b-2 border-orange-300 pb-2">⚡ 快問快答</h2>
+  <div class="bg-white rounded-xl shadow p-6">
+    <div id="quizProgress" class="text-sm text-gray-500 mb-2">第 1 / 10 題</div>
+    <div id="quizQuestion" class="text-xl font-bold text-orange-800 mb-4"></div>
+    <div id="quizOptions" class="grid grid-cols-2 gap-3"></div>
+    <div id="quizResult" class="hidden mt-4 text-center">
+      <div id="quizScore" class="text-3xl font-black text-orange-700 mb-2"></div>
+      <div id="quizComment" class="text-gray-600 mb-4"></div>
+      <button onclick="restartQuiz()" class="bg-orange-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-orange-700">重新挑戰</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="text-center py-6 text-gray-400 text-sm">法文每日課程 · 第5課 食物與飲料 · 修正版</footer>
+
+<script>
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+var selectedLeft = null, selectedRight = null, matchCount = 0;
+function selectMatch(btn, side) {
+  if (btn.classList.contains('correct')) return;
+  btn.parentElement.querySelectorAll('.match-btn.selected').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  if (side === 'left') selectedLeft = btn; else selectedRight = btn;
+  if (selectedLeft && selectedRight) {
+    if (selectedLeft.dataset.pair === selectedRight.dataset.pair) {
+      selectedLeft.classList.remove('selected'); selectedLeft.classList.add('correct');
+      selectedRight.classList.remove('selected'); selectedRight.classList.add('correct');
+      matchCount++; document.getElementById('matchScore').textContent = matchCount + '/10';
+      selectedLeft = null; selectedRight = null;
+    } else {
+      var l = selectedLeft, r = selectedRight;
+      l.classList.add('wrong'); r.classList.add('wrong');
+      setTimeout(function(){ l.classList.remove('wrong','selected'); r.classList.remove('wrong','selected'); }, 600);
+      selectedLeft = null; selectedRight = null;
+    }
+  }
+}
+
+var questions = [
+  {q: '"du" 用於？', opts: ['陰性名詞','陽性名詞','複數','否定'], ans: 1},
+  {q: '「水」法文？', opts: ['le lait','l\'eau','le vin','le café'], ans: 1},
+  {q: '否定句冠詞變成？', opts: ['du→du','du→de','du→des','不變'], ans: 1},
+  {q: '"le fromage" IPA？', opts: ['/fʁɔmaʒ/','/fromage/','/fʁɔmage/','/fʁɔmɑʒ/'], ans: 0},
+  {q: '「我想要咖啡」正確說法？', opts: ['Je voudrais du café.','Je voudrais le café.','Je voudrais de café.','Je voudrais des cafés.'], ans: 0},
+  {q: 'l\'eau 是？', opts: ['陽性','陰性','中性','複數'], ans: 1},
+  {q: '蔬菜複數的冠詞？', opts: ['du légume','de la légume','des légumes','de légumes'], ans: 2},
+  {q: '"Un café, s\'il vous plaît." 意思？', opts: ['我喜歡咖啡','請給我一杯咖啡','這是咖啡','我不喝咖啡'], ans: 1},
+  {q: '葡萄酒法文？', opts: ['le lait','l\'eau','le vin','le café'], ans: 2},
+  {q: '"Je ne mange pas ___ viande."', opts: ['du','de la','de','des'], ans: 2}
+];
+var qIdx = 0, score = 0;
+
+function renderQuiz() {
+  if (qIdx >= questions.length) {
+    ['quizProgress','quizQuestion','quizOptions'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); });
+    document.getElementById('quizResult').classList.remove('hidden');
+    document.getElementById('quizScore').textContent = score + ' / ' + questions.length + ' 分';
+    var pct = score / questions.length;
+    document.getElementById('quizComment').textContent = pct >= 0.9 ? '完美！！🎉' : pct >= 0.7 ? '很不錯！👍' : pct >= 0.5 ? '繼續加油！💪' : '多多練習！📚';
+    return;
+  }
+  var q = questions[qIdx];
+  document.getElementById('quizProgress').textContent = '第 ' + (qIdx+1) + ' / ' + questions.length + ' 題';
+  document.getElementById('quizQuestion').textContent = q.q;
+  document.getElementById('quizOptions').innerHTML = q.opts.map(function(o,i){
+    return '<button class="quiz-option border-2 border-gray-200 rounded-lg py-3 px-4 text-left font-medium" onclick="answerQuiz(this,' + i + ',' + q.ans + ')">' + o + '</button>';
+  }).join('');
+}
+function answerQuiz(btn, chosen, correct) {
+  document.querySelectorAll('.quiz-option').forEach(function(b){ b.onclick = null; });
+  if (chosen === correct) { btn.classList.add('correct'); score++; }
+  else { btn.classList.add('wrong'); document.querySelectorAll('.quiz-option')[correct].classList.add('correct'); }
+  setTimeout(function(){ qIdx++; renderQuiz(); }, 1500);
+}
+function restartQuiz() {
+  qIdx = 0; score = 0;
+  ['quizProgress','quizQuestion','quizOptions'].forEach(function(id){ document.getElementById(id).classList.remove('hidden'); });
+  document.getElementById('quizResult').classList.add('hidden');
+  renderQuiz();
+}
+renderQuiz();
+</script>
+</body>
+</html>
