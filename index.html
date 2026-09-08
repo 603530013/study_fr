@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法文課程月曆</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .day-cell { min-height: 62px; cursor: pointer; transition: all 0.15s; }
+  .day-cell:hover { filter: brightness(0.92); }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<div class="bg-gradient-to-r from-blue-900 via-white to-red-600 p-6 text-center shadow">
+  <p class="text-blue-900 font-semibold text-sm">🇫🇷 French Study Planner</p>
+  <h1 class="text-2xl font-bold text-blue-900">法文課程月曆</h1>
+</div>
+
+<div class="max-w-3xl mx-auto p-4">
+
+  <!-- 月份導覽 -->
+  <div class="flex items-center justify-between mb-3 bg-white rounded-2xl shadow px-6 py-3">
+    <button onclick="prevMonth()" class="text-blue-600 font-bold text-2xl hover:text-blue-800 w-8">‹</button>
+    <h2 class="text-lg font-bold text-gray-800" id="month-title"></h2>
+    <button onclick="nextMonth()" class="text-blue-600 font-bold text-2xl hover:text-blue-800 w-8">›</button>
+  </div>
+
+  <!-- 圖例 -->
+  <div class="flex gap-3 mb-3 flex-wrap text-xs px-1">
+    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-blue-500 inline-block"></span>已生成課程</span>
+    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-blue-200 inline-block"></span>未來課程</span>
+    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-400 inline-block"></span>已生成複習</span>
+    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-100 inline-block"></span>未來複習</span>
+    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-green-500 inline-block"></span>今天</span>
+  </div>
+
+  <!-- 日曆 -->
+  <div class="bg-white rounded-2xl shadow overflow-hidden mb-4">
+    <div class="grid grid-cols-7 bg-blue-900 text-white text-center text-sm font-semibold">
+      <div class="py-2">日</div><div class="py-2">一</div><div class="py-2">二</div>
+      <div class="py-2">三</div><div class="py-2">四</div><div class="py-2">五</div><div class="py-2">六</div>
+    </div>
+    <div class="grid grid-cols-7 gap-px bg-gray-200" id="calendar-grid"></div>
+  </div>
+
+  <!-- 詳情面板 -->
+  <div id="detail-panel" class="hidden bg-white rounded-2xl shadow p-6 mb-8">
+    <div id="detail-content"></div>
+  </div>
+
+</div>
+
+<script>
+var START = new Date(2026, 8, 4); // month is 0-indexed: 8 = September
+
+var LESSON_THEMES = [
+  '', // padding for 1-based index
+  '打招呼與基本禮貌用語',
+  '數字 0-20',
+  '顏色',
+  '家庭成員',
+  '食物與飲料',
+  '星期與月份',
+  '身體部位',
+  '衣物',
+  '情緒與感受',
+  '動詞 être（是）',
+  '動詞 avoir（有）',
+  '動詞 aller（去）',
+  '動詞 faire（做）',
+  '動詞 vouloir/pouvoir',
+  '地點與方向',
+  '天氣與季節',
+  '時間表達',
+  '購物用語',
+  '餐廳點餐用語',
+  '複習與綜合練習'
+];
+
+function toDateOnly(d) {
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function padZ(n) { return String(n).padStart(2, '0'); }
+
+function getLessonInfo(date) {
+  var d = toDateOnly(date);
+  var s = toDateOnly(START);
+  var N = Math.round((d - s) / 86400000);
+  if (N < 0) return null;
+
+  var y = d.getFullYear();
+  var mo = padZ(d.getMonth() + 1);
+  var dd = padZ(d.getDate());
+  var dateStr = '' + y + mo + dd;
+
+  if (N % 11 === 10) {
+    var r = Math.floor(N / 11) + 1;
+    var s1 = (r - 1) * 10 + 1;
+    var s2 = r * 10;
+    var themes = [];
+    for (var i = 0; i < 10; i++) {
+      var ln = s1 + i;
+      var ti = ((ln - 1) % 20) + 1;
+      themes.push({ num: ln, theme: LESSON_THEMES[ti] || ('第' + ln + '課') });
+    }
+    return {
+      type: 'review',
+      num: r,
+      label: 'R' + r,
+      theme: '第' + s1 + '～' + s2 + '課總複習',
+      startLesson: s1,
+      endLesson: s2,
+      themes: themes,
+      file: 'fr_review_' + r + '_' + dateStr + '.html',
+      dateStr: dateStr
+    };
+  } else {
+    var lessonNum = Math.floor(N / 11) * 10 + (N % 11) + 1;
+    var themeIdx = ((lessonNum - 1) % 20) + 1;
+    return {
+      type: 'lesson',
+      num: lessonNum,
+      label: 'L' + lessonNum,
+      theme: LESSON_THEMES[themeIdx] || ('第' + lessonNum + '課'),
+      file: 'fr_lesson_' + lessonNum + '_' + dateStr + '.html',
+      dateStr: dateStr
+    };
+  }
+}
+
+var curYear, curMonth, selectedDate;
+
+function init() {
+  var now = new Date();
+  curYear = now.getFullYear();
+  curMonth = now.getMonth();
+  render();
+}
+
+function render() {
+  var today = toDateOnly(new Date());
+  var firstDay = new Date(curYear, curMonth, 1);
+  var lastDay = new Date(curYear, curMonth + 1, 0);
+  var monthNames = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  document.getElementById('month-title').textContent = curYear + ' 年 ' + monthNames[curMonth];
+
+  var html = '';
+
+  // empty cells before 1st
+  for (var i = 0; i < firstDay.getDay(); i++) {
+    html += '<div class="bg-gray-50 min-h-16 p-1"></div>';
+  }
+
+  for (var day = 1; day <= lastDay.getDate(); day++) {
+    var d = new Date(curYear, curMonth, day);
+    var info = getLessonInfo(d);
+    var isToday = toDateOnly(d).getTime() === today.getTime();
+    var isPast = toDateOnly(d) <= today;
+    var isSel = selectedDate && toDateOnly(d).getTime() === toDateOnly(selectedDate).getTime();
+
+    var bg, labelHtml;
+    if (isToday) {
+      bg = 'bg-green-500 text-white';
+    } else if (!info) {
+      bg = 'bg-gray-50 text-gray-300';
+    } else if (info.type === 'review') {
+      bg = isPast ? 'bg-amber-400 text-white' : 'bg-amber-100 text-amber-700';
+    } else {
+      bg = isPast ? 'bg-blue-500 text-white' : 'bg-blue-100 text-blue-600';
+    }
+
+    var ring = isSel ? ' ring-2 ring-gray-800 ring-inset z-10 relative' : '';
+    var badge = info ? '<span class="text-xs font-bold leading-tight">' + info.label + '</span>' : '';
+
+    html += '<div class="day-cell ' + bg + ring + ' p-1 flex flex-col items-center pt-2 select-none"' +
+      (info ? ' onclick="selectDay(' + curYear + ',' + curMonth + ',' + day + ')"' : '') + '>' +
+      '<span class="text-sm font-semibold">' + day + '</span>' +
+      badge +
+      '</div>';
+  }
+
+  document.getElementById('calendar-grid').innerHTML = html;
+
+  if (selectedDate) renderDetail(selectedDate);
+}
+
+function selectDay(y, m, d) {
+  selectedDate = new Date(y, m, d);
+  render();
+  document.getElementById('detail-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderDetail(date) {
+  var panel = document.getElementById('detail-panel');
+  var content = document.getElementById('detail-content');
+  var info = getLessonInfo(date);
+  var today = toDateOnly(new Date());
+  var isPast = toDateOnly(date) <= today;
+  var dateLabel = date.getFullYear() + '/' + padZ(date.getMonth() + 1) + '/' + padZ(date.getDate());
+
+  if (!info) {
+    content.innerHTML = '<p class="text-gray-500">📅 ' + dateLabel + '：課程尚未開始（從 2026/09/04 起）</p>';
+    panel.classList.remove('hidden');
+    return;
+  }
+
+  var html = '';
+  if (info.type === 'lesson') {
+    var badgeColor = isPast ? 'bg-blue-500' : 'bg-blue-300';
+    var linkHtml = isPast
+      ? '<a href="' + info.file + '" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-xl transition">📖 開始學習 →</a>'
+      : '<p class="text-gray-400 text-sm">⏰ 課程將於此日生成並寄送到信箱</p><p class="text-gray-400 text-xs mt-1">檔名：' + info.file + '</p>';
+    html = '<div class="flex items-center gap-3 mb-4">' +
+      '<span class="px-3 py-1 rounded-full text-white font-bold text-sm ' + badgeColor + '">' + info.label + '</span>' +
+      '<div><p class="text-xs text-gray-400">' + dateLabel + '</p>' +
+      '<p class="font-bold text-gray-800 text-xl">第' + info.num + '課：' + info.theme + '</p></div>' +
+      '</div>' + linkHtml;
+
+  } else {
+    var badgeColor = isPast ? 'bg-amber-500' : 'bg-amber-300';
+    var linkHtml = isPast
+      ? '<a href="' + info.file + '" class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-semibold px-5 py-2 rounded-xl transition">🏆 進入複習 →</a>'
+      : '<p class="text-gray-400 text-sm">⏰ 複習課將於此日生成並寄送到信箱</p>';
+    html = '<div class="flex items-center gap-3 mb-4">' +
+      '<span class="px-3 py-1 rounded-full text-white font-bold text-sm ' + badgeColor + '">' + info.label + '</span>' +
+      '<div><p class="text-xs text-gray-400">' + dateLabel + '</p>' +
+      '<p class="font-bold text-gray-800 text-xl">' + info.theme + '</p></div>' +
+      '</div>' +
+      '<div class="grid grid-cols-2 gap-2 mb-4">';
+    info.themes.forEach(function(t) {
+      html += '<div class="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">' +
+        '<span class="font-semibold text-amber-700 text-sm">第' + t.num + '課</span>' +
+        '<span class="text-gray-600 text-xs block">' + t.theme + '</span>' +
+        '</div>';
+    });
+    html += '</div>' + linkHtml;
+  }
+
+  content.innerHTML = html;
+  panel.classList.remove('hidden');
+}
+
+function prevMonth() {
+  curMonth--;
+  if (curMonth < 0) { curMonth = 11; curYear--; }
+  render();
+}
+function nextMonth() {
+  curMonth++;
+  if (curMonth > 11) { curMonth = 0; curYear++; }
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
