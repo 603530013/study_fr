@@ -1,354 +1,499 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>法文第6課：星期與月份</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Segoe UI', system-ui, sans-serif; }
-    .card-hover { transition: all 0.3s; }
-    .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,35,0.12); }
-    .speak-btn { cursor: pointer; transition: transform 0.1s, background 0.2s; }
-    .speak-btn:active { transform: scale(0.88); }
-    .match-correct { background-color: #22c55e !important; color: white !important; border-color: #16a34a !important; pointer-events: none; }
-    .match-wrong { animation: flash-red 0.5s; }
-    @keyframes flash-red {
-      0%,100% { background-color: #f3f4f6; color: #374151; }
-      30%,70% { background-color: #ef4444; color: white; }
-    }
-    .match-selected { border-color: #3b82f6 !important; background-color: #dbeafe !important; box-shadow: 0 0 0 3px #93c5fd; }
-    .opt-correct { background-color: #22c55e !important; color: white !important; border-color: #16a34a !important; }
-    .opt-wrong   { background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法文第6課：星期與月份</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.speak-btn{cursor:pointer;transition:transform 0.1s}.speak-btn:hover{transform:scale(1.1)}
+.vocab-card{transition:box-shadow 0.2s}.vocab-card:hover{box-shadow:0 8px 25px rgba(0,0,0,0.15)}
+.match-item{cursor:pointer;transition:all 0.2s}
+.match-item.selected{border-color:#3b82f6!important;background:#eff6ff!important}
+.match-item.correct{border-color:#22c55e!important;background:#f0fdf4!important;pointer-events:none}
+.match-item.wrong{border-color:#ef4444!important;background:#fef2f2!important;animation:flash 0.5s}
+@keyframes flash{0%,100%{opacity:1}50%{opacity:0.3}}
+.quiz-option{transition:all 0.2s;text-align:left}
+.quiz-option.correct-ans{background:#22c55e!important;color:white!important;border-color:#22c55e!important}
+.quiz-option.wrong-ans{background:#ef4444!important;color:white!important;border-color:#ef4444!important}
+.quiz-option:disabled{cursor:not-allowed;opacity:0.85}
+.ipa{font-family:'Lucida Sans Unicode','Arial Unicode MS',sans-serif}
+table th{background:#1e40af;color:white}
+</style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-100 min-h-screen">
 
-<!-- ===== HEADER ===== -->
-<div style="background: linear-gradient(135deg, #002395 0%, #ffffff 50%, #ED2939 100%); padding: 2.5rem 1rem; text-align:center;">
-  <div class="max-w-3xl mx-auto">
-    <div style="font-size:4rem; margin-bottom:0.5rem;">🇫🇷</div>
-    <h1 style="font-size:2.2rem; font-weight:800; color:#002395; margin:0 0 0.3rem 0; text-shadow: 0 1px 3px rgba(0,0,0,0.08);">第6課：星期與月份</h1>
-    <p style="font-size:1.1rem; color:#374151; font-style:italic; margin:0.2rem 0;">Les jours de la semaine et les mois</p>
-    <p style="color:#6b7280; margin-top:0.4rem;">2026年9月9日</p>
+<!-- Header -->
+<header style="background:linear-gradient(135deg,#002395 0%,#002395 33%,#ffffff 33%,#ffffff 67%,#ED2939 67%)" class="py-12 shadow-lg">
+  <div class="bg-white bg-opacity-95 mx-4 md:mx-auto max-w-4xl rounded-xl p-8 shadow text-center">
+    <div class="text-5xl mb-3">🇫🇷</div>
+    <h1 class="text-3xl font-bold text-blue-900">第6課：星期與月份</h1>
+    <p class="text-gray-500 mt-1 ipa">Les jours de la semaine et les mois de l'année</p>
+    <div class="flex justify-center gap-6 mt-4 text-sm text-gray-400">
+      <span>📅 2026-09-09</span><span>📚 Leçon 6</span><span>🎯 星期 + 月份</span>
+    </div>
   </div>
-</div>
+</header>
 
-<div class="max-w-3xl mx-auto px-4 py-8 space-y-12">
+<main class="max-w-4xl mx-auto px-4 py-8 space-y-10">
 
-<!-- ===== VOCABULARY ===== -->
+<!-- 1. Vocabulary -->
 <section>
-  <h2 class="text-2xl font-bold text-blue-900 mb-5 flex items-center gap-2">📚 今日單字</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="vocab-grid"></div>
+  <h2 class="text-2xl font-bold text-blue-800 mb-5">📖 今日單字</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-blue-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-blue-700">lundi</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[lœ̃di]</span>
+        <span class="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="lundi" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">星期一</p>
+      <p class="text-sm italic text-gray-500 mt-2">Lundi, j'ai cours de français.</p>
+      <button onclick="speak(this)" data-text="Lundi, j'ai cours de français." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-blue-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-blue-700">mercredi</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[mɛʁkʁədi]</span>
+        <span class="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="mercredi" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">星期三</p>
+      <p class="text-sm italic text-gray-500 mt-2">Mercredi, je vais à la piscine.</p>
+      <button onclick="speak(this)" data-text="Mercredi, je vais à la piscine." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-blue-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-blue-700">samedi</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[samdi]</span>
+        <span class="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="samedi" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">星期六</p>
+      <p class="text-sm italic text-gray-500 mt-2">Le samedi, je me repose.</p>
+      <button onclick="speak(this)" data-text="Le samedi, je me repose." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-blue-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-blue-700">dimanche</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[dimɑ̃ʃ]</span>
+        <span class="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="dimanche" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">星期日</p>
+      <p class="text-sm italic text-gray-500 mt-2">Le dimanche, ma famille se réunit.</p>
+      <button onclick="speak(this)" data-text="Le dimanche, ma famille se réunit." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-red-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-red-700">janvier</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[ʒɑ̃vje]</span>
+        <span class="ml-2 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="janvier" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">一月</p>
+      <p class="text-sm italic text-gray-500 mt-2">Mon anniversaire est en janvier.</p>
+      <button onclick="speak(this)" data-text="Mon anniversaire est en janvier." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-red-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-red-700">avril</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[avʁil]</span>
+        <span class="ml-2 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="avril" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">四月</p>
+      <p class="text-sm italic text-gray-500 mt-2">Il fait beau en avril.</p>
+      <button onclick="speak(this)" data-text="Il fait beau en avril." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-red-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-red-700">juillet</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[ʒɥijɛ]</span>
+        <span class="ml-2 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="juillet" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">七月</p>
+      <p class="text-sm italic text-gray-500 mt-2">Je pars en vacances en juillet.</p>
+      <button onclick="speak(this)" data-text="Je pars en vacances en juillet." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-red-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-red-700">décembre</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[desɑ̃bʁ]</span>
+        <span class="ml-2 text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="décembre" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">十二月</p>
+      <p class="text-sm italic text-gray-500 mt-2">Noël est en décembre.</p>
+      <button onclick="speak(this)" data-text="Noël est en décembre." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-green-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-green-700">semaine</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[səmɛn]</span>
+        <span class="ml-2 text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded">n.f.</span></div>
+        <button onclick="speak(this)" data-text="semaine" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">星期 / 週</p>
+      <p class="text-sm italic text-gray-500 mt-2">Il y a sept jours dans une semaine.</p>
+      <button onclick="speak(this)" data-text="Il y a sept jours dans une semaine." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+    <div class="vocab-card bg-white rounded-xl shadow p-5 border-l-4 border-blue-500">
+      <div class="flex items-start justify-between">
+        <div><span class="text-2xl font-bold text-blue-700">mois</span>
+        <span class="ml-2 text-sm ipa text-gray-400">[mwa]</span>
+        <span class="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">n.m.</span></div>
+        <button onclick="speak(this)" data-text="mois" class="speak-btn text-xl">🔊</button>
+      </div>
+      <p class="text-lg font-semibold text-gray-700 mt-1">月份</p>
+      <p class="text-sm italic text-gray-500 mt-2">Il y a douze mois dans une année.</p>
+      <button onclick="speak(this)" data-text="Il y a douze mois dans une année." class="speak-btn text-xs text-blue-500 mt-1">🔊 例句</button>
+    </div>
+
+  </div>
 </section>
 
-<!-- ===== SENTENCES ===== -->
+<!-- 2. Complete Reference Tables -->
 <section>
-  <h2 class="text-2xl font-bold text-blue-900 mb-5 flex items-center gap-2">💬 基礎語句</h2>
-  <div class="space-y-3" id="sentences-grid"></div>
+  <h2 class="text-2xl font-bold text-blue-800 mb-5">📋 完整參考表</h2>
+
+  <!-- Days of the week -->
+  <div class="bg-white rounded-xl shadow p-6 mb-6">
+    <h3 class="text-xl font-bold text-blue-700 mb-4">🗓️ 一週七天（Les jours de la semaine）</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse rounded-lg overflow-hidden">
+        <thead><tr>
+          <th class="px-4 py-3 text-left">法文</th>
+          <th class="px-4 py-3 text-left">IPA 音標</th>
+          <th class="px-4 py-3 text-left">中文</th>
+          <th class="px-4 py-3 text-center">發音</th>
+        </tr></thead>
+        <tbody>
+          <tr class="border-b bg-blue-50"><td class="px-4 py-3 font-bold text-blue-700">lundi</td><td class="px-4 py-3 ipa text-gray-500">[lœ̃di]</td><td class="px-4 py-3">星期一</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="lundi" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b"><td class="px-4 py-3 font-bold text-blue-700">mardi</td><td class="px-4 py-3 ipa text-gray-500">[maʁdi]</td><td class="px-4 py-3">星期二</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="mardi" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b bg-blue-50"><td class="px-4 py-3 font-bold text-blue-700">mercredi</td><td class="px-4 py-3 ipa text-gray-500">[mɛʁkʁədi]</td><td class="px-4 py-3">星期三</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="mercredi" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b"><td class="px-4 py-3 font-bold text-blue-700">jeudi</td><td class="px-4 py-3 ipa text-gray-500">[ʒødi]</td><td class="px-4 py-3">星期四</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="jeudi" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b bg-blue-50"><td class="px-4 py-3 font-bold text-blue-700">vendredi</td><td class="px-4 py-3 ipa text-gray-500">[vɑ̃dʁədi]</td><td class="px-4 py-3">星期五</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="vendredi" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b"><td class="px-4 py-3 font-bold text-blue-700">samedi</td><td class="px-4 py-3 ipa text-gray-500">[samdi]</td><td class="px-4 py-3">星期六</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="samedi" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr><td class="px-4 py-3 font-bold text-blue-700">dimanche</td><td class="px-4 py-3 ipa text-gray-500">[dimɑ̃ʃ]</td><td class="px-4 py-3">星期日</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="dimanche" class="speak-btn text-lg">🔊</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Months -->
+  <div class="bg-white rounded-xl shadow p-6">
+    <h3 class="text-xl font-bold text-red-700 mb-4">📅 一年十二個月（Les mois de l'année）</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse rounded-lg overflow-hidden">
+        <thead><tr>
+          <th class="px-4 py-3 text-left">法文</th>
+          <th class="px-4 py-3 text-left">IPA 音標</th>
+          <th class="px-4 py-3 text-left">中文</th>
+          <th class="px-4 py-3 text-center">發音</th>
+        </tr></thead>
+        <tbody>
+          <tr class="border-b bg-red-50"><td class="px-4 py-3 font-bold text-red-700">janvier</td><td class="px-4 py-3 ipa text-gray-500">[ʒɑ̃vje]</td><td class="px-4 py-3">一月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="janvier" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b"><td class="px-4 py-3 font-bold text-red-700">février</td><td class="px-4 py-3 ipa text-gray-500">[fevʁije]</td><td class="px-4 py-3">二月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="février" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b bg-red-50"><td class="px-4 py-3 font-bold text-red-700">mars</td><td class="px-4 py-3 ipa text-gray-500">[maʁs]</td><td class="px-4 py-3">三月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="mars" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b"><td class="px-4 py-3 font-bold text-red-700">avril</td><td class="px-4 py-3 ipa text-gray-500">[avʁil]</td><td class="px-4 py-3">四月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="avril" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b bg-red-50"><td class="px-4 py-3 font-bold text-red-700">mai</td><td class="px-4 py-3 ipa text-gray-500">[mɛ]</td><td class="px-4 py-3">五月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="mai" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b"><td class="px-4 py-3 font-bold text-red-700">juin</td><td class="px-4 py-3 ipa text-gray-500">[ʒɥɛ̃]</td><td class="px-4 py-3">六月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="juin" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b bg-red-50"><td class="px-4 py-3 font-bold text-red-700">juillet</td><td class="px-4 py-3 ipa text-gray-500">[ʒɥijɛ]</td><td class="px-4 py-3">七月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="juillet" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b"><td class="px-4 py-3 font-bold text-red-700">août</td><td class="px-4 py-3 ipa text-gray-500">[u]</td><td class="px-4 py-3">八月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="août" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b bg-red-50"><td class="px-4 py-3 font-bold text-red-700">septembre</td><td class="px-4 py-3 ipa text-gray-500">[sɛptɑ̃bʁ]</td><td class="px-4 py-3">九月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="septembre" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b"><td class="px-4 py-3 font-bold text-red-700">octobre</td><td class="px-4 py-3 ipa text-gray-500">[ɔktɔbʁ]</td><td class="px-4 py-3">十月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="octobre" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr class="border-b bg-red-50"><td class="px-4 py-3 font-bold text-red-700">novembre</td><td class="px-4 py-3 ipa text-gray-500">[nɔvɑ̃bʁ]</td><td class="px-4 py-3">十一月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="novembre" class="speak-btn text-lg">🔊</button></td></tr>
+          <tr><td class="px-4 py-3 font-bold text-red-700">décembre</td><td class="px-4 py-3 ipa text-gray-500">[desɑ̃bʁ]</td><td class="px-4 py-3">十二月</td><td class="px-4 py-3 text-center"><button onclick="speak(this)" data-text="décembre" class="speak-btn text-lg">🔊</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </section>
 
-<!-- ===== GRAMMAR ===== -->
+<!-- 3. Grammar Tips -->
 <section>
-  <h2 class="text-2xl font-bold text-blue-900 mb-5 flex items-center gap-2">📝 文法小提示</h2>
+  <h2 class="text-2xl font-bold text-blue-800 mb-5">💡 文法小提示</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-xl p-5">
+      <h3 class="font-bold text-yellow-800 mb-2">① 星期與月份不需大寫</h3>
+      <p class="text-sm text-gray-700">法文的星期和月份<strong>首字母不需大寫</strong>（除非位於句首）。例如：<em>lundi</em>（星期一）、<em>janvier</em>（一月）。這與英文 Monday、January 的寫法不同！</p>
+    </div>
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-xl p-5">
+      <h3 class="font-bold text-yellow-800 mb-2">② 冠詞與介詞用法</h3>
+      <p class="text-sm text-gray-700">表示「在某月」用 <strong>en</strong>：<em>en janvier</em>（在一月）。表示「每個星期X」用 <strong>le</strong>：<em>le lundi</em>（每個星期一）。說「這個星期X」直接說 <em>lundi</em> 即可，不加冠詞。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Basic Sentences -->
+<section>
+  <h2 class="text-2xl font-bold text-blue-800 mb-5">💬 基礎語句</h2>
   <div class="space-y-3">
-    <div class="bg-amber-50 border-l-4 border-amber-400 rounded-r-xl p-5">
-      <h3 class="font-bold text-amber-800 text-lg mb-1">1. 星期與月份不大寫</h3>
-      <p class="text-gray-700">法文中星期和月份<strong>不用</strong>大寫（與英文不同）：<br>
-      ✅ <em>lundi, janvier, juillet</em>&nbsp;&nbsp;
-      ❌ <em>Lundi, Janvier</em>（錯誤）</p>
+
+    <div class="bg-white rounded-xl shadow p-4 flex items-start justify-between gap-4">
+      <div class="flex-1">
+        <p class="font-bold text-blue-700">Aujourd'hui, c'est lundi.</p>
+        <p class="text-xs ipa text-gray-400 mt-0.5">[oʒuʁdɥi sɛ lœ̃di]</p>
+        <p class="text-sm text-gray-600 mt-1">今天是星期一。</p>
+      </div>
+      <button onclick="speak(this)" data-text="Aujourd'hui, c'est lundi." class="speak-btn text-2xl flex-shrink-0">🔊</button>
     </div>
-    <div class="bg-blue-50 border-l-4 border-blue-400 rounded-r-xl p-5">
-      <h3 class="font-bold text-blue-800 text-lg mb-1">2. 在某天 vs. 每週某天</h3>
-      <p class="text-gray-700">
-        • 單次事件，不加冠詞：<em>Je travaille <strong>lundi</strong>.</em>（我這個星期一要工作）<br>
-        • 習慣性，加冠詞 <strong>le</strong>：<em>Je travaille <strong>le lundi</strong>.</em>（我每個星期一都工作）<br>
-        • 月份用介詞 <strong>en</strong>：<em>Mon anniversaire est <strong>en</strong> janvier.</em>（我的生日在一月）
-      </p>
+
+    <div class="bg-white rounded-xl shadow p-4 flex items-start justify-between gap-4">
+      <div class="flex-1">
+        <p class="font-bold text-blue-700">Quel jour sommes-nous ?</p>
+        <p class="text-xs ipa text-gray-400 mt-0.5">[kɛl ʒuʁ sɔm nu]</p>
+        <p class="text-sm text-gray-600 mt-1">今天是星期幾？</p>
+      </div>
+      <button onclick="speak(this)" data-text="Quel jour sommes-nous ?" class="speak-btn text-2xl flex-shrink-0">🔊</button>
     </div>
+
+    <div class="bg-white rounded-xl shadow p-4 flex items-start justify-between gap-4">
+      <div class="flex-1">
+        <p class="font-bold text-blue-700">Mon anniversaire est en juillet.</p>
+        <p class="text-xs ipa text-gray-400 mt-0.5">[mɔ̃n anivɛʁsɛʁ ɛ ɑ̃ ʒɥijɛ]</p>
+        <p class="text-sm text-gray-600 mt-1">我的生日在七月。</p>
+      </div>
+      <button onclick="speak(this)" data-text="Mon anniversaire est en juillet." class="speak-btn text-2xl flex-shrink-0">🔊</button>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4 flex items-start justify-between gap-4">
+      <div class="flex-1">
+        <p class="font-bold text-blue-700">Nous sommes le trois janvier.</p>
+        <p class="text-xs ipa text-gray-400 mt-0.5">[nu sɔm lə tʁwa ʒɑ̃vje]</p>
+        <p class="text-sm text-gray-600 mt-1">今天是一月三號。</p>
+      </div>
+      <button onclick="speak(this)" data-text="Nous sommes le trois janvier." class="speak-btn text-2xl flex-shrink-0">🔊</button>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4 flex items-start justify-between gap-4">
+      <div class="flex-1">
+        <p class="font-bold text-blue-700">La semaine commence le lundi.</p>
+        <p class="text-xs ipa text-gray-400 mt-0.5">[la səmɛn kɔmɑ̃s lə lœ̃di]</p>
+        <p class="text-sm text-gray-600 mt-1">這週從星期一開始。</p>
+      </div>
+      <button onclick="speak(this)" data-text="La semaine commence le lundi." class="speak-btn text-2xl flex-shrink-0">🔊</button>
+    </div>
+
   </div>
 </section>
 
-<!-- ===== MATCHING GAME ===== -->
+<!-- 5. Matching Game -->
 <section>
-  <h2 class="text-2xl font-bold text-blue-900 mb-2 flex items-center gap-2">🎯 配對遊戲</h2>
-  <p class="text-gray-500 mb-4">點選左邊法文，再點右邊中文，看看能否全部配對！</p>
-  <div class="bg-white rounded-2xl shadow-md p-6">
+  <h2 class="text-2xl font-bold text-blue-800 mb-5">🎮 配對遊戲</h2>
+  <div class="bg-white rounded-xl shadow p-6">
     <div class="flex justify-between items-center mb-4">
-      <span class="text-gray-600 font-medium">進度：<span id="match-score" class="font-bold text-blue-700">0</span> / 10</span>
-      <button onclick="resetMatch()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-1.5 rounded-full text-sm font-semibold transition">重新開始</button>
+      <p class="text-gray-500 text-sm">點擊法文，再點對應的中文</p>
+      <span id="match-score" class="text-lg font-bold text-blue-700">0 / 10</span>
     </div>
     <div class="grid grid-cols-2 gap-3">
-      <div id="match-left" class="space-y-2"></div>
-      <div id="match-right" class="space-y-2"></div>
+      <div class="space-y-2" id="match-left"></div>
+      <div class="space-y-2" id="match-right"></div>
     </div>
-    <div id="match-win" class="hidden text-center mt-5">
-      <span class="text-4xl">🎉</span>
-      <p class="text-xl font-bold text-green-600 mt-2">全部配對完成！太厲害了！</p>
+    <div id="match-complete" class="hidden mt-4 text-center">
+      <div class="text-4xl mb-2">🎉</div>
+      <p class="text-green-700 font-bold text-lg">全部配對完成！太棒了！</p>
+      <button onclick="resetMatch()" class="mt-3 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">再玩一次</button>
     </div>
   </div>
 </section>
 
-<!-- ===== QUIZ ===== -->
+<!-- 6. Quiz -->
 <section>
-  <h2 class="text-2xl font-bold text-blue-900 mb-2 flex items-center gap-2">⚡ 快問快答</h2>
-  <p class="text-gray-500 mb-4">15題混合測驗，挑戰你的記憶！</p>
-  <div class="bg-white rounded-2xl shadow-md p-6">
-    <div class="flex justify-between items-center mb-5">
-      <span class="text-gray-500">第 <span id="q-num" class="font-bold text-gray-800">1</span> / 15 題</span>
-      <span class="font-bold text-blue-700">得分：<span id="q-score">0</span></span>
+  <h2 class="text-2xl font-bold text-blue-800 mb-5">✍️ 快問快答</h2>
+  <div class="bg-white rounded-xl shadow p-6">
+    <div id="quiz-container" class="space-y-6"></div>
+    <div class="mt-8 text-center">
+      <button onclick="submitQuiz()" id="submit-btn" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-blue-700 transition">提交答案</button>
     </div>
-    <div id="quiz-area"></div>
-    <div id="quiz-result" class="hidden text-center py-6">
-      <div class="text-6xl mb-3" id="res-emoji"></div>
-      <h3 class="text-2xl font-bold mb-1" id="res-title"></h3>
-      <p class="text-2xl font-bold text-blue-700 mb-1"><span id="res-score"></span> / 15</p>
-      <p class="text-gray-500 mb-6" id="res-comment"></p>
-      <button onclick="restartQuiz()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold text-lg transition">再挑戰一次！</button>
+    <div id="quiz-result" class="hidden mt-6 text-center p-6 bg-gray-50 rounded-xl">
+      <div id="result-badge" class="text-5xl mb-3"></div>
+      <p id="result-score" class="text-2xl font-bold text-blue-800"></p>
+      <p id="result-comment" class="text-gray-600 mt-2 text-sm"></p>
+      <button onclick="resetQuiz()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">重新挑戰</button>
     </div>
   </div>
 </section>
 
-</div>
+</main>
 
-<footer class="text-center py-6 text-gray-400 text-sm">
-  🇫🇷 法文每日課程・第6課・2026/09/09
+<footer class="text-center py-6 text-sm text-gray-400 mt-4">
+  <p>🇫🇷 法文每日課程 · 第6課：星期與月份 · 2026-09-09</p>
 </footer>
 
 <script>
-// ===================== SPEECH =====================
-function speak(el) {
-  var text = (typeof el === 'string') ? el : el.dataset.text;
+function speak(el){
+  var text=typeof el==='string'?el:el.dataset.text;
   window.speechSynthesis.cancel();
-  var u = new SpeechSynthesisUtterance(text);
-  u.lang = 'fr-FR'; u.rate = 0.85;
+  var u=new SpeechSynthesisUtterance(text);
+  u.lang='fr-FR';u.rate=0.85;
   window.speechSynthesis.speak(u);
 }
-function speakBoth(el) {
-  var textM = el.dataset.textM, textF = el.dataset.textF;
+function speakBoth(el){
+  var tM=el.dataset.textM,tF=el.dataset.textF;
   window.speechSynthesis.cancel();
-  var u1 = new SpeechSynthesisUtterance(textM); u1.lang='fr-FR'; u1.rate=0.85;
-  var u2 = new SpeechSynthesisUtterance(textF); u2.lang='fr-FR'; u2.rate=0.85;
-  window.speechSynthesis.speak(u1);
-  window.speechSynthesis.speak(u2);
+  var u1=new SpeechSynthesisUtterance(tM);u1.lang='fr-FR';u1.rate=0.85;
+  var u2=new SpeechSynthesisUtterance(tF);u2.lang='fr-FR';u2.rate=0.85;
+  window.speechSynthesis.speak(u1);window.speechSynthesis.speak(u2);
 }
 
-// ===================== VOCABULARY =====================
-var vocab = [
-  { fr:'lundi',    ipa:'[lœ̃di]',      pos:'n.m.', zh:'星期一',  ex:"Lundi, je vais à l'école.",              exZh:'星期一我去學校。' },
-  { fr:'mardi',    ipa:'[maʁdi]',      pos:'n.m.', zh:'星期二',  ex:'Il a un cours de français mardi.',        exZh:'他星期二有法文課。' },
-  { fr:'mercredi', ipa:'[mɛʁkʁədi]',  pos:'n.m.', zh:'星期三',  ex:'Mercredi, nous allons au parc.',          exZh:'星期三我們去公園。' },
-  { fr:'jeudi',    ipa:'[ʒødi]',       pos:'n.m.', zh:'星期四',  ex:'Jeudi soir, je reste à la maison.',      exZh:'星期四晚上我待在家。' },
-  { fr:'vendredi', ipa:'[vɑ̃dʁədi]',   pos:'n.m.', zh:'星期五',  ex:"Vendredi, c'est le début du week-end!",  exZh:'星期五，週末開始了！' },
-  { fr:'samedi',   ipa:'[samdi]',      pos:'n.m.', zh:'星期六',  ex:'Le samedi, je fais du sport.',            exZh:'每個星期六我做運動。' },
-  { fr:'dimanche', ipa:'[dimɑ̃ʃ]',     pos:'n.m.', zh:'星期日',  ex:'Le dimanche, ma famille se réunit.',     exZh:'星期天家人聚在一起。' },
-  { fr:'janvier',  ipa:'[ʒɑ̃vje]',     pos:'n.m.', zh:'一月',    ex:'Mon anniversaire est en janvier.',        exZh:'我的生日在一月。' },
-  { fr:'juillet',  ipa:'[ʒɥijɛ]',     pos:'n.m.', zh:'七月',    ex:'En juillet, il fait très chaud.',         exZh:'七月天氣非常熱。' },
-  { fr:'décembre', ipa:'[desɑ̃bʁ]',    pos:'n.m.', zh:'十二月',  ex:'Noël est en décembre.',                  exZh:'聖誕節在十二月。' },
+// ---- MATCHING GAME ----
+var matchPairs=[
+  {fr:'lundi',zh:'星期一'},{fr:'mardi',zh:'星期二'},{fr:'mercredi',zh:'星期三'},
+  {fr:'jeudi',zh:'星期四'},{fr:'vendredi',zh:'星期五'},{fr:'samedi',zh:'星期六'},
+  {fr:'dimanche',zh:'星期日'},{fr:'janvier',zh:'一月'},{fr:'juillet',zh:'七月'},
+  {fr:'décembre',zh:'十二月'}
 ];
-
-function renderVocab() {
-  document.getElementById('vocab-grid').innerHTML = vocab.map(function(v) {
-    return '<div class="bg-white rounded-2xl shadow card-hover p-5 border border-gray-100">' +
-      '<div class="flex justify-between items-start mb-2">' +
-        '<div>' +
-          '<span class="text-2xl font-bold text-blue-800">' + v.fr + '</span>' +
-          '<span class="text-gray-400 text-sm ml-2">' + v.ipa + '</span>' +
-        '</div>' +
-        '<button onclick="speak(this)" data-text="' + v.fr + '" class="speak-btn bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold">🔊</button>' +
-      '</div>' +
-      '<div class="flex items-center gap-2 mb-3">' +
-        '<span class="bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded">' + v.pos + '</span>' +
-        '<span class="text-lg font-semibold text-gray-800">' + v.zh + '</span>' +
-      '</div>' +
-      '<div class="border-t border-gray-100 pt-3">' +
-        '<p class="text-blue-700 italic text-sm">' + v.ex + '</p>' +
-        '<p class="text-gray-500 text-sm mt-1">' + v.exZh + '</p>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+var matchScore=0,selectedLeft=null;
+function shuffle(a){var b=[...a];for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+function initMatch(){
+  matchScore=0;selectedLeft=null;
+  document.getElementById('match-score').textContent='0 / 10';
+  document.getElementById('match-complete').classList.add('hidden');
+  var lEl=document.getElementById('match-left'),rEl=document.getElementById('match-right');
+  lEl.innerHTML='';rEl.innerHTML='';
+  shuffle(matchPairs).forEach(function(p){
+    var b=document.createElement('button');
+    b.className='match-item w-full border-2 border-gray-200 rounded-lg p-2 font-bold text-blue-700 text-sm';
+    b.dataset.fr=p.fr;b.textContent=p.fr;
+    b.onclick=function(){selectLeft(b);};lEl.appendChild(b);
+  });
+  shuffle(matchPairs).forEach(function(p){
+    var b=document.createElement('button');
+    b.className='match-item w-full border-2 border-gray-200 rounded-lg p-2 text-gray-700 text-sm';
+    b.dataset.fr=p.fr;b.textContent=p.zh;
+    b.onclick=function(){selectRight(b);};rEl.appendChild(b);
+  });
 }
+function selectLeft(btn){
+  if(btn.classList.contains('correct'))return;
+  document.querySelectorAll('#match-left .match-item').forEach(function(b){if(!b.classList.contains('correct'))b.classList.remove('selected');});
+  btn.classList.add('selected');selectedLeft=btn;
+}
+function selectRight(btn){
+  if(!selectedLeft||btn.classList.contains('correct'))return;
+  if(selectedLeft.dataset.fr===btn.dataset.fr){
+    selectedLeft.classList.remove('selected');
+    selectedLeft.classList.add('correct');btn.classList.add('correct');
+    matchScore++;document.getElementById('match-score').textContent=matchScore+' / 10';
+    selectedLeft=null;
+    if(matchScore===10)setTimeout(function(){document.getElementById('match-complete').classList.remove('hidden');},300);
+  }else{
+    selectedLeft.classList.add('wrong');btn.classList.add('wrong');
+    var sl=selectedLeft;
+    setTimeout(function(){sl.classList.remove('wrong','selected');btn.classList.remove('wrong');selectedLeft=null;},500);
+  }
+}
+function resetMatch(){initMatch();}
 
-// ===================== SENTENCES =====================
-var sentences = [
-  { fr:"Aujourd'hui, c'est lundi.",           ipa:"[oʒuʁdɥi sɛ lœ̃di]",                zh:"今天是星期一。" },
-  { fr:"Quel jour sommes-nous?",              ipa:"[kɛl ʒuʁ sɔm nu]",                   zh:"今天是星期幾？" },
-  { fr:"Mon anniversaire est en janvier.",    ipa:"[mɔ̃n‿anivɛʁsɛʁ ɛt‿ɑ̃ ʒɑ̃vje]",    zh:"我的生日在一月。" },
-  { fr:"Le week-end, je me repose.",          ipa:"[lə wikɛnd ʒə mə ʁəpoz]",            zh:"週末我休息。" },
-  { fr:"En juillet, il fait très chaud.",     ipa:"[ɑ̃ ʒɥijɛ il fɛ tʁɛ ʃo]",          zh:"七月天氣非常熱。" },
+// ---- QUIZ ----
+var quizData=[
+  {type:'中法互譯',q:'「星期一」的法文是？',opts:['lundi','mardi','jeudi','vendredi'],ans:0},
+  {type:'中法互譯',q:'「vendredi」的中文是？',opts:['星期三','星期四','星期五','星期六'],ans:2},
+  {type:'中法互譯',q:'「七月」的法文是？',opts:['juin','juillet','août','mai'],ans:1},
+  {type:'中法互譯',q:'「novembre」的中文是？',opts:['九月','十月','十一月','十二月'],ans:2},
+  {type:'中法互譯',q:'「星期日」的法文是？',opts:['samedi','dimanche','vendredi','jeudi'],ans:1},
+  {type:'中法互譯',q:'「mars」的中文是？',opts:['一月','二月','三月','四月'],ans:2},
+  {type:'拼字題',q:'「星期三」的正確法文拼法是？',opts:['mercredi','mercrudi','mercrady','merqredi'],ans:0},
+  {type:'拼字題',q:'「十二月」的正確法文拼法是？',opts:['decembre','décembre','decémbré','dacembre'],ans:1},
+  {type:'拼字題',q:'「__nvier」代表一月，空格應填入？',opts:['ja','gi','ma','fe'],ans:0},
+  {type:'陰陽性題',q:'「semaine」（星期/週）的語法性別是？',opts:['陽性（masculin）','陰性（féminin）'],ans:1},
+  {type:'陰陽性題',q:'「janvier」（一月）的語法性別是？',opts:['陽性（masculin）','陰性（féminin）'],ans:0},
+  {type:'陰陽性題',q:'「dimanche」（星期日）的語法性別是？',opts:['陽性（masculin）','陰性（féminin）'],ans:0},
+  {type:'發音選擇題',q:'請聽各選項發音，選出「星期六」的法文：',audioOpts:['samedi','dimanche','vendredi','jeudi'],opts:['samedi','dimanche','vendredi','jeudi'],ans:0},
+  {type:'發音選擇題',q:'請聽各選項發音，選出「三月」的法文：',audioOpts:['janvier','février','mars','avril'],opts:['janvier','février','mars','avril'],ans:2},
+  {type:'發音選擇題',q:'請聽各選項發音，選出「星期日」的法文：',audioOpts:['samedi','dimanche','mercredi','lundi'],opts:['samedi','dimanche','mercredi','lundi'],ans:1}
 ];
+var userAns=new Array(quizData.length).fill(null);
+var submitted=false;
 
-function renderSentences() {
-  document.getElementById('sentences-grid').innerHTML = sentences.map(function(s) {
-    return '<div class="bg-white rounded-xl shadow p-4 flex items-start gap-4 border border-gray-100">' +
-      '<button onclick="speak(this)" data-text="' + s.fr + '" class="speak-btn flex-shrink-0 bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-2 rounded-full text-sm font-medium mt-0.5">🔊</button>' +
-      '<div>' +
-        '<p class="text-blue-800 font-semibold text-lg">' + s.fr + '</p>' +
-        '<p class="text-gray-400 text-sm italic">' + s.ipa + '</p>' +
-        '<p class="text-gray-600 mt-1">' + s.zh + '</p>' +
-      '</div>' +
-    '</div>';
-  }).join('');
-}
-
-// ===================== MATCHING GAME =====================
-var matchPairs = vocab.map(function(v){ return { fr: v.fr, zh: v.zh }; });
-var selectedLeft = null;
-var matchedCount = 0;
-
-function shuffle(arr) {
-  var a = arr.slice();
-  for (var i = a.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i+1));
-    var t = a[i]; a[i] = a[j]; a[j] = t;
-  }
-  return a;
-}
-
-function renderMatch() {
-  selectedLeft = null;
-  matchedCount = 0;
-  document.getElementById('match-score').textContent = '0';
-  document.getElementById('match-win').classList.add('hidden');
-  var leftArr = shuffle(matchPairs);
-  var rightArr = shuffle(matchPairs);
-  document.getElementById('match-left').innerHTML = leftArr.map(function(p) {
-    return '<button class="match-btn w-full py-2.5 px-3 rounded-xl border-2 border-blue-200 bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold transition text-sm" ' +
-      'data-key="' + p.fr + '" data-side="left" onclick="selectMatch(this)">' + p.fr + '</button>';
-  }).join('');
-  document.getElementById('match-right').innerHTML = rightArr.map(function(p) {
-    return '<button class="match-btn w-full py-2.5 px-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-800 font-semibold transition text-sm" ' +
-      'data-key="' + p.fr + '" data-side="right" onclick="selectMatch(this)">' + p.zh + '</button>';
-  }).join('');
-}
-
-function selectMatch(el) {
-  if (el.classList.contains('match-correct')) return;
-  var side = el.dataset.side;
-  if (side === 'left') {
-    document.querySelectorAll('.match-btn[data-side="left"]').forEach(function(b){ b.classList.remove('match-selected'); });
-    el.classList.add('match-selected');
-    selectedLeft = el;
-  } else {
-    if (!selectedLeft) return;
-    if (selectedLeft.dataset.key === el.dataset.key) {
-      selectedLeft.classList.remove('match-selected');
-      selectedLeft.classList.add('match-correct');
-      el.classList.add('match-correct');
-      selectedLeft = null;
-      matchedCount++;
-      document.getElementById('match-score').textContent = matchedCount;
-      if (matchedCount === 10) { document.getElementById('match-win').classList.remove('hidden'); }
-    } else {
-      el.classList.add('match-wrong');
-      selectedLeft.classList.add('match-wrong');
-      var left = selectedLeft;
-      selectedLeft = null;
-      setTimeout(function(){
-        el.classList.remove('match-wrong');
-        left.classList.remove('match-wrong', 'match-selected');
-      }, 600);
-    }
-  }
-}
-
-function resetMatch() { renderMatch(); }
-
-// ===================== QUIZ =====================
-var quizData = [
-  // --- TYPE 1: 中法互譯 (6 questions) ---
-  { type:'translate', q:'「星期一」的法文是？',       opts:['lundi','mardi','vendredi','dimanche'],     ans:0 },
-  { type:'translate', q:'「星期五」的法文是？',       opts:['mercredi','jeudi','vendredi','samedi'],     ans:2 },
-  { type:'translate', q:'「七月」的法文是？',         opts:['janvier','juin','juillet','décembre'],      ans:2 },
-  { type:'translate', q:'"samedi" 的中文是？',        opts:['星期五','星期六','星期日','星期四'],         ans:1 },
-  { type:'translate', q:'"mercredi" 的中文是？',      opts:['星期一','星期二','星期三','星期四'],         ans:2 },
-  { type:'translate', q:'「十二月」的法文是？',       opts:['novembre','septembre','décembre','octobre'], ans:2 },
-  // --- TYPE 2: 拼字題 (3 questions) ---
-  { type:'spelling',  q:'「星期四」法文正確拼法？',   opts:['joudi','jeudi','juedi','jeuddi'],           ans:1 },
-  { type:'spelling',  q:'「十二月」法文正確拼法？',   opts:['decembre','décambre','décembre','desembre'], ans:2 },
-  { type:'spelling',  q:'「星期日」法文正確拼法？',   opts:['dimanch','dimmanche','dimanche','dimence'],  ans:2 },
-  // --- TYPE 3: 陰陽性題 (3 questions) ---
-  { type:'gender', q:'"lundi" 是陽性還是陰性？',      opts:['陽性 (masculin)','陰性 (féminin)'],          ans:0 },
-  { type:'gender', q:'"janvier" 是陽性還是陰性？',    opts:['陽性 (masculin)','陰性 (féminin)'],          ans:0 },
-  { type:'gender', q:'法文中所有星期幾都是？',         opts:['陽性 (masculin)','陰性 (féminin)','視情況','無性別'], ans:0 },
-  // --- TYPE 4: 發音選擇題 (3 questions) ---
-  { type:'audio', q:'請聽音，選出「星期二」的法文發音', opts:['lundi','mardi','jeudi','samedi'],          ans:1 },
-  { type:'audio', q:'請聽音，選出「一月」的法文發音',   opts:['décembre','juillet','janvier','vendredi'], ans:2 },
-  { type:'audio', q:'請聽音，選出「十二月」的法文發音', opts:['mercredi','dimanche','décembre','janvier'], ans:2 },
-];
-
-var curQ = 0, qScore = 0;
-
-function renderQuiz() {
-  if (curQ >= quizData.length) { showResult(); return; }
-  document.getElementById('q-num').textContent = curQ + 1;
-  var q = quizData[curQ];
-  var html = '<p class="text-lg font-semibold text-gray-800 mb-5">' + q.q + '</p>';
-  if (q.type === 'audio') {
-    html += '<div class="grid grid-cols-2 gap-3">';
-    q.opts.forEach(function(opt, i) {
-      html += '<div class="border-2 border-gray-200 rounded-xl p-3 text-center">' +
-        '<button onclick="speak(this)" data-text="' + opt + '" class="speak-btn text-3xl block mx-auto mb-2 hover:scale-110 transition-transform">🔊</button>' +
-        '<p class="text-xs text-gray-400 mb-2">' + opt + '</p>' +
-        '<button class="quiz-opt w-full py-1.5 rounded-lg bg-gray-100 hover:bg-blue-100 text-gray-700 font-medium text-sm transition border-2 border-transparent" ' +
-          'onclick="answerQuiz(this,' + i + ',' + q.ans + ')">選這個</button>' +
-      '</div>';
-    });
-    html += '</div>';
-  } else {
-    var cols = (q.type === 'gender' && q.opts.length === 2) ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-2';
-    html += '<div class="grid ' + cols + ' gap-3">';
-    q.opts.forEach(function(opt, i) {
-      html += '<button class="quiz-opt border-2 border-gray-200 rounded-xl py-3 px-4 text-center hover:border-blue-300 hover:bg-blue-50 text-gray-800 font-medium transition" ' +
-        'onclick="answerQuiz(this,' + i + ',' + q.ans + ')">' + opt + '</button>';
-    });
-    html += '</div>';
-  }
-  document.getElementById('quiz-area').innerHTML = html;
-}
-
-function answerQuiz(el, chosen, correct) {
-  document.querySelectorAll('.quiz-opt').forEach(function(b){ b.disabled = true; b.style.pointerEvents='none'; });
-  var allOpts = document.querySelectorAll('.quiz-opt');
-  if (chosen === correct) {
-    el.classList.add('opt-correct');
-    qScore++;
-    document.getElementById('q-score').textContent = qScore;
-  } else {
-    el.classList.add('opt-wrong');
-    allOpts[correct].classList.add('opt-correct');
-  }
-  setTimeout(function(){ curQ++; renderQuiz(); }, 1300);
-}
-
-function showResult() {
-  document.getElementById('quiz-area').classList.add('hidden');
-  document.getElementById('quiz-result').classList.remove('hidden');
-  var pct = qScore / quizData.length;
-  var emoji, title, comment;
-  if (pct >= 0.9)      { emoji='🏆'; title='完美！'; comment='你對法文星期和月份已非常熟練！繼續保持！'; }
-  else if (pct >= 0.7) { emoji='🎉'; title='很棒！'; comment='掌握得不錯，再多複習幾個單字就完美了！'; }
-  else if (pct >= 0.5) { emoji='👍'; title='加油！'; comment='有一定基礎，多聽發音和複習單字卡吧！'; }
-  else                 { emoji='💪'; title='繼續努力！'; comment='多看幾遍單字卡，再試一次，你一定可以！'; }
-  document.getElementById('res-emoji').textContent = emoji;
-  document.getElementById('res-title').textContent = title;
-  document.getElementById('res-score').textContent = qScore;
-  document.getElementById('res-comment').textContent = comment;
-}
-
-function restartQuiz() {
-  curQ = 0; qScore = 0;
-  document.getElementById('q-score').textContent = '0';
-  document.getElementById('quiz-area').classList.remove('hidden');
+function initQuiz(){
+  userAns=new Array(quizData.length).fill(null);submitted=false;
   document.getElementById('quiz-result').classList.add('hidden');
-  renderQuiz();
+  document.getElementById('submit-btn').style.display='inline-block';
+  var c=document.getElementById('quiz-container');c.innerHTML='';
+  quizData.forEach(function(q,qi){
+    var div=document.createElement('div');
+    div.className='border border-gray-200 rounded-xl p-5';
+    var html='<div class="flex items-center gap-2 mb-3">'
+      +'<span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">'+q.type+'</span>'
+      +'<span class="text-gray-400 text-xs">第 '+(qi+1)+' 題</span></div>'
+      +'<p class="font-semibold text-gray-800 mb-4">'+q.q+'</p>';
+    if(q.type==='發音選擇題'){
+      html+='<div class="grid grid-cols-2 gap-3">';
+      q.audioOpts.forEach(function(at,oi){
+        html+='<div class="border-2 border-gray-200 rounded-lg p-3 text-center">'
+          +'<button onclick="speak(this)" data-text="'+at+'" class="speak-btn text-3xl block mx-auto mb-2">🔊</button>'
+          +'<button class="quiz-option border-2 border-gray-300 rounded-lg px-3 py-1 w-full text-sm hover:bg-blue-50" '
+          +'onclick="answerQ('+qi+','+oi+')" id="qopt-'+qi+'-'+oi+'">選這個</button>'
+          +'</div>';
+      });
+      html+='</div>';
+    }else{
+      html+='<div class="grid grid-cols-2 gap-2">';
+      q.opts.forEach(function(opt,oi){
+        html+='<button class="quiz-option border-2 border-gray-200 rounded-lg p-3 hover:bg-blue-50" '
+          +'onclick="answerQ('+qi+','+oi+')" id="qopt-'+qi+'-'+oi+'">'+opt+'</button>';
+      });
+      html+='</div>';
+    }
+    div.innerHTML=html;c.appendChild(div);
+  });
 }
+function answerQ(qi,oi){
+  if(submitted)return;
+  for(var i=0;i<quizData[qi].opts.length;i++){
+    var b=document.getElementById('qopt-'+qi+'-'+i);
+    if(b){b.classList.remove('border-blue-500','bg-blue-100');}
+  }
+  var btn=document.getElementById('qopt-'+qi+'-'+oi);
+  if(btn){btn.classList.add('border-blue-500','bg-blue-100');}
+  userAns[qi]=oi;
+}
+function submitQuiz(){
+  var unanswered=userAns.filter(function(a){return a===null;}).length;
+  if(unanswered>0&&!confirm('還有 '+unanswered+' 題未作答，確定提交嗎？'))return;
+  submitted=true;var score=0;
+  quizData.forEach(function(q,qi){
+    var ua=userAns[qi];
+    q.opts.forEach(function(opt,oi){
+      var b=document.getElementById('qopt-'+qi+'-'+oi);
+      if(!b)return;
+      b.disabled=true;
+      b.classList.remove('border-blue-500','bg-blue-100','border-gray-200','border-gray-300');
+      if(oi===q.ans){b.classList.add('correct-ans');}
+      else if(oi===ua){b.classList.add('wrong-ans');}
+    });
+    if(ua===q.ans)score++;
+  });
+  var pct=Math.round(score/quizData.length*100);
+  document.getElementById('submit-btn').style.display='none';
+  document.getElementById('quiz-result').classList.remove('hidden');
+  document.getElementById('result-score').textContent=score+' / '+quizData.length+' 分（'+pct+'%）';
+  var badge='',comment='';
+  if(pct>=90){badge='🥇';comment='太優秀了！法文星期和月份你已完全掌握，繼續保持！';}
+  else if(pct>=70){badge='🥈';comment='很不錯！大部分都答對了，再多練習幾次就能達到完美！';}
+  else if(pct>=50){badge='🥉';comment='及格了！建議再複習一下參考表，相信下次會更好！';}
+  else{badge='📚';comment='繼續加油！多看幾遍參考表，再試一次吧！';}
+  document.getElementById('result-badge').textContent=badge;
+  document.getElementById('result-comment').textContent=comment;
+}
+function resetQuiz(){initQuiz();}
 
-// ===================== INIT =====================
-renderVocab();
-renderSentences();
-renderMatch();
-renderQuiz();
+window.onload=function(){initMatch();initQuiz();};
 </script>
 </body>
 </html>
