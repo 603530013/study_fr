@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>法語第7課 – 身體部位</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+    body { font-family: 'Noto Sans TC', sans-serif; }
+
+    /* Header French flag gradient */
+    .fr-header {
+      background: linear-gradient(135deg,
+        #1e3a8a 0%, #1e3a8a 33%,
+        #ffffff 33%, #ffffff 66%,
+        #dc2626 66%, #dc2626 100%);
+    }
+
+    /* Vocab card flip */
+    .card-container { perspective: 900px; }
+    .card-inner {
+      position: relative; width: 100%; height: 220px;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .card-container.flipped .card-inner { transform: rotateY(180deg); }
+    .card-front, .card-back {
+      position: absolute; width: 100%; height: 100%;
+      backface-visibility: hidden;
+      border-radius: 1rem;
+    }
+    .card-back { transform: rotateY(180deg); }
+
+    /* Matching game */
+    .match-btn {
+      cursor: pointer;
+      border: 2px solid #6b7280;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      text-align: center;
+      transition: all 0.2s;
+      background: white;
+      user-select: none;
+    }
+    .match-btn:hover { border-color: #3b82f6; background: #eff6ff; }
+    .match-btn.selected { border-color: #2563eb; background: #dbeafe; font-weight: 700; }
+    .match-btn.correct { border-color: #16a34a; background: #dcfce7; color: #15803d; font-weight: 700; pointer-events: none; }
+    .match-btn.wrong { border-color: #dc2626; background: #fee2e2; color: #b91c1c; }
+
+    /* Quiz */
+    .quiz-option { cursor: pointer; border: 2px solid #d1d5db; border-radius: 0.5rem; padding: 0.6rem 1rem; transition: all 0.2s; background: white; }
+    .quiz-option:hover { border-color: #3b82f6; background: #eff6ff; }
+    .quiz-option.selected-right { border-color: #16a34a; background: #dcfce7; color: #15803d; font-weight: 700; }
+    .quiz-option.selected-wrong { border-color: #dc2626; background: #fee2e2; color: #b91c1c; }
+    .quiz-option.show-answer { border-color: #16a34a; background: #dcfce7; color: #15803d; font-weight: 700; }
+
+    /* Spelling input */
+    .spelling-input { border: 2px solid #d1d5db; border-radius: 0.375rem; padding: 0.4rem 0.6rem; font-size: 1.1rem; width: 100%; }
+    .spelling-input:focus { outline: none; border-color: #3b82f6; }
+    .spelling-input.correct-input { border-color: #16a34a; background: #dcfce7; }
+    .spelling-input.wrong-input { border-color: #dc2626; background: #fee2e2; }
+
+    /* Progress bar */
+    .progress-bar { transition: width 0.5s ease; }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Section divider */
+    .section-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #1e3a8a, #ef4444);
+      border-radius: 2px;
+    }
+
+    /* Speak button */
+    .speak-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 2rem; height: 2rem; border-radius: 50%;
+      background: #dbeafe; border: none; cursor: pointer;
+      font-size: 0.9rem; transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .speak-btn:hover { background: #93c5fd; }
+    .speak-btn-sm {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.6rem; height: 1.6rem; border-radius: 50%;
+      background: #e0e7ff; border: none; cursor: pointer;
+      font-size: 0.75rem; transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .speak-btn-sm:hover { background: #a5b4fc; }
+
+    /* Table row hover */
+    tbody tr:hover { background: #f8fafc; }
+
+    /* Nav link */
+    .nav-link { transition: color 0.2s; }
+    .nav-link:hover { color: #2563eb; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-5xl mx-auto px-4 py-2 flex flex-wrap gap-x-5 gap-y-1 text-sm font-medium text-gray-600">
+    <a href="#section-vocab"    class="nav-link">📚 單字卡</a>
+    <a href="#section-table"    class="nav-link">📋 參考表</a>
+    <a href="#section-sentences" class="nav-link">💬 例句</a>
+    <a href="#section-grammar"  class="nav-link">📝 文法提示</a>
+    <a href="#section-matching" class="nav-link">🎯 配對遊戲</a>
+    <a href="#section-quiz"     class="nav-link">✏️ 測驗</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="fr-header text-white py-10 px-4 text-center shadow-lg">
+  <div class="bg-black bg-opacity-30 inline-block rounded-2xl px-8 py-5 backdrop-blur-sm">
+    <p class="text-sm tracking-widest uppercase opacity-80 mb-1">法語課程 · Cours de Français</p>
+    <h1 class="text-4xl font-bold drop-shadow mb-2">第 7 課</h1>
+    <h2 class="text-2xl font-semibold drop-shadow mb-1">身體部位</h2>
+    <p class="text-lg italic opacity-90 mb-3">Les parties du corps</p>
+    <p class="text-sm opacity-75 tracking-wide">2026-09-10</p>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN CONTENT
+============================================================ -->
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-14">
+
+  <!-- ===================== VOCABULARY CARDS ===================== -->
+  <section id="section-vocab">
+    <h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
+      <span class="text-blue-700">📚</span> 核心單字卡
+    </h2>
+    <p class="text-gray-500 text-sm mb-4">點擊卡片翻面查看例句與說明</p>
+    <div class="section-divider mb-6"></div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5" id="vocab-cards"></div>
+  </section>
+
+  <!-- ===================== REFERENCE TABLE ===================== -->
+  <section id="section-table">
+    <h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
+      <span class="text-blue-700">📋</span> 完整身體部位參考表
+    </h2>
+    <p class="text-gray-500 text-sm mb-4">Les parties du corps – 完整詞彙參考</p>
+    <div class="section-divider mb-6"></div>
+
+    <!-- Head / Face -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold text-blue-800 mb-2 flex items-center gap-2">🧠 頭部與臉部 (Tête et visage)</h3>
+      <div class="overflow-x-auto rounded-xl shadow">
+        <table class="w-full text-sm bg-white border-collapse">
+          <thead class="bg-blue-800 text-white">
+            <tr>
+              <th class="px-3 py-2 text-left">法文</th>
+              <th class="px-3 py-2 text-left">IPA</th>
+              <th class="px-3 py-2 text-left">詞性/性別</th>
+              <th class="px-3 py-2 text-left">中文</th>
+              <th class="px-3 py-2 text-center">發音</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100" id="table-head"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Body (Trunk / Arms) -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold text-blue-800 mb-2 flex items-center gap-2">💪 軀幹與手臂 (Torse et bras)</h3>
+      <div class="overflow-x-auto rounded-xl shadow">
+        <table class="w-full text-sm bg-white border-collapse">
+          <thead class="bg-blue-800 text-white">
+            <tr>
+              <th class="px-3 py-2 text-left">法文</th>
+              <th class="px-3 py-2 text-left">IPA</th>
+              <th class="px-3 py-2 text-left">詞性/性別</th>
+              <th class="px-3 py-2 text-left">中文</th>
+              <th class="px-3 py-2 text-center">發音</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100" id="table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Legs -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold text-blue-800 mb-2 flex items-center gap-2">🦵 腿部與腳部 (Jambes et pieds)</h3>
+      <div class="overflow-x-auto rounded-xl shadow">
+        <table class="w-full text-sm bg-white border-collapse">
+          <thead class="bg-blue-800 text-white">
+            <tr>
+              <th class="px-3 py-2 text-left">法文</th>
+              <th class="px-3 py-2 text-left">IPA</th>
+              <th class="px-3 py-2 text-left">詞性/性別</th>
+              <th class="px-3 py-2 text-left">中文</th>
+              <th class="px-3 py-2 text-center">發音</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100" id="table-legs"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SENTENCES ===================== -->
+  <section id="section-sentences">
+    <h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
+      <span class="text-blue-700">💬</span> 基本例句
+    </h2>
+    <p class="text-gray-500 text-sm mb-4">描述身體部位、疼痛與外貌的常用句型</p>
+    <div class="section-divider mb-6"></div>
+    <div class="space-y-4" id="sentences-list"></div>
+  </section>
+
+  <!-- ===================== GRAMMAR ===================== -->
+  <section id="section-grammar">
+    <h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
+      <span class="text-blue-700">📝</span> 文法提示
+    </h2>
+    <div class="section-divider mb-6"></div>
+
+    <!-- Tip 1 -->
+    <div class="bg-amber-50 border-l-4 border-amber-400 rounded-xl p-5 mb-5 shadow-sm">
+      <h3 class="font-bold text-amber-800 text-lg mb-2">💡 提示一：法文身體部位的定冠詞</h3>
+      <p class="text-gray-700 mb-3">法文描述身體部位時，通常使用<strong>定冠詞（le / la / les）</strong>，而非英文的所有格代名詞（my / your…）。</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-lg p-4 border border-amber-200">
+          <p class="text-sm font-semibold text-red-600 mb-1">❌ 不自然（直譯）</p>
+          <p class="font-mono text-gray-700">Je lave <em>mon</em> visage.</p>
+          <p class="text-gray-500 text-xs mt-1">（較不常用）</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 border border-amber-200">
+          <p class="text-sm font-semibold text-green-600 mb-1">✅ 自然法文</p>
+          <p class="font-mono text-gray-700">Je me lave <em>le</em> visage.</p>
+          <p class="text-gray-500 text-xs mt-1">我洗臉。（代動詞 + 定冠詞）</p>
+        </div>
+      </div>
+      <div class="mt-3 text-sm text-gray-600">
+        <strong>規則：</strong>使用代動詞（verbe pronominal）時，身體部位前使用定冠詞。<br>
+        例：<span class="font-mono">se laver les mains</span>（洗手）、<span class="font-mono">se brosser les dents</span>（刷牙）
+      </div>
+    </div>
+
+    <!-- Tip 2 -->
+    <div class="bg-blue-50 border-l-4 border-blue-400 rounded-xl p-5 shadow-sm">
+      <h3 class="font-bold text-blue-800 text-lg mb-2">💡 提示二：avoir mal à — 表示疼痛</h3>
+      <p class="text-gray-700 mb-3">表達某個部位疼痛，使用 <strong>avoir mal à + 定冠詞 + 身體部位</strong>。</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse bg-white rounded-lg overflow-hidden">
+          <thead class="bg-blue-800 text-white">
+            <tr>
+              <th class="px-3 py-2 text-left">句型</th>
+              <th class="px-3 py-2 text-left">縮合形式</th>
+              <th class="px-3 py-2 text-left">中文</th>
+              <th class="px-3 py-2 text-center">發音</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-blue-100">
+            <tr>
+              <td class="px-3 py-2 font-mono">avoir mal à + le → <strong>au</strong></td>
+              <td class="px-3 py-2 font-mono text-blue-700">J'ai mal au dos.</td>
+              <td class="px-3 py-2">我背痛。</td>
+              <td class="px-3 py-2 text-center"><button class="speak-btn-sm" onclick="speak(this)" data-text="J'ai mal au dos.">🔊</button></td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 font-mono">avoir mal à + la</td>
+              <td class="px-3 py-2 font-mono text-blue-700">J'ai mal à la tête.</td>
+              <td class="px-3 py-2">我頭痛。</td>
+              <td class="px-3 py-2 text-center"><button class="speak-btn-sm" onclick="speak(this)" data-text="J'ai mal à la tête.">🔊</button></td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 font-mono">avoir mal à + les → <strong>aux</strong></td>
+              <td class="px-3 py-2 font-mono text-blue-700">J'ai mal aux pieds.</td>
+              <td class="px-3 py-2">我腳痛。</td>
+              <td class="px-3 py-2 text-center"><button class="speak-btn-sm" onclick="speak(this)" data-text="J'ai mal aux pieds.">🔊</button></td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 font-mono">avoir mal à + l'</td>
+              <td class="px-3 py-2 font-mono text-blue-700">J'ai mal à l'oreille.</td>
+              <td class="px-3 py-2">我耳朵痛。</td>
+              <td class="px-3 py-2 text-center"><button class="speak-btn-sm" onclick="speak(this)" data-text="J'ai mal à l'oreille.">🔊</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3 text-sm text-gray-600"><strong>縮合規則：</strong>à + le = <strong>au</strong>；à + les = <strong>aux</strong>；à + la / à + l' 不縮合。</p>
+    </div>
+  </section>
+
+  <!-- ===================== MATCHING GAME ===================== -->
+  <section id="section-matching">
+    <h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
+      <span class="text-blue-700">🎯</span> 配對遊戲
+    </h2>
+    <p class="text-gray-500 text-sm mb-4">點選左側法文單字，再點選右側對應的中文，看看你能全對嗎！</p>
+    <div class="section-divider mb-6"></div>
+
+    <div class="bg-white rounded-2xl shadow p-5">
+      <div class="flex items-center justify-between mb-4">
+        <div class="text-sm font-semibold text-gray-600">進度：<span id="match-score">0</span> / 10</div>
+        <button onclick="resetMatch()" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full transition">🔄 重新開始</button>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-2 mb-5">
+        <div id="match-progress-bar" class="progress-bar bg-green-500 h-2 rounded-full" style="width:0%"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="space-y-2" id="match-left"></div>
+        <div class="space-y-2" id="match-right"></div>
+      </div>
+
+      <div id="match-complete" class="hidden mt-5 text-center">
+        <p class="text-2xl font-bold text-green-600 mb-2">🎉 全部配對完成！</p>
+        <p class="text-gray-600 text-sm mb-3">太棒了！你記住了所有身體部位！</p>
+        <button onclick="resetMatch()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition">再玩一次</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section id="section-quiz">
+    <h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
+      <span class="text-blue-700">✏️</span> 綜合測驗
+    </h2>
+    <p class="text-gray-500 text-sm mb-4">15題混合題型：翻譯、拼字、性別判斷、聽音辨字</p>
+    <div class="section-divider mb-6"></div>
+
+    <div class="bg-white rounded-2xl shadow p-5">
+      <!-- Quiz progress -->
+      <div id="quiz-progress-area" class="mb-4">
+        <div class="flex justify-between text-sm text-gray-600 mb-1">
+          <span>題目 <span id="quiz-q-num">1</span> / 15</span>
+          <span>答對：<span id="quiz-correct-count">0</span></span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+          <div id="quiz-progress-bar" class="progress-bar bg-blue-500 h-2 rounded-full" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Question area -->
+      <div id="quiz-question-area"></div>
+
+      <!-- Final screen -->
+      <div id="quiz-final" class="hidden text-center py-6">
+        <p class="text-5xl mb-3" id="quiz-final-emoji">🎊</p>
+        <p class="text-2xl font-bold mb-1">測驗結束！</p>
+        <p class="text-lg text-gray-700 mb-1">得分：<span id="quiz-final-score" class="text-blue-700 font-bold"></span> / 15</p>
+        <p class="text-base text-gray-500 mb-4" id="quiz-final-comment"></p>
+        <button onclick="restartQuiz()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold transition">🔄 重新測驗</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="text-center py-6 text-gray-400 text-xs border-t border-gray-200 mt-10">
+  法語第7課 · 身體部位 · Les parties du corps · 2026-09-10
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+// ──────────────────────────────────────────────
+// SPEAK FUNCTIONS (exact spec)
+// ──────────────────────────────────────────────
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+function speakBoth(el) {
+  var textM = el.dataset.textM;
+  var textF = el.dataset.textF;
+  window.speechSynthesis.cancel();
+  var u1 = new SpeechSynthesisUtterance(textM);
+  u1.lang = 'fr-FR'; u1.rate = 0.85;
+  var u2 = new SpeechSynthesisUtterance(textF);
+  u2.lang = 'fr-FR'; u2.rate = 0.85;
+  window.speechSynthesis.speak(u1);
+  window.speechSynthesis.speak(u2);
+}
+
+// ──────────────────────────────────────────────
+// DATA
+// ──────────────────────────────────────────────
+const vocabData = [
+  {
+    fr: 'la tête',       ipa: '/la tɛt/',     pos: 'n.f.',  gender: '陰性',
+    zh: '頭',
+    example: 'Elle a mal à la tête.',
+    exZh: '她頭痛。',
+    exIpa: '/ɛl a mal a la tɛt/',
+    color: 'from-blue-500 to-blue-700'
+  },
+  {
+    fr: 'le visage',     ipa: '/lə vizaʒ/',   pos: 'n.m.',  gender: '陽性',
+    zh: '臉',
+    example: 'Il a un beau visage.',
+    exZh: '他有一張漂亮的臉。',
+    exIpa: '/il a œ̃ bo vizaʒ/',
+    color: 'from-indigo-500 to-indigo-700'
+  },
+  {
+    fr: "l'œil / les yeux", ipa: '/lœj / le jø/', pos: 'n.m.', gender: '陽性',
+    zh: '眼睛（單/複數）',
+    example: 'Elle a les yeux bleus.',
+    exZh: '她有藍色的眼睛。',
+    exIpa: '/ɛl a le jø blø/',
+    color: 'from-sky-500 to-sky-700'
+  },
+  {
+    fr: "l'oreille",     ipa: '/lɔʁɛj/',     pos: 'n.f.',  gender: '陰性',
+    zh: '耳朵',
+    example: "J'ai mal à l'oreille.",
+    exZh: '我耳朵痛。',
+    exIpa: "/ʒe mal a lɔʁɛj/",
+    color: 'from-purple-500 to-purple-700'
+  },
+  {
+    fr: 'le nez',        ipa: '/lə ne/',      pos: 'n.m.',  gender: '陽性',
+    zh: '鼻子',
+    example: 'Mon nez est rouge.',
+    exZh: '我的鼻子是紅的。',
+    exIpa: '/mɔ̃ ne ɛ ʁuʒ/',
+    color: 'from-pink-500 to-pink-700'
+  },
+  {
+    fr: 'la bouche',     ipa: '/la buʃ/',     pos: 'n.f.',  gender: '陰性',
+    zh: '嘴巴',
+    example: 'Ouvre la bouche, s\'il te plaît.',
+    exZh: '請張開嘴巴。',
+    exIpa: "/uvʁ la buʃ sil tə plɛ/",
+    color: 'from-red-500 to-red-700'
+  },
+  {
+    fr: 'la main',       ipa: '/la mɛ̃/',      pos: 'n.f.',  gender: '陰性',
+    zh: '手',
+    example: 'Lave-toi les mains !',
+    exZh: '去洗手！',
+    exIpa: '/lav twa le mɛ̃/',
+    color: 'from-orange-500 to-orange-700'
+  },
+  {
+    fr: 'le pied',       ipa: '/lə pje/',     pos: 'n.m.',  gender: '陽性',
+    zh: '腳',
+    example: "J'ai mal aux pieds.",
+    exZh: '我的腳很痛。',
+    exIpa: "/ʒe mal o pje/",
+    color: 'from-amber-500 to-amber-700'
+  },
+  {
+    fr: 'le dos',        ipa: '/lə do/',      pos: 'n.m.',  gender: '陽性',
+    zh: '背部',
+    example: "J'ai mal au dos.",
+    exZh: '我腰背痛。',
+    exIpa: "/ʒe mal o do/",
+    color: 'from-teal-500 to-teal-700'
+  },
+  {
+    fr: 'le bras',       ipa: '/lə bʁa/',     pos: 'n.m.',  gender: '陽性',
+    zh: '手臂',
+    example: 'Il porte un enfant dans les bras.',
+    exZh: '他抱著一個孩子。',
+    exIpa: '/il pɔʁt œ̃ ɑ̃fɑ̃ dɑ̃ le bʁa/',
+    color: 'from-emerald-500 to-emerald-700'
+  }
+];
+
+const tableHeadData = [
+  { fr: 'la tête',      ipa: '/tɛt/',      gender: 'n.f. 陰性', zh: '頭' },
+  { fr: 'le visage',    ipa: '/vizaʒ/',    gender: 'n.m. 陽性', zh: '臉' },
+  { fr: "l'œil",        ipa: '/œj/',       gender: 'n.m. 陽性', zh: '眼睛（單數）' },
+  { fr: 'les yeux',     ipa: '/jø/',       gender: 'n.m.pl. 陽性複數', zh: '眼睛（複數）' },
+  { fr: "l'oreille",    ipa: '/ɔʁɛj/',    gender: 'n.f. 陰性', zh: '耳朵' },
+  { fr: 'le nez',       ipa: '/ne/',       gender: 'n.m. 陽性', zh: '鼻子' },
+  { fr: 'la bouche',    ipa: '/buʃ/',      gender: 'n.f. 陰性', zh: '嘴巴' },
+  { fr: 'la dent',      ipa: '/dɑ̃/',       gender: 'n.f. 陰性', zh: '牙齒' },
+  { fr: 'la lèvre',     ipa: '/lɛvʁ/',    gender: 'n.f. 陰性', zh: '嘴唇' },
+  { fr: 'la joue',      ipa: '/ʒu/',       gender: 'n.f. 陰性', zh: '臉頰' },
+  { fr: 'le front',     ipa: '/fʁɔ̃/',      gender: 'n.m. 陽性', zh: '額頭' },
+  { fr: 'le menton',    ipa: '/mɑ̃tɔ̃/',    gender: 'n.m. 陽性', zh: '下巴' }
+];
+
+const tableBodyData = [
+  { fr: 'le cou',       ipa: '/ku/',       gender: 'n.m. 陽性', zh: '脖子' },
+  { fr: "l'épaule",     ipa: '/epol/',     gender: 'n.f. 陰性', zh: '肩膀' },
+  { fr: 'le bras',      ipa: '/bʁa/',      gender: 'n.m. 陽性', zh: '手臂' },
+  { fr: 'le coude',     ipa: '/kud/',      gender: 'n.m. 陽性', zh: '手肘' },
+  { fr: 'le poignet',   ipa: '/pwaɲɛ/',   gender: 'n.m. 陽性', zh: '手腕' },
+  { fr: 'la main',      ipa: '/mɛ̃/',       gender: 'n.f. 陰性', zh: '手' },
+  { fr: 'le doigt',     ipa: '/dwa/',      gender: 'n.m. 陽性', zh: '手指' },
+  { fr: 'la poitrine',  ipa: '/pwatʁin/', gender: 'n.f. 陰性', zh: '胸部' },
+  { fr: 'le ventre',    ipa: '/vɑ̃tʁ/',    gender: 'n.m. 陽性', zh: '腹部' },
+  { fr: 'le dos',       ipa: '/do/',       gender: 'n.m. 陽性', zh: '背部' },
+  { fr: 'la hanche',    ipa: '/ɑ̃ʃ/',      gender: 'n.f. 陰性', zh: '臀部/髖部' },
+  { fr: 'le nombril',   ipa: '/nɔ̃bʁil/', gender: 'n.m. 陽性', zh: '肚臍' }
+];
+
+const tableLegsData = [
+  { fr: 'la jambe',     ipa: '/ʒɑ̃b/',     gender: 'n.f. 陰性', zh: '腿' },
+  { fr: 'le genou',     ipa: '/ʒənu/',     gender: 'n.m. 陽性', zh: '膝蓋' },
+  { fr: 'la cuisse',    ipa: '/kɥis/',     gender: 'n.f. 陰性', zh: '大腿' },
+  { fr: 'le mollet',    ipa: '/mɔlɛ/',     gender: 'n.m. 陽性', zh: '小腿' },
+  { fr: 'la cheville',  ipa: '/ʃəvij/',   gender: 'n.f. 陰性', zh: '腳踝' },
+  { fr: 'le pied',      ipa: '/pje/',      gender: 'n.m. 陽性', zh: '腳' },
+  { fr: "l'orteil",     ipa: '/ɔʁtɛj/',   gender: 'n.m. 陽性', zh: '腳趾' },
+  { fr: 'le talon',     ipa: '/talɔ̃/',    gender: 'n.m. 陽性', zh: '腳跟' }
+];
+
+const sentencesData = [
+  {
+    fr: "J'ai deux yeux, un nez et une bouche.",
+    ipa: "/ʒe dø jø, œ̃ ne e yn buʃ/",
+    zh: "我有兩隻眼睛、一個鼻子和一張嘴。"
+  },
+  {
+    fr: "Elle a les cheveux longs et les yeux verts.",
+    ipa: "/ɛl a le ʃəvø lɔ̃ e le jø vɛʁ/",
+    zh: "她有長頭髮和綠色眼睛。"
+  },
+  {
+    fr: "J'ai mal à la gorge et à la tête.",
+    ipa: "/ʒe mal a la ɡɔʁʒ e a la tɛt/",
+    zh: "我喉嚨痛又頭痛。"
+  },
+  {
+    fr: "Il se casse le bras.",
+    ipa: "/il sə kas lə bʁa/",
+    zh: "他把手臂弄骨折了。"
+  },
+  {
+    fr: "Le médecin examine le genou du patient.",
+    ipa: "/lə medsɛ̃ ɛɡzamin lə ʒənu dy pasjɑ̃/",
+    zh: "醫生檢查病人的膝蓋。"
+  }
+];
+
+// ──────────────────────────────────────────────
+// RENDER VOCABULARY CARDS
+// ──────────────────────────────────────────────
+function renderVocabCards() {
+  const container = document.getElementById('vocab-cards');
+  container.innerHTML = vocabData.map((v, i) => `
+    <div class="card-container" onclick="this.classList.toggle('flipped')" style="cursor:pointer;">
+      <div class="card-inner">
+        <!-- Front -->
+        <div class="card-front bg-gradient-to-br ${v.color} text-white p-5 flex flex-col justify-between shadow-lg">
+          <div>
+            <div class="flex items-start justify-between mb-1">
+              <div>
+                <p class="text-2xl font-bold leading-tight">${v.fr}</p>
+                <p class="text-xs opacity-80 mt-0.5">${v.ipa}</p>
+              </div>
+              <button class="speak-btn bg-white bg-opacity-20 hover:bg-opacity-40"
+                      onclick="event.stopPropagation(); speak(this)"
+                      data-text="${v.fr}">🔊</button>
+            </div>
+            <div class="flex gap-2 mt-2">
+              <span class="bg-white bg-opacity-20 text-xs px-2 py-0.5 rounded-full">${v.pos}</span>
+              <span class="bg-white bg-opacity-20 text-xs px-2 py-0.5 rounded-full">${v.gender}</span>
+            </div>
+          </div>
+          <div class="text-center">
+            <p class="text-4xl font-bold opacity-30">{{${i + 1}}}</p>
+            <p class="text-3xl font-bold">${v.zh}</p>
+          </div>
+          <p class="text-xs opacity-60 text-center mt-1">點擊翻面查看例句 ▸</p>
+        </div>
+        <!-- Back -->
+        <div class="card-back bg-white border-2 border-gray-200 p-5 flex flex-col justify-center shadow-lg">
+          <p class="text-xs text-gray-400 mb-2 uppercase tracking-wide">例句 · Exemple</p>
+          <div class="flex items-start gap-2 mb-1">
+            <p class="font-semibold text-gray-800 flex-1 leading-snug">${v.example}</p>
+            <button class="speak-btn flex-shrink-0"
+                    onclick="event.stopPropagation(); speak(this)"
+                    data-text="${v.example}">🔊</button>
+          </div>
+          <p class="text-xs text-gray-400 mb-1">${v.exIpa}</p>
+          <p class="text-gray-600 text-sm mb-4">${v.exZh}</p>
+          <div class="border-t border-gray-100 pt-3">
+            <div class="flex items-center gap-2">
+              <span class="text-blue-600 font-bold">${v.fr}</span>
+              <button class="speak-btn-sm"
+                      onclick="event.stopPropagation(); speak(this)"
+                      data-text="${v.fr}">🔊</button>
+              <span class="text-gray-400">·</span>
+              <span class="text-gray-500 text-sm">${v.zh}</span>
+            </div>
+          </div>
+          <p class="text-xs text-gray-300 text-center mt-3">◂ 點擊翻回</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ──────────────────────────────────────────────
+// RENDER TABLE ROWS
+// ──────────────────────────────────────────────
+function renderTableRows(data, tbodyId) {
+  const tbody = document.getElementById(tbodyId);
+  tbody.innerHTML = data.map((r, i) => `
+    <tr class="${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}">
+      <td class="px-3 py-2 font-semibold text-blue-800">${r.fr}</td>
+      <td class="px-3 py-2 text-gray-500 font-mono text-xs">${r.ipa}</td>
+      <td class="px-3 py-2 text-xs text-gray-500">${r.gender}</td>
+      <td class="px-3 py-2 text-gray-700">${r.zh}</td>
+      <td class="px-3 py-2 text-center">
+        <button class="speak-btn-sm" onclick="speak(this)" data-text="${r.fr}">🔊</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ──────────────────────────────────────────────
+// RENDER SENTENCES
+// ──────────────────────────────────────────────
+function renderSentences() {
+  const container = document.getElementById('sentences-list');
+  container.innerHTML = sentencesData.map((s, i) => `
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4 flex gap-3">
+      <div class="flex-shrink-0 w-8 h-8 bg-blue-800 text-white rounded-full flex items-center justify-center font-bold text-sm">${i + 1}</div>
+      <div class="flex-1">
+        <div class="flex items-start gap-2 mb-1">
+          <p class="font-semibold text-gray-800 flex-1">${s.fr}</p>
+          <button class="speak-btn flex-shrink-0" onclick="speak(this)" data-text="${s.fr}">🔊</button>
+        </div>
+        <p class="text-xs text-gray-400 mb-1">${s.ipa}</p>
+        <p class="text-gray-600 text-sm">${s.zh}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ──────────────────────────────────────────────
+// MATCHING GAME
+// ──────────────────────────────────────────────
+const matchPairs = [
+  { fr: 'la tête',     zh: '頭' },
+  { fr: 'le nez',      zh: '鼻子' },
+  { fr: 'la bouche',   zh: '嘴巴' },
+  { fr: "l'oreille",   zh: '耳朵' },
+  { fr: 'le dos',      zh: '背部' },
+  { fr: 'la main',     zh: '手' },
+  { fr: 'le pied',     zh: '腳' },
+  { fr: 'le genou',    zh: '膝蓋' },
+  { fr: 'le bras',     zh: '手臂' },
+  { fr: 'la joue',     zh: '臉頰' }
+];
+
+let matchSelectedLeft = null;
+let matchSelectedRight = null;
+let matchCompleted = 0;
+let matchCorrectPairs = new Set();
+
+function shuffle(arr) {
+  return arr.slice().sort(() => Math.random() - 0.5);
+}
+
+function renderMatch() {
+  matchSelectedLeft = null;
+  matchSelectedRight = null;
+  matchCompleted = 0;
+  matchCorrectPairs.clear();
+
+  const leftShuffled = shuffle(matchPairs);
+  const rightShuffled = shuffle(matchPairs);
+
+  document.getElementById('match-left').innerHTML = leftShuffled.map(p => `
+    <div class="match-btn" id="ml-${p.fr.replace(/[^a-zA-Z]/g,'-')}"
+         data-fr="${p.fr}" onclick="matchClickLeft(this)">${p.fr}</div>
+  `).join('');
+
+  document.getElementById('match-right').innerHTML = rightShuffled.map(p => `
+    <div class="match-btn" id="mr-${p.zh}"
+         data-zh="${p.zh}" onclick="matchClickRight(this)">${p.zh}</div>
+  `).join('');
+
+  document.getElementById('match-score').textContent = '0';
+  document.getElementById('match-progress-bar').style.width = '0%';
+  document.getElementById('match-complete').classList.add('hidden');
+}
+
+function matchClickLeft(el) {
+  if (el.classList.contains('correct')) return;
+  document.querySelectorAll('#match-left .match-btn').forEach(b => {
+    if (!b.classList.contains('correct')) b.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  matchSelectedLeft = el;
+  if (matchSelectedRight) tryMatch();
+}
+
+function matchClickRight(el) {
+  if (el.classList.contains('correct')) return;
+  document.querySelectorAll('#match-right .match-btn').forEach(b => {
+    if (!b.classList.contains('correct')) b.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  matchSelectedRight = el;
+  if (matchSelectedLeft) tryMatch();
+}
+
+function tryMatch() {
+  const frWord = matchSelectedLeft.dataset.fr;
+  const zhWord = matchSelectedRight.dataset.zh;
+  const correctZh = matchPairs.find(p => p.fr === frWord).zh;
+
+  if (correctZh === zhWord) {
+    // Correct
+    matchSelectedLeft.classList.remove('selected');
+    matchSelectedRight.classList.remove('selected');
+    matchSelectedLeft.classList.add('correct');
+    matchSelectedRight.classList.add('correct');
+    matchSelectedLeft.innerHTML = '✓ ' + matchSelectedLeft.innerHTML;
+    matchSelectedRight.innerHTML = '✓ ' + matchSelectedRight.innerHTML;
+    matchCompleted++;
+    document.getElementById('match-score').textContent = matchCompleted;
+    document.getElementById('match-progress-bar').style.width = (matchCompleted * 10) + '%';
+    if (matchCompleted === 10) {
+      document.getElementById('match-complete').classList.remove('hidden');
+    }
+  } else {
+    // Wrong - brief red flash
+    matchSelectedLeft.classList.add('wrong');
+    matchSelectedRight.classList.add('wrong');
+    setTimeout(() => {
+      if (matchSelectedLeft) {
+        matchSelectedLeft.classList.remove('wrong', 'selected');
+        matchSelectedLeft = null;
+      }
+      if (matchSelectedRight) {
+        matchSelectedRight.classList.remove('wrong', 'selected');
+        matchSelectedRight = null;
+      }
+    }, 700);
+    return;
+  }
+
+  matchSelectedLeft = null;
+  matchSelectedRight = null;
+}
+
+function resetMatch() {
+  renderMatch();
+}
+
+// ──────────────────────────────────────────────
+// QUIZ
+// ──────────────────────────────────────────────
+const allWords = [
+  { fr: 'la tête',      zh: '頭',        gender: 'f', article: 'la' },
+  { fr: 'le visage',    zh: '臉',        gender: 'm', article: 'le' },
+  { fr: 'les yeux',     zh: '眼睛',      gender: 'm', article: 'les' },
+  { fr: "l'oreille",    zh: '耳朵',      gender: 'f', article: "l'" },
+  { fr: 'le nez',       zh: '鼻子',      gender: 'm', article: 'le' },
+  { fr: 'la bouche',    zh: '嘴巴',      gender: 'f', article: 'la' },
+  { fr: 'la dent',      zh: '牙齒',      gender: 'f', article: 'la' },
+  { fr: 'la main',      zh: '手',        gender: 'f', article: 'la' },
+  { fr: 'le pied',      zh: '腳',        gender: 'm', article: 'le' },
+  { fr: 'le dos',       zh: '背部',      gender: 'm', article: 'le' },
+  { fr: 'le bras',      zh: '手臂',      gender: 'm', article: 'le' },
+  { fr: 'le genou',     zh: '膝蓋',      gender: 'm', article: 'le' },
+  { fr: 'la jambe',     zh: '腿',        gender: 'f', article: 'la' },
+  { fr: "l'épaule",     zh: '肩膀',      gender: 'f', article: "l'" },
+  { fr: 'le cou',       zh: '脖子',      gender: 'm', article: 'le' },
+  { fr: 'la joue',      zh: '臉頰',      gender: 'f', article: 'la' },
+  { fr: 'le front',     zh: '額頭',      gender: 'm', article: 'le' },
+  { fr: 'le ventre',    zh: '腹部',      gender: 'm', article: 'le' },
+  { fr: 'la cheville',  zh: '腳踝',      gender: 'f', article: 'la' },
+  { fr: 'le doigt',     zh: '手指',      gender: 'm', article: 'le' }
+];
+
+// Spelling puzzles (word → hide some letters)
+const spellingWords = [
+  { fr: 'tête',   hint: 't_te',   bare: 'tête' },
+  { fr: 'bouche', hint: 'b_uch_', bare: 'bouche' },
+  { fr: 'épaule', hint: '_paul_', bare: 'épaule' },
+  { fr: 'genou',  hint: 'gen_u',  bare: 'genou' },
+  { fr: 'jambe',  hint: 'j_mb_',  bare: 'jambe' },
+  { fr: 'visage', hint: 'vis_g_', bare: 'visage' }
+];
+
+let quizQuestions = [];
+let quizCurrentIndex = 0;
+let quizCorrectCount = 0;
+let quizAnswered = false;
+
+function generateQuizQuestions() {
+  const questions = [];
+  const wordsShuffled = shuffle(allWords);
+
+  // Type 1: Chinese → French (4 choices) — 5 questions
+  const t1Words = wordsShuffled.slice(0, 5);
+  t1Words.forEach(w => {
+    const wrong = shuffle(allWords.filter(x => x.fr !== w.fr)).slice(0, 3);
+    const choices = shuffle([w, ...wrong]);
+    questions.push({
+      type: 1,
+      prompt: `「${w.zh}」的法文是？`,
+      choices: choices.map(c => c.fr),
+      answer: w.fr
+    });
+  });
+
+  // Type 2: Spelling fill-in — 4 questions
+  const spelShuffled = shuffle(spellingWords).slice(0, 4);
+  spelShuffled.forEach(s => {
+    questions.push({
+      type: 2,
+      prompt: `請填入缺少的字母，完成單字：`,
+      hint: s.hint,
+      answer: s.bare,
+      full: s.fr
+    });
+  });
+
+  // Type 3: Gender (article) — 3 questions
+  const t3Words = shuffle(allWords).slice(0, 3);
+  t3Words.forEach(w => {
+    const bare = w.fr.replace(/^(le |la |les |l')/i, '').trim();
+    questions.push({
+      type: 3,
+      prompt: `「${w.zh}」(${bare}) 的性別是？`,
+      bare: bare,
+      choices: ['le (陽性)', 'la (陰性)', "l' (母音開頭)", 'les (複數)'],
+      answer: `${w.article} (${w.article === 'le' ? '陽性' : w.article === 'la' ? '陰性' : w.article === "l'" ? '母音開頭' : '複數'})`
+    });
+  });
+
+  // Type 4: Audio selection — 3 questions
+  const t4Groups = [
+    { words: ['la tête', 'la dent', 'le nez'], answer: 'la tête', prompt: '請聽聲音，選出正確的單字：' },
+    { words: ['la main', 'la jambe', 'le pied'], answer: 'la main', prompt: '請聽聲音，選出正確的單字：' },
+    { words: ['le dos', 'le cou', 'le genou'], answer: 'le dos', prompt: '請聽聲音，選出正確的單字：' }
+  ];
+  t4Groups.forEach(g => {
+    questions.push({
+      type: 4,
+      prompt: g.prompt,
+      audioText: g.answer,
+      choices: shuffle(g.words),
+      answer: g.answer
+    });
+  });
+
+  return shuffle(questions);
+}
+
+function renderQuizQuestion() {
+  if (quizCurrentIndex >= quizQuestions.length) {
+    showQuizFinal();
+    return;
+  }
+
+  quizAnswered = false;
+  const q = quizQuestions[quizCurrentIndex];
+  const qNum = quizCurrentIndex + 1;
+
+  // Update progress
+  document.getElementById('quiz-q-num').textContent = qNum;
+  document.getElementById('quiz-correct-count').textContent = quizCorrectCount;
+  document.getElementById('quiz-progress-bar').style.width = ((qNum - 1) / 15 * 100) + '%';
+
+  let html = '';
+
+  // Type badge
+  const typeBadges = {
+    1: { label: '翻譯題', color: 'bg-blue-100 text-blue-700' },
+    2: { label: '拼字題', color: 'bg-purple-100 text-purple-700' },
+    3: { label: '性別題', color: 'bg-amber-100 text-amber-700' },
+    4: { label: '聽音辨字', color: 'bg-green-100 text-green-700' }
+  };
+  const badge = typeBadges[q.type];
+
+  html += `<div class="mb-4">`;
+  html += `<span class="inline-block px-3 py-1 rounded-full text-xs font-semibold ${badge.color} mb-3">${badge.label} · 第 ${qNum}/15 題</span>`;
+  html += `<p class="text-lg font-semibold text-gray-800 mb-4">${q.prompt}</p>`;
+
+  if (q.type === 1) {
+    html += `<div class="grid grid-cols-2 gap-3">`;
+    q.choices.forEach((c, i) => {
+      html += `<button class="quiz-option" onclick="checkQuizAnswer(this, '${escQ(c)}')" data-value="${escQ(c)}">${c}</button>`;
+    });
+    html += `</div>`;
+  }
+
+  if (q.type === 2) {
+    html += `<div class="mb-3">
+      <p class="text-gray-500 text-sm mb-2">提示格式：<span class="font-mono text-blue-700 text-lg">${q.hint}</span></p>
+      <input type="text" id="spelling-input" class="spelling-input" placeholder="輸入完整單字…"
+             onkeydown="if(event.key==='Enter') checkSpelling()" />
+      <div class="flex gap-2 mt-3">
+        <button onclick="checkSpelling()" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg transition">確認</button>
+      </div>
+    </div>`;
+  }
+
+  if (q.type === 3) {
+    html += `<p class="text-gray-600 text-sm mb-3 font-mono text-xl">___ ${q.bare}</p>`;
+    html += `<div class="grid grid-cols-2 gap-3">`;
+    q.choices.forEach(c => {
+      html += `<button class="quiz-option" onclick="checkQuizAnswer(this, '${escQ(c)}')" data-value="${escQ(c)}">${c}</button>`;
+    });
+    html += `</div>`;
+  }
+
+  if (q.type === 4) {
+    html += `<div class="flex justify-center mb-4">
+      <button onclick="speak(this)" data-text="${q.audioText}"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition">
+        🔊 播放聲音
+      </button>
+    </div>`;
+    html += `<div class="grid grid-cols-3 gap-3">`;
+    q.choices.forEach(c => {
+      html += `<button class="quiz-option text-center" onclick="checkQuizAnswer(this, '${escQ(c)}')" data-value="${escQ(c)}">${c}</button>`;
+    });
+    html += `</div>`;
+  }
+
+  // Feedback area
+  html += `<div id="quiz-feedback" class="hidden mt-4 p-3 rounded-lg text-sm font-semibold"></div>`;
+  html += `<div class="mt-4 flex justify-end">
+    <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition">
+      ${qNum < 15 ? '下一題 →' : '查看結果 →'}
+    </button>
+  </div>`;
+
+  html += `</div>`;
+  document.getElementById('quiz-question-area').innerHTML = html;
+
+  // Focus spelling input
+  if (q.type === 2) {
+    setTimeout(() => {
+      const inp = document.getElementById('spelling-input');
+      if (inp) inp.focus();
+    }, 100);
+  }
+}
+
+function escQ(s) {
+  return s.replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+}
+
+function checkQuizAnswer(btn, value) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+
+  const q = quizQuestions[quizCurrentIndex];
+  const isCorrect = value === q.answer || btn.dataset.value === q.answer;
+
+  // Highlight all options
+  document.querySelectorAll('.quiz-option').forEach(b => {
+    if (b.dataset.value === q.answer) b.classList.add('show-answer');
+  });
+
+  const feedback = document.getElementById('quiz-feedback');
+  feedback.classList.remove('hidden');
+
+  if (isCorrect) {
+    btn.classList.add('selected-right');
+    feedback.className = 'mt-4 p-3 rounded-lg text-sm font-semibold bg-green-100 text-green-700';
+    feedback.textContent = '✅ 正確！';
+    quizCorrectCount++;
+    document.getElementById('quiz-correct-count').textContent = quizCorrectCount;
+  } else {
+    btn.classList.add('selected-wrong');
+    feedback.className = 'mt-4 p-3 rounded-lg text-sm font-semibold bg-red-100 text-red-700';
+    feedback.textContent = `❌ 答錯了！正確答案是：${q.answer}`;
+  }
+
+  document.querySelectorAll('.quiz-option').forEach(b => b.style.pointerEvents = 'none');
+  document.getElementById('quiz-next-btn').classList.remove('hidden');
+}
+
+function checkSpelling() {
+  if (quizAnswered) return;
+  const input = document.getElementById('spelling-input');
+  if (!input) return;
+  const val = input.value.trim().toLowerCase();
+  const q = quizQuestions[quizCurrentIndex];
+  const isCorrect = val === q.answer.toLowerCase() || val === q.full.toLowerCase();
+
+  quizAnswered = true;
+  const feedback = document.getElementById('quiz-feedback');
+  feedback.classList.remove('hidden');
+
+  if (isCorrect) {
+    input.classList.add('correct-input');
+    feedback.className = 'mt-4 p-3 rounded-lg text-sm font-semibold bg-green-100 text-green-700';
+    feedback.textContent = '✅ 拼寫正確！';
+    quizCorrectCount++;
+    document.getElementById('quiz-correct-count').textContent = quizCorrectCount;
+  } else {
+    input.classList.add('wrong-input');
+    feedback.className = 'mt-4 p-3 rounded-lg text-sm font-semibold bg-red-100 text-red-700';
+    feedback.textContent = `❌ 拼錯了！正確拼法是：${q.answer}`;
+  }
+
+  input.disabled = true;
+  document.getElementById('quiz-next-btn').classList.remove('hidden');
+}
+
+function nextQuizQuestion() {
+  quizCurrentIndex++;
+  if (quizCurrentIndex >= quizQuestions.length) {
+    showQuizFinal();
+  } else {
+    renderQuizQuestion();
+  }
+}
+
+function showQuizFinal() {
+  document.getElementById('quiz-progress-area').classList.add('hidden');
+  document.getElementById('quiz-question-area').classList.add('hidden');
+  const final = document.getElementById('quiz-final');
+  final.classList.remove('hidden');
+
+  const score = quizCorrectCount;
+  document.getElementById('quiz-final-score').textContent = score;
+  document.getElementById('quiz-progress-bar').style.width = '100%';
+
+  let emoji = '😊';
+  let comment = '';
+  if (score === 15) { emoji = '🏆'; comment = '滿分！你是法語身體部位大師！Parfait !'; }
+  else if (score >= 12) { emoji = '🎉'; comment = '非常出色！繼續保持！Très bien !'; }
+  else if (score >= 9)  { emoji = '👍'; comment = '做得不錯！再複習一次就更完美了！Bien !'; }
+  else if (score >= 6)  { emoji = '📚'; comment = '還需要多練習，加油！Continuez !'; }
+  else                  { emoji = '💪'; comment = '別灰心，多複習單字卡！Courage !'; }
+
+  document.getElementById('quiz-final-emoji').textContent = emoji;
+  document.getElementById('quiz-final-comment').textContent = comment;
+}
+
+function restartQuiz() {
+  quizCurrentIndex = 0;
+  quizCorrectCount = 0;
+  quizAnswered = false;
+  quizQuestions = generateQuizQuestions();
+
+  document.getElementById('quiz-progress-area').classList.remove('hidden');
+  document.getElementById('quiz-question-area').classList.remove('hidden');
+  document.getElementById('quiz-final').classList.add('hidden');
+  document.getElementById('quiz-correct-count').textContent = '0';
+  document.getElementById('quiz-progress-bar').style.width = '0%';
+
+  renderQuizQuestion();
+}
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  renderVocabCards();
+  renderTableRows(tableHeadData, 'table-head');
+  renderTableRows(tableBodyData, 'table-body');
+  renderTableRows(tableLegsData, 'table-legs');
+  renderSentences();
+  renderMatch();
+
+  quizQuestions = generateQuizQuestions();
+  renderQuizQuestion();
+});
+</script>
+</body>
+</html>
