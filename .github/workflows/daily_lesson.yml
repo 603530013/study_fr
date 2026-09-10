@@ -1,0 +1,37 @@
+name: 法文每日課程
+
+on:
+  schedule:
+    - cron: '30 0 * * *'  # 08:30 Taipei (UTC+8) = 00:30 UTC
+  workflow_dispatch:       # 允許手動觸發
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Generate lesson
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_lesson.py
+
+      - name: Commit and push
+        run: |
+          git config user.email "french-bot@github.com"
+          git config user.name "French Lesson Bot"
+          FILENAME=$(cat /tmp/lesson_filename.txt)
+          TITLE=$(cat /tmp/lesson_title.txt)
+          git add "$FILENAME"
+          git diff --cached --quiet || git commit -m "Add ${TITLE}"
+          git push
