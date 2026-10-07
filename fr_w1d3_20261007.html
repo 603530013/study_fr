@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1週 Day3・衣物・情境對話</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- Header -->
+<div class="bg-gradient-to-r from-blue-800 via-white to-red-600 p-6 text-center shadow">
+  <p class="text-blue-900 font-semibold text-sm">🇫🇷 French Study Planner</p>
+  <h1 class="text-2xl font-bold text-blue-900">第1週 · Day3 · 衣物 · 情境對話</h1>
+  <p class="text-gray-700 text-sm mt-1">2026-10-07</p>
+  <div class="flex justify-center gap-2 mt-3">
+    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gray-200 text-gray-500">D1</span>
+    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gray-200 text-gray-500">D2</span>
+    <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-700 text-white">D3</span>
+    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gray-200 text-gray-500">D4</span>
+    <span class="px-3 py-1 rounded-full text-xs font-bold bg-gray-200 text-gray-500">D5</span>
+  </div>
+</div>
+
+<div class="max-w-3xl mx-auto p-4">
+
+  <!-- Vocabulary Section -->
+  <h2 class="text-lg font-bold text-gray-800 mt-4 mb-2">📚 今日詞彙（情境詞彙10個）</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">essayer</span>
+          <span class="ml-2 text-xs text-gray-400">/e.se.je/</span>
+          <span class="ml-2 text-xs bg-blue-100 text-blue-700 px-1 rounded">v.</span>
+        </div>
+        <button onclick="speak(this)" data-text="essayer" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">試穿</p>
+      <p class="text-sm text-gray-500 mt-1 italic">Je veux essayer cette robe.
+        <button onclick="speak(this)" data-text="Je veux essayer cette robe." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">我想試穿這條裙子。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">la taille</span>
+          <span class="ml-2 text-xs text-gray-400">/la taj/</span>
+          <span class="ml-2 text-xs bg-pink-100 text-pink-700 px-1 rounded">n.f.</span>
+        </div>
+        <button onclick="speak(this)" data-text="la taille" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">尺寸</p>
+      <p class="text-sm text-gray-500 mt-1 italic">Quelle est votre taille ?
+        <button onclick="speak(this)" data-text="Quelle est votre taille ?" class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">您的尺寸是幾號？</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">la couleur</span>
+          <span class="ml-2 text-xs text-gray-400">/la ku.lœʁ/</span>
+          <span class="ml-2 text-xs bg-pink-100 text-pink-700 px-1 rounded">n.f.</span>
+        </div>
+        <button onclick="speak(this)" data-text="la couleur" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">顏色</p>
+      <p class="text-sm text-gray-500 mt-1 italic">J'aime cette couleur.
+        <button onclick="speak(this)" data-text="J'aime cette couleur." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">我喜歡這個顏色。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">cher / chère</span>
+          <span class="ml-2 text-xs text-gray-400">/ʃɛʁ/</span>
+          <span class="ml-2 text-xs bg-purple-100 text-purple-700 px-1 rounded">adj.</span>
+        </div>
+        <button onclick="speak(this)" data-text="cher" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">貴的</p>
+      <p class="text-sm text-gray-500 mt-1 italic">C'est trop cher.
+        <button onclick="speak(this)" data-text="C'est trop cher." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">這太貴了。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">bon marché</span>
+          <span class="ml-2 text-xs text-gray-400">/bɔ̃ maʁ.ʃe/</span>
+          <span class="ml-2 text-xs bg-purple-100 text-purple-700 px-1 rounded">adj.</span>
+        </div>
+        <button onclick="speak(this)" data-text="bon marché" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">便宜的</p>
+      <p class="text-sm text-gray-500 mt-1 italic">Ce pull est bon marché.
+        <button onclick="speak(this)" data-text="Ce pull est bon marché." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">這件毛衣很便宜。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">la cabine d'essayage</span>
+          <span class="ml-2 text-xs text-gray-400">/la ka.bin de.sɛ.jaʒ/</span>
+          <span class="ml-2 text-xs bg-pink-100 text-pink-700 px-1 rounded">n.f.</span>
+        </div>
+        <button onclick="speak(this)" data-text="la cabine d'essayage" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">試衣間</p>
+      <p class="text-sm text-gray-500 mt-1 italic">La cabine d'essayage est là.
+        <button onclick="speak(this)" data-text="La cabine d'essayage est là." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">試衣間在那裡。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">à la mode</span>
+          <span class="ml-2 text-xs text-gray-400">/a la mɔd/</span>
+          <span class="ml-2 text-xs bg-green-100 text-green-700 px-1 rounded">expr.</span>
+        </div>
+        <button onclick="speak(this)" data-text="à la mode" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">流行的</p>
+      <p class="text-sm text-gray-500 mt-1 italic">Cette veste est très à la mode.
+        <button onclick="speak(this)" data-text="Cette veste est très à la mode." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">這件外套非常流行。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">confortable</span>
+          <span class="ml-2 text-xs text-gray-400">/kɔ̃.fɔʁ.tabl/</span>
+          <span class="ml-2 text-xs bg-purple-100 text-purple-700 px-1 rounded">adj.</span>
+        </div>
+        <button onclick="speak(this)" data-text="confortable" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">舒適的</p>
+      <p class="text-sm text-gray-500 mt-1 italic">Ces chaussures sont confortables.
+        <button onclick="speak(this)" data-text="Ces chaussures sont confortables." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">這雙鞋子很舒適。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">trop grand</span>
+          <span class="ml-2 text-xs text-gray-400">/tʁo ɡʁɑ̃/</span>
+          <span class="ml-2 text-xs bg-green-100 text-green-700 px-1 rounded">expr.</span>
+        </div>
+        <button onclick="speak(this)" data-text="trop grand" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">太大</p>
+      <p class="text-sm text-gray-500 mt-1 italic">C'est trop grand pour moi.
+        <button onclick="speak(this)" data-text="C'est trop grand pour moi." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">這對我來說太大了。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-lg font-bold text-blue-700">trop petit</span>
+          <span class="ml-2 text-xs text-gray-400">/tʁo pə.ti/</span>
+          <span class="ml-2 text-xs bg-green-100 text-green-700 px-1 rounded">expr.</span>
+        </div>
+        <button onclick="speak(this)" data-text="trop petit" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button>
+      </div>
+      <p class="text-gray-700 font-semibold mt-1">太小</p>
+      <p class="text-sm text-gray-500 mt-1 italic">Ce pantalon est trop petit.
+        <button onclick="speak(this)" data-text="Ce pantalon est trop petit." class="ml-1 text-blue-400 hover:text-blue-600 text-sm">🔊</button>
+      </p>
+      <p class="text-xs text-gray-400">這條褲子太小了。</p>
+    </div>
+
+  </div>
+
+  <!-- Dialogues Section -->
+  <h2 class="text-lg font-bold text-gray-800 mb-2">💬 情境對話</h2>
+
+  <!-- Dialogue 1 -->
+  <div class="bg-white rounded-xl shadow p-4 mb-4">
+    <h3 class="font-bold text-blue-700 mb-3">情境一：在服裝店詢問尺寸</h3>
+    <div class="space-y-2">
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Bonjour, je cherche une chemise.</p>
+          <p class="text-gray-500 text-sm">你好，我在找一件襯衫。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Bonjour, je cherche une chemise." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Bien sûr ! Vous faites quelle taille ?</p>
+          <p class="text-gray-500 text-sm">當然！您穿幾號？</p>
+        </div>
+        <button onclick="speak(this)" data-text="Bien sûr ! Vous faites quelle taille ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Je fais du trente-huit, je crois.</p>
+          <p class="text-gray-500 text-sm">我想我穿38號。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Je fais du trente-huit, je crois." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Voici une chemise en taille trente-huit. Elle vous plaît ?</p>
+          <p class="text-gray-500 text-sm">這是一件38號的襯衫。您喜歡嗎？</p>
+        </div>
+        <button onclick="speak(this)" data-text="Voici une chemise en taille trente-huit. Elle vous plaît ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Oui, elle est jolie. Est-ce que je peux l'essayer ?</p>
+          <p class="text-gray-500 text-sm">是的，很漂亮。我可以試穿嗎？</p>
+        </div>
+        <button onclick="speak(this)" data-text="Oui, elle est jolie. Est-ce que je peux l'essayer ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Oui, la cabine d'essayage est au fond à droite.</p>
+          <p class="text-gray-500 text-sm">當然，試衣間在最裡面右邊。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Oui, la cabine d'essayage est au fond à droite." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialogue 2 -->
+  <div class="bg-white rounded-xl shadow p-4 mb-4">
+    <h3 class="font-bold text-blue-700 mb-3">情境二：試穿衣服</h3>
+    <div class="space-y-2">
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Alors, comment ça va ?</p>
+          <p class="text-gray-500 text-sm">怎麼樣？合身嗎？</p>
+        </div>
+        <button onclick="speak(this)" data-text="Alors, comment ça va ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">C'est trop grand. Avez-vous une taille en dessous ?</p>
+          <p class="text-gray-500 text-sm">太大了。有小一號的嗎？</p>
+        </div>
+        <button onclick="speak(this)" data-text="C'est trop grand. Avez-vous une taille en dessous ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Oui, voilà la taille trente-six.</p>
+          <p class="text-gray-500 text-sm">有的，這是36號。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Oui, voilà la taille trente-six." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Parfait, c'est exactement ma taille. Je la prends !</p>
+          <p class="text-gray-500 text-sm">太好了，正好合我的尺寸。我買這件！</p>
+        </div>
+        <button onclick="speak(this)" data-text="Parfait, c'est exactement ma taille. Je la prends !" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialogue 3 -->
+  <div class="bg-white rounded-xl shadow p-4 mb-4">
+    <h3 class="font-bold text-blue-700 mb-3">情境三：詢問價格與顏色</h3>
+    <div class="space-y-2">
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Ce manteau, il coûte combien ?</p>
+          <p class="text-gray-500 text-sm">這件大衣多少錢？</p>
+        </div>
+        <button onclick="speak(this)" data-text="Ce manteau, il coûte combien ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Il coûte cent cinquante euros.</p>
+          <p class="text-gray-500 text-sm">一百五十歐元。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Il coûte cent cinquante euros." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">C'est un peu cher. Avez-vous ça en bleu marine ?</p>
+          <p class="text-gray-500 text-sm">有點貴。有深藍色的嗎？</p>
+        </div>
+        <button onclick="speak(this)" data-text="C'est un peu cher. Avez-vous ça en bleu marine ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Oui, et ce modèle est en promotion, à cent euros.</p>
+          <p class="text-gray-500 text-sm">有的，而且這款正在特價，一百歐元。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Oui, et ce modèle est en promotion, à cent euros." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Super ! Je le prends.</p>
+          <p class="text-gray-500 text-sm">太棒了！我買這件。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Super ! Je le prends." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialogue 4 -->
+  <div class="bg-white rounded-xl shadow p-4 mb-4">
+    <h3 class="font-bold text-blue-700 mb-3">情境四：描述朋友的穿著</h3>
+    <div class="space-y-2">
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Tu as vu Marie aujourd'hui ? Elle était comment ?</p>
+          <p class="text-gray-500 text-sm">你今天看到瑪麗了嗎？她怎麼樣？</p>
+        </div>
+        <button onclick="speak(this)" data-text="Tu as vu Marie aujourd'hui ? Elle était comment ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Elle portait une belle robe rouge et des talons noirs.</p>
+          <p class="text-gray-500 text-sm">她穿著一條漂亮的紅色裙子和黑色高跟鞋。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Elle portait une belle robe rouge et des talons noirs." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Elle est toujours très élégante !</p>
+          <p class="text-gray-500 text-sm">她總是非常優雅！</p>
+        </div>
+        <button onclick="speak(this)" data-text="Elle est toujours très élégante !" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Oui, et sa robe était vraiment à la mode.</p>
+          <p class="text-gray-500 text-sm">是的，她的裙子真的很流行。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Oui, et sa robe était vraiment à la mode." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialogue 5 -->
+  <div class="bg-white rounded-xl shadow p-4 mb-4">
+    <h3 class="font-bold text-blue-700 mb-3">情境五：準備出門，討論穿什麼</h3>
+    <div class="space-y-2">
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">On sort ce soir. Qu'est-ce que tu vas mettre ?</p>
+          <p class="text-gray-500 text-sm">我們今晚要出去。你打算穿什麼？</p>
+        </div>
+        <button onclick="speak(this)" data-text="On sort ce soir. Qu'est-ce que tu vas mettre ?" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Je pense mettre mon pull bleu avec un jean.</p>
+          <p class="text-gray-500 text-sm">我想穿我的藍色毛衣配牛仔褲。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Je pense mettre mon pull bleu avec un jean." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Il fait froid dehors, tu devrais aussi mettre un manteau.</p>
+          <p class="text-gray-500 text-sm">外面很冷，你也應該穿大衣。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Il fait froid dehors, tu devrais aussi mettre un manteau." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">B:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Bonne idée ! Je vais prendre ma veste noire.</p>
+          <p class="text-gray-500 text-sm">好主意！我去拿我的黑色外套。</p>
+        </div>
+        <button onclick="speak(this)" data-text="Bonne idée ! Je vais prendre ma veste noire." class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+      <div class="flex items-start gap-2">
+        <span class="font-bold text-gray-500 w-6 shrink-0">A:</span>
+        <div class="flex-1">
+          <p class="text-blue-700 font-medium">Parfait, on y va dans dix minutes !</p>
+          <p class="text-gray-500 text-sm">太好了，我們十分鐘後出發！</p>
+        </div>
+        <button onclick="speak(this)" data-text="Parfait, on y va dans dix minutes !" class="text-blue-400 hover:text-blue-600 shrink-0">🔊</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Useful Sentence Patterns -->
+  <h2 class="text-lg font-bold text-gray-800 mb-2">✨ 實用句型</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+      <p class="font-bold text-indigo-700">Vous faites quelle taille ?</p>
+      <p class="text-xs text-indigo-400 italic">/vu fɛt kɛl taj/</p>
+      <p class="text-gray-600 text-sm mt-1">您穿幾號？</p>
+      <button onclick="speak(this)" data-text="Vous faites quelle taille ?" class="mt-2 text-indigo-400 hover:text-indigo-600 text-sm">🔊 聆聽</button>
+    </div>
+    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+      <p class="font-bold text-indigo-700">Est-ce que je peux l'essayer ?</p>
+      <p class="text-xs text-indigo-400 italic">/ɛs kə ʒə pø le.se.je/</p>
+      <p class="text-gray-600 text-sm mt-1">我可以試穿嗎？</p>
+      <button onclick="speak(this)" data-text="Est-ce que je peux l'essayer ?" class="mt-2 text-indigo-400 hover:text-indigo-600 text-sm">🔊 聆聽</button>
+    </div>
+    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+      <p class="font-bold text-indigo-700">Avez-vous ça en bleu ?</p>
+      <p class="text-xs text-indigo-400 italic">/a.ve.vu sa ɑ̃ blø/</p>
+      <p class="text-gray-600 text-sm mt-1">有藍色的嗎？（可替換顏色）</p>
+      <button onclick="speak(this)" data-text="Avez-vous ça en bleu ?" class="mt-2 text-indigo-400 hover:text-indigo-600 text-sm">🔊 聆聽</button>
+    </div>
+    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+      <p class="font-bold text-indigo-700">Je le / la prends.</p>
+      <p class="text-xs text-indigo-400 italic">/ʒə lə / la pʁɑ̃/</p>
+      <p class="text-gray-600 text-sm mt-1">我買這個。（陽性 le / 陰性 la）</p>
+      <button onclick="speak(this)" data-text="Je le prends." class="mt-2 text-indigo-400 hover:text-indigo-600 text-sm">🔊 聆聽</button>
+    </div>
+  </div>
+
+  <!-- Grammar Tip -->
+  <div class="bg-yellow-50 border border-yellow-300 rounded-xl p-4 mb-6">
+    <h2 class="font-bold text-yellow-800 mb-2">📝 文法小提示</h2>
+    <p class="text-yellow-900 text-sm"><strong>形容詞陰陽性變化（衣物相關）：</strong></p>
+    <table class="w-full text-sm mt-2 border-collapse">
+      <thead>
+        <tr class="bg-yellow-100">
+          <th class="text-left p-1 border border-yellow-300">陽性</th>
+          <th class="text-left p-1 border border-yellow-300">陰性</th>
+          <th class="text-left p-1 border border-yellow-300">中文</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="p-1 border border-yellow-200">grand</td><td class="p-1 border border-yellow-200">grande</td><td class="p-1 border border-yellow-200">大的</td></tr>
+        <tr><td class="p-1 border border-yellow-200">petit</td><td class="p-1 border border-yellow-200">petite</td><td class="p-1 border border-yellow-200">小的</td></tr>
+        <tr><td class="p-1 border border-yellow-200">cher</td><td class="p-1 border border-yellow-200">chère</td><td class="p-1 border border-yellow-200">貴的</td></tr>
+        <tr><td class="p-1 border border-yellow-200">beau</td><td class="p-1 border border-yellow-200">belle</td><td class="p-1 border border-yellow-200">美的</td></tr>
+        <tr><td class="p-1 border border-yellow-200">confortable</td><td class="p-1 border border-yellow-200">confortable</td><td class="p-1 border border-yellow-200">舒適的（不變）</td></tr>
+      </tbody>
+    </table>
+    <p class="text-yellow-800 text-xs mt-2">💡 bon marché 和 à la mode 不因名詞的性別而改變。</p>
+  </div>
+
+  <!-- Matching Game -->
+  <h2 class="text-lg font-bold text-gray-800 mb-2">🎮 配對遊戲</h2>
+  <div class="bg-white rounded-xl shadow p-4 mb-6">
+    <p class="text-sm text-gray-500 mb-3">點選左邊法文，再點選右邊中文配對。正確→綠色，錯誤→短暫紅色。</p>
+    <div class="text-center font-bold text-blue-700 mb-3" id="match-score">0 / 10</div>
+    <div class="grid grid-cols-2 gap-2" id="match-grid"></div>
+    <button onclick="resetMatch()" class="mt-4 w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-600 text-sm font-semibold">重新開始</button>
+  </div>
+
+  <!-- Quiz Section -->
+  <h2 class="text-lg font-bold text-gray-800 mb-2">⚡ 快問快答（15題）</h2>
+  <div class="bg-white rounded-xl shadow p-4 mb-8" id="quiz-container">
+    <div id="quiz-body"></div>
+  </div>
+
+</div>
+
+<script>
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR'; u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+// ── Matching Game ──────────────────────────────────────
+var matchPairs = [
+  ['essayer','試穿'],
+  ['la taille','尺寸'],
+  ['la couleur','顏色'],
+  ['cher','貴的'],
+  ['bon marché','便宜的'],
+  ['la cabine d\'essayage','試衣間'],
+  ['à la mode','流行的'],
+  ['confortable','舒適的'],
+  ['trop grand','太大'],
+  ['trop petit','太小']
+];
+
+var matchSelected = null;
+var matchSolved = 0;
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function resetMatch() {
+  matchSelected = null;
+  matchSolved = 0;
+  document.getElementById('match-score').textContent = '0 / 10';
+  renderMatch();
+}
+
+function renderMatch() {
+  var leftItems = shuffle(matchPairs.map(function(p){ return p[0]; }));
+  var rightItems = shuffle(matchPairs.map(function(p){ return p[1]; }));
+  var grid = document.getElementById('match-grid');
+  grid.innerHTML = '';
+  var leftCol = document.createElement('div');
+  leftCol.className = 'flex flex-col gap-2';
+  leftItems.forEach(function(fr) {
+    var btn = document.createElement('button');
+    btn.className = 'match-btn left-btn px-3 py-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 font-medium text-sm border border-blue-200 text-left';
+    btn.textContent = fr;
+    btn.dataset.val = fr;
+    btn.onclick = function() { selectMatch(this, 'left'); };
+    leftCol.appendChild(btn);
+  });
+  var rightCol = document.createElement('div');
+  rightCol.className = 'flex flex-col gap-2';
+  rightItems.forEach(function(zh) {
+    var btn = document.createElement('button');
+    btn.className = 'match-btn right-btn px-3 py-2 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-800 font-medium text-sm border border-purple-200 text-left';
+    btn.textContent = zh;
+    btn.dataset.val = zh;
+    btn.onclick = function() { selectMatch(this, 'right'); };
+    rightCol.appendChild(btn);
+  });
+  grid.appendChild(leftCol);
+  grid.appendChild(rightCol);
+}
+
+function selectMatch(btn, side) {
+  if (btn.disabled) return;
+  if (matchSelected && matchSelected.side === side) {
+    var prev = document.querySelector('.match-btn.ring-2');
+    if (prev) prev.classList.remove('ring-2','ring-blue-500','ring-purple-500');
+    matchSelected = null;
+  }
+  if (!matchSelected) {
+    matchSelected = { btn: btn, side: side, val: btn.dataset.val };
+    btn.classList.add('ring-2', side === 'left' ? 'ring-blue-500' : 'ring-purple-500');
+    return;
+  }
+  var other = matchSelected;
+  btn.classList.add('ring-2', side === 'left' ? 'ring-blue-500' : 'ring-purple-500');
+  var frVal = side === 'left' ? btn.dataset.val : other.val;
+  var zhVal = side === 'right' ? btn.dataset.val : other.val;
+  var correct = matchPairs.some(function(p){ return p[0] === frVal && p[1] === zhVal; });
+  if (correct) {
+    [btn, other.btn].forEach(function(b){
+      b.classList.remove('ring-2','ring-blue-500','ring-purple-500');
+      b.classList.add('bg-green-200','border-green-400','text-green-800');
+      b.disabled = true;
+    });
+    matchSolved++;
+    document.getElementById('match-score').textContent = matchSolved + ' / 10';
+  } else {
+    [btn, other.btn].forEach(function(b){
+      b.classList.add('bg-red-200','border-red-400');
+      setTimeout(function(){ b.classList.remove('bg-red-200','border-red-400','ring-2','ring-blue-500','ring-purple-500'); }, 600);
+    });
+  }
+  matchSelected = null;
+}
+
+resetMatch();
+
+// ── Quiz ──────────────────────────────────────────────
+var quizQuestions = [
+  { type:'mc', q:'「試穿」的法文是？', opts:['essayer','acheter','chercher','mettre'], ans:0 },
+  { type:'mc', q:'「太大了」用法文怎麼說？', opts:['trop petit','trop cher','trop grand','trop mode'], ans:2 },
+  { type:'mc', q:'Quelle est votre _____ ? （您的尺寸？）', opts:['couleur','taille','mode','cabine'], ans:1 },
+  { type:'mc', q:'「便宜的」法文是？', opts:['cher','bon marché','confortable','élégant'], ans:1 },
+  { type:'mc', q:'試衣間的法文是？', opts:['la couleur','la taille','la cabine d\'essayage','la mode'], ans:2 },
+  { type:'mc', q:'「流行的」用法文說？', opts:['confortable','à la mode','bon marché','trop grand'], ans:1 },
+  { type:'mc', q:'C\'est trop ___ pour moi.（這對我太小了）', opts:['grand','cher','petit','confortable'], ans:2 },
+  { type:'mc', q:'「舒適的」法文是？', opts:['élégant','à la mode','confortable','cher'], ans:2 },
+  { type:'mc', q:'我想試穿這條裙子，要怎麼說？', opts:['Je veux acheter cette robe.','Je veux essayer cette robe.','J\'aime cette robe.','Je prends cette robe.'], ans:1 },
+  { type:'mc', q:'想詢問「有藍色的嗎」，要怎麼說？', opts:['Avez-vous ça en bleu ?','Vous faites quelle taille ?','Je le prends.','C\'est trop cher.'], ans:0 },
+  { type:'mc', q:'買下一件陽性名詞商品時說？', opts:['Je la prends.','Je le prends.','Je les prends.','Je prends ça.'], ans:1 },
+  { type:'mc', q:'店員問尺寸，正確回答是？', opts:['Je fais du trente-huit.','C\'est trop cher.','Avez-vous ça en rouge ?','La cabine est là.'], ans:0 },
+  { type:'fill', q:'完成句子：Ces chaussures sont très _____.（這雙鞋很舒適）', ans:'confortables', hint:'c' },
+  { type:'fill', q:'完成句子：_____ est là.（試衣間在那裡）', ans:'La cabine d\'essayage', hint:'L' },
+  { type:'mc', q:'「顏色」的法文是？', opts:['la taille','la couleur','la cabine','la mode'], ans:1 },
+];
+
+var qIdx = 0, score = 0;
+
+function renderQuiz() {
+  var container = document.getElementById('quiz-body');
+  if (qIdx >= quizQuestions.length) {
+    var pct = Math.round(score / quizQuestions.length * 100);
+    var msg = pct >= 85 ? '🎉 太棒了！法文穿搭達人！' : pct >= 60 ? '👍 不錯！繼續加油！' : '💪 再複習一下對話吧！';
+    container.innerHTML = '<div class="text-center py-6"><p class="text-3xl font-bold text-blue-700">' + score + ' / ' + quizQuestions.length + '</p>' +
+      '<p class="text-gray-500 mt-1">' + pct + '%</p><p class="text-lg mt-3">' + msg + '</p>' +
+      '<button onclick="restartQuiz()" class="mt-4 px-6 py-2 bg-blue-500 text-white rounded-xl font-semibold hover:bg-blue-600">重新挑戰</button></div>';
+    return;
+  }
+  var q = quizQuestions[qIdx];
+  var progress = '<div class="flex justify-between text-xs text-gray-400 mb-3"><span>第 ' + (qIdx+1) + ' / ' + quizQuestions.length + ' 題</span><span>得分：' + score + '</span></div>';
+  var bar = '<div class="w-full bg-gray-200 rounded-full h-1.5 mb-4"><div class="bg-blue-500 h-1.5 rounded-full" style="width:' + (qIdx/quizQuestions.length*100) + '%"></div></div>';
+  if (q.type === 'mc') {
+    var opts = q.opts.map(function(o, i){
+      return '<button onclick="answerMC(' + i + ')" class="w-full text-left px-4 py-3 rounded-lg border border-gray-200 hover:bg-blue-50 hover:border-blue-300 text-sm mb-2 transition">' + o + '</button>';
+    }).join('');
+    container.innerHTML = progress + bar + '<p class="font-semibold text-gray-800 mb-4">' + q.q + '</p>' + opts;
+  } else {
+    container.innerHTML = progress + bar + '<p class="font-semibold text-gray-800 mb-2">' + q.q + '</p>' +
+      '<p class="text-xs text-gray-400 mb-2">提示：首字母「' + q.hint + '」</p>' +
+      '<input id="fill-input" type="text" placeholder="輸入法文..." class="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-400 mb-3">' +
+      '<button onclick="answerFill()" class="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 text-sm">確認</button>';
+  }
+}
+
+function answerMC(i) {
+  var q = quizQuestions[qIdx];
+  var btns = document.querySelectorAll('#quiz-body button');
+  btns.forEach(function(b){ b.disabled = true; });
+  if (i === q.ans) {
+    score++;
+    btns[i].classList.add('bg-green-100','border-green-400','text-green-800');
+  } else {
+    btns[i].classList.add('bg-red-100','border-red-400','text-red-800');
+    btns[q.ans].classList.add('bg-green-100','border-green-400','text-green-800');
+  }
+  setTimeout(function(){ qIdx++; renderQuiz(); }, 900);
+}
+
+function answerFill() {
+  var q = quizQuestions[qIdx];
+  var inp = document.getElementById('fill-input');
+  var val = inp.value.trim().toLowerCase();
+  var correct = q.ans.toLowerCase();
+  if (val === correct) {
+    score++;
+    inp.classList.add('border-green-400','bg-green-50');
+  } else {
+    inp.classList.add('border-red-400','bg-red-50');
+    inp.value = q.ans;
+  }
+  setTimeout(function(){ qIdx++; renderQuiz(); }, 900);
+}
+
+function restartQuiz() {
+  qIdx = 0; score = 0;
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>

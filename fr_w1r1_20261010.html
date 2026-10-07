@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1週 週末複習：衣物 | 2026-10-10</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .match-btn { transition: all 0.15s; }
+  .match-btn.selected { ring: 2px; }
+  .match-btn.correct { background-color: #22c55e !important; color: white !important; pointer-events: none; }
+  .match-btn.wrong { background-color: #ef4444 !important; color: white !important; }
+  .quiz-option:hover { filter: brightness(0.95); }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- Header -->
+<div class="bg-gradient-to-r from-purple-700 via-blue-600 to-indigo-700 p-6 text-center shadow-lg">
+  <p class="text-purple-200 text-sm font-semibold mb-1">🇫🇷 French Study Planner</p>
+  <h1 class="text-2xl font-bold text-white mb-1">第1週 · 週末複習 · 衣物</h1>
+  <p class="text-purple-200 text-sm">2026-10-10 &nbsp;|&nbsp; Révision du week-end</p>
+  <!-- Progress -->
+  <div class="flex justify-center gap-1 mt-3">
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-20 text-white">D1</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-20 text-white">D2</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-20 text-white">D3</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-20 text-white">D4</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-20 text-white">D5</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-yellow-300 text-purple-900">R1</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-20 text-white">R2</span>
+  </div>
+</div>
+
+<div class="max-w-3xl mx-auto p-4">
+
+  <!-- Section 1: Vocabulary Review Cards -->
+  <div class="bg-white rounded-2xl shadow p-5 mb-5">
+    <h2 class="text-lg font-bold text-purple-700 mb-3">📚 本週20個核心詞彙</h2>
+    <div class="grid grid-cols-2 gap-2" id="vocab-cards"></div>
+  </div>
+
+  <!-- Section 2: Matching Game -->
+  <div class="bg-white rounded-2xl shadow p-5 mb-5">
+    <h2 class="text-lg font-bold text-blue-700 mb-1">🎯 配對遊戲（20題）</h2>
+    <p class="text-sm text-gray-500 mb-3">點選左側法文，再點選右側中文配對</p>
+    <div class="flex justify-between items-center mb-3">
+      <span class="text-sm font-semibold text-gray-600">進度：<span id="match-score">0</span>/20</span>
+      <button onclick="resetMatch()" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-1 rounded-lg">重置</button>
+    </div>
+    <div class="grid grid-cols-2 gap-2" id="match-grid"></div>
+    <div id="match-complete" class="hidden text-center py-4 text-green-600 font-bold text-lg">🎉 全部配對完成！</div>
+  </div>
+
+  <!-- Section 3: Quiz -->
+  <div class="bg-white rounded-2xl shadow p-5 mb-8">
+    <h2 class="text-lg font-bold text-indigo-700 mb-1">⚡ 快問快答（20題）</h2>
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-sm text-gray-500">題目 <span id="q-num">1</span>/20</span>
+      <span class="text-sm font-semibold text-indigo-600">得分：<span id="q-score">0</span></span>
+    </div>
+    <div id="quiz-area"></div>
+    <div id="quiz-result" class="hidden text-center py-6">
+      <div class="text-5xl mb-3" id="result-emoji"></div>
+      <div class="text-2xl font-bold text-gray-800 mb-2" id="result-title"></div>
+      <div class="text-gray-600 mb-4" id="result-comment"></div>
+      <div class="text-3xl font-bold text-indigo-600 mb-5" id="result-score"></div>
+      <button onclick="restartQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl">🔄 重新挑戰</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var VOCAB = [
+  { fr: 'le manteau', zh: '大衣', ex: 'Je porte un manteau chaud.' },
+  { fr: 'la robe', zh: '洋裝', ex: 'Elle met une belle robe.' },
+  { fr: 'le pantalon', zh: '褲子', ex: 'Ce pantalon est trop grand.' },
+  { fr: 'la chemise', zh: '襯衫', ex: 'Il porte une chemise blanche.' },
+  { fr: 'les chaussures', zh: '鞋子', ex: 'Ces chaussures sont confortables.' },
+  { fr: 'le pull', zh: '毛衣', ex: 'Ce pull est très chaud.' },
+  { fr: 'la jupe', zh: '裙子', ex: 'La jupe rouge est à la mode.' },
+  { fr: 'le chapeau', zh: '帽子', ex: 'Il porte un chapeau noir.' },
+  { fr: 'les chaussettes', zh: '襪子', ex: 'J\'ai perdu mes chaussettes.' },
+  { fr: 'la veste', zh: '外套', ex: 'Cette veste est élégante.' },
+  { fr: 'le t-shirt', zh: 'T恤', ex: 'Ce t-shirt est confortable.' },
+  { fr: 'le short', zh: '短褲', ex: 'Je mets un short en été.' },
+  { fr: 'le costume', zh: '西裝', ex: 'Il porte un costume gris.' },
+  { fr: "l'imperméable", zh: '雨衣', ex: "N'oublie pas ton imperméable." },
+  { fr: 'la ceinture', zh: '腰帶', ex: 'La ceinture est trop petite.' },
+  { fr: "l'écharpe", zh: '圍巾', ex: "Elle porte une écharpe rouge." },
+  { fr: 'les gants', zh: '手套', ex: 'Mets tes gants, il fait froid.' },
+  { fr: 'le collant', zh: '褲襪', ex: 'Elle met un collant noir.' },
+  { fr: 'le trench-coat', zh: '風衣', ex: 'Ce trench-coat est classique.' },
+  { fr: 'la salopette', zh: '吊帶褲', ex: 'La salopette est à la mode.' }
+];
+
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR'; u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+// ── Vocab Cards ──────────────────────────────────────────────
+function buildVocabCards() {
+  var html = '';
+  VOCAB.forEach(function(v) {
+    html += '<div class="flex items-center gap-2 bg-purple-50 rounded-xl px-3 py-2">' +
+      '<button onclick="speak(this)" data-text="' + v.fr + '" class="text-purple-600 hover:text-purple-800 text-lg flex-shrink-0">🔊</button>' +
+      '<div class="min-w-0"><p class="font-bold text-purple-800 text-sm truncate">' + v.fr + '</p>' +
+      '<p class="text-gray-600 text-xs">' + v.zh + '</p></div>' +
+      '</div>';
+  });
+  document.getElementById('vocab-cards').innerHTML = html;
+}
+
+// ── Matching Game ─────────────────────────────────────────────
+var matchSelected = null;
+var matchDone = 0;
+var matchFrOrder = [];
+var matchZhOrder = [];
+
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function buildMatch() {
+  matchSelected = null;
+  matchDone = 0;
+  document.getElementById('match-score').textContent = '0';
+  document.getElementById('match-complete').classList.add('hidden');
+  matchFrOrder = shuffle(VOCAB.map(function(v, i) { return i; }));
+  matchZhOrder = shuffle(VOCAB.map(function(v, i) { return i; }));
+  var html = '';
+  for (var i = 0; i < 20; i++) {
+    var fi = matchFrOrder[i];
+    var zi = matchZhOrder[i];
+    html += '<div class="contents">';
+    html += '<button id="mfr-' + fi + '" data-idx="' + fi + '" data-side="fr" onclick="matchClick(this)" class="match-btn bg-blue-50 hover:bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-2 rounded-lg text-left border-2 border-transparent">' + VOCAB[fi].fr + '</button>';
+    html += '<button id="mzh-' + zi + '" data-idx="' + zi + '" data-side="zh" onclick="matchClick(this)" class="match-btn bg-pink-50 hover:bg-pink-100 text-pink-800 text-xs font-semibold px-3 py-2 rounded-lg text-left border-2 border-transparent">' + VOCAB[zi].zh + '</button>';
+    html += '</div>';
+  }
+  document.getElementById('match-grid').innerHTML = html;
+}
+
+function matchClick(btn) {
+  if (btn.classList.contains('correct')) return;
+  if (!matchSelected) {
+    matchSelected = btn;
+    btn.classList.add('ring-2', 'ring-indigo-500', 'border-indigo-500');
+    return;
+  }
+  if (matchSelected === btn) {
+    btn.classList.remove('ring-2', 'ring-indigo-500', 'border-indigo-500');
+    matchSelected = null;
+    return;
+  }
+  var a = matchSelected, b = btn;
+  matchSelected.classList.remove('ring-2', 'ring-indigo-500', 'border-indigo-500');
+  matchSelected = null;
+  if (a.dataset.side === b.dataset.side) {
+    a.classList.add('ring-2', 'ring-indigo-500', 'border-indigo-500');
+    matchSelected = b;
+    b.classList.add('ring-2', 'ring-indigo-500', 'border-indigo-500');
+    return;
+  }
+  if (a.dataset.idx === b.dataset.idx) {
+    a.classList.add('correct');
+    b.classList.add('correct');
+    matchDone++;
+    document.getElementById('match-score').textContent = matchDone;
+    if (matchDone === 20) document.getElementById('match-complete').classList.remove('hidden');
+  } else {
+    a.classList.add('wrong'); b.classList.add('wrong');
+    setTimeout(function() { a.classList.remove('wrong'); b.classList.remove('wrong'); }, 600);
+  }
+}
+
+function resetMatch() { buildMatch(); }
+
+// ── Quiz ──────────────────────────────────────────────────────
+var QUESTIONS = [];
+var qIdx = 0, qScore = 0;
+
+function buildQuestions() {
+  QUESTIONS = [];
+  var pool = shuffle(VOCAB);
+
+  // Q1-5: French→Chinese (4 choices)
+  for (var i = 0; i < 5; i++) {
+    var v = pool[i];
+    var wrong = shuffle(VOCAB.filter(function(x) { return x.fr !== v.fr; })).slice(0, 3);
+    var opts = shuffle([v.zh].concat(wrong.map(function(x) { return x.zh; })));
+    QUESTIONS.push({ type: 'mc', prompt: '「' + v.fr + '」的中文是？', speak: v.fr, options: opts, answer: v.zh });
+  }
+
+  // Q6-10: Chinese→French (4 choices)
+  for (var i = 5; i < 10; i++) {
+    var v = pool[i];
+    var wrong = shuffle(VOCAB.filter(function(x) { return x.zh !== v.zh; })).slice(0, 3);
+    var opts = shuffle([v.fr].concat(wrong.map(function(x) { return x.fr; })));
+    QUESTIONS.push({ type: 'mc', prompt: '「' + v.zh + '」的法文是？', options: opts, answer: v.fr });
+  }
+
+  // Q11-13: Spelling fill-in
+  var spellPool = shuffle(VOCAB).slice(0, 3);
+  spellPool.forEach(function(v) {
+    var hint = v.fr.substring(0, Math.ceil(v.fr.length / 3));
+    QUESTIONS.push({ type: 'fill', prompt: '填入法文單字（' + v.zh + '）', hint: '提示：' + hint + '...', answer: v.fr.toLowerCase() });
+  });
+
+  // Q14-15: Gender/article
+  var gPool = shuffle(VOCAB.filter(function(v) { return v.fr.startsWith('le ') || v.fr.startsWith('la '); })).slice(0, 2);
+  gPool.forEach(function(v) {
+    var bare = v.fr.replace(/^(le |la )/, '');
+    var article = v.fr.startsWith('le ') ? 'le' : 'la';
+    var wrong = article === 'le' ? 'la' : 'le';
+    QUESTIONS.push({ type: 'mc', prompt: '「' + bare + '」的冠詞是？', options: [article, wrong, 'les', "l'"], answer: article });
+  });
+
+  // Q16-17: Listen & choose
+  var listenPool = shuffle(VOCAB).slice(0, 2);
+  listenPool.forEach(function(v) {
+    var wrong = shuffle(VOCAB.filter(function(x) { return x.fr !== v.fr; })).slice(0, 3);
+    var opts = shuffle([v.zh].concat(wrong.map(function(x) { return x.zh; })));
+    QUESTIONS.push({ type: 'listen', prompt: '聆聽後選出正確的中文意思', speak: v.fr, options: opts, answer: v.zh });
+  });
+
+  // Q18-20: Example sentence fill-in
+  var exPool = shuffle(VOCAB.filter(function(v) { return v.ex; })).slice(0, 3);
+  exPool.forEach(function(v) {
+    var bare = v.fr.replace(/^(le |la |les |l')/, '');
+    var sentence = v.ex.replace(new RegExp(bare, 'i'), '___');
+    var wrong = shuffle(VOCAB.filter(function(x) { return x.zh !== v.zh; })).slice(0, 3);
+    var opts = shuffle([v.fr].concat(wrong.map(function(x) { return x.fr; })));
+    QUESTIONS.push({ type: 'mc', prompt: '填入正確的詞彙：' + sentence, options: opts, answer: v.fr });
+  });
+
+  QUESTIONS = QUESTIONS.slice(0, 20);
+}
+
+function showQuestion() {
+  if (qIdx >= QUESTIONS.length) { showResult(); return; }
+  var q = QUESTIONS[qIdx];
+  document.getElementById('q-num').textContent = qIdx + 1;
+  var html = '<div class="mb-4"><p class="font-semibold text-gray-800 text-base mb-3">' + (qIdx + 1) + '. ' + q.prompt + '</p>';
+  if (q.type === 'listen') {
+    html += '<div class="mb-3"><button onclick="speak(this)" data-text="' + q.speak + '" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-bold px-5 py-3 rounded-xl text-xl">🔊 播放</button></div>';
+  } else if (q.speak) {
+    html += '<div class="mb-2"><button onclick="speak(this)" data-text="' + q.speak + '" class="text-blue-500 hover:text-blue-700 text-lg">🔊</button></div>';
+  }
+  if (q.type === 'fill') {
+    html += '<p class="text-xs text-gray-400 mb-2">' + q.hint + '</p>';
+    html += '<div class="flex gap-2"><input id="fill-input" type="text" placeholder="輸入法文..." class="border-2 border-gray-200 rounded-lg px-3 py-2 flex-1 text-sm focus:outline-none focus:border-indigo-400" onkeydown="if(event.key===\'Enter\')checkFill()">';
+    html += '<button onclick="checkFill()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm">確認</button></div>';
+  } else {
+    html += '<div class="grid grid-cols-1 gap-2">';
+    q.options.forEach(function(opt) {
+      html += '<button onclick="checkMC(this,\'' + opt.replace(/'/g, "\\'") + '\')" class="quiz-option bg-gray-50 hover:bg-gray-100 text-gray-800 text-sm font-medium px-4 py-3 rounded-xl text-left border-2 border-gray-100">' + opt + '</button>';
+    });
+    html += '</div>';
+  }
+  html += '<div id="q-feedback" class="mt-3 text-sm font-semibold hidden"></div></div>';
+  document.getElementById('quiz-area').innerHTML = html;
+}
+
+function checkMC(btn, chosen) {
+  var q = QUESTIONS[qIdx];
+  var btns = document.querySelectorAll('.quiz-option');
+  btns.forEach(function(b) { b.onclick = null; b.classList.add('pointer-events-none'); });
+  var fb = document.getElementById('q-feedback');
+  fb.classList.remove('hidden');
+  if (chosen === q.answer) {
+    btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+    fb.textContent = '✅ 正確！';
+    fb.className = 'mt-3 text-sm font-semibold text-green-600';
+    qScore++;
+    document.getElementById('q-score').textContent = qScore;
+  } else {
+    btn.classList.add('bg-red-100', 'border-red-400', 'text-red-800');
+    fb.textContent = '❌ 正確答案：' + q.answer;
+    fb.className = 'mt-3 text-sm font-semibold text-red-600';
+    btns.forEach(function(b) { if (b.textContent.trim() === q.answer) b.classList.add('bg-green-100', 'border-green-500'); });
+  }
+  setTimeout(nextQ, 1200);
+}
+
+function checkFill() {
+  var q = QUESTIONS[qIdx];
+  var val = (document.getElementById('fill-input').value || '').trim().toLowerCase();
+  var fb = document.getElementById('q-feedback');
+  fb.classList.remove('hidden');
+  if (val === q.answer.toLowerCase()) {
+    fb.textContent = '✅ 正確！';
+    fb.className = 'mt-3 text-sm font-semibold text-green-600';
+    qScore++;
+    document.getElementById('q-score').textContent = qScore;
+  } else {
+    fb.textContent = '❌ 正確答案：' + q.answer;
+    fb.className = 'mt-3 text-sm font-semibold text-red-600';
+  }
+  document.getElementById('fill-input').disabled = true;
+  setTimeout(nextQ, 1400);
+}
+
+function nextQ() { qIdx++; showQuestion(); }
+
+function showResult() {
+  document.getElementById('quiz-area').classList.add('hidden');
+  var pct = Math.round(qScore / 20 * 100);
+  var emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🥈' : pct >= 50 ? '🥉' : '📚';
+  var title = pct >= 90 ? '太棒了！' : pct >= 70 ? '表現不錯！' : pct >= 50 ? '繼續加油！' : '需要多複習';
+  var comment = pct >= 90 ? '衣物詞彙掌握得很好，週日挑戰等你！' : pct >= 70 ? '大部分詞彙都記住了，再複習一下弱點。' : pct >= 50 ? '有一半以上答對，多練習幾次吧！' : '建議回顧詞彙卡片再來一次。';
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-comment').textContent = comment;
+  document.getElementById('result-score').textContent = qScore + ' / 20（' + pct + '%）';
+  document.getElementById('quiz-result').classList.remove('hidden');
+}
+
+function restartQuiz() {
+  qIdx = 0; qScore = 0;
+  document.getElementById('q-score').textContent = '0';
+  document.getElementById('quiz-area').classList.remove('hidden');
+  document.getElementById('quiz-result').classList.add('hidden');
+  buildQuestions();
+  showQuestion();
+}
+
+// Init
+buildVocabCards();
+buildMatch();
+buildQuestions();
+showQuestion();
+</script>
+</body>
+</html>

@@ -3,11 +3,12 @@ import anthropic
 import os
 from datetime import date
 
-# ── 新排程：從 2026-09-11 起，每週一個主題 ────────────────────
+# ── 新排程：從 2026-10-05 起，每週一個主題 ────────────────────
 # 週一～週五：新內容（同主題5天，逐步深入）
 # 週六～週日：複習（遊戲強化 + 綜合測驗）
 
-NEW_START = date(2026, 9, 11)   # 新排程起始日
+NEW_START = date(2026, 10, 5)   # 新排程起始日（週一）
+THEME_OFFSET = 8                # 從 THEMES[9]=衣物 開始
 today = date.today()
 N = (today - NEW_START).days
 date_str = today.strftime('%Y%m%d')
@@ -24,7 +25,7 @@ THEMES = [
 
 week_num = N // 7 + 1           # 第幾週（從1起）
 day_in_week = N % 7             # 0=週一, 1=週二... 4=週五, 5=週六, 6=週日
-theme_idx = ((N // 7) % 20) + 1
+theme_idx = ((N // 7 + THEME_OFFSET) % 20) + 1
 theme = THEMES[theme_idx]
 
 # 每天的內容焦點

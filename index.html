@@ -62,8 +62,10 @@ var OLD_THEMES = [
   '天氣與季節', '時間表達', '購物用語', '餐廳點餐用語', '複習與綜合練習'
 ];
 
-// ── 新排程（2026-09-11 起，每週一主題）──────────────────────
-var NEW_START = new Date(2026, 8, 11);
+// ── 新排程（2026-10-05 起，從衣物開始，每週一主題）──────────
+var NEW_START = new Date(2026, 9, 5);
+var OLD_END = new Date(2026, 8, 11);  // 舊排程結束（exclusive）
+var THEME_OFFSET = 8;                 // 第1週主題 = THEMES[9] = 衣物
 
 var DAY_FOCUS = ['詞彙入門','語法深入','情境對話','進階表達','本週整理'];
 
@@ -75,6 +77,7 @@ function padZ(n) { return String(n).padStart(2, '0'); }
 function getLessonInfo(date) {
   var d = toDateOnly(date);
   var oldS = toDateOnly(OLD_START);
+  var oldE = toDateOnly(OLD_END);
   var newS = toDateOnly(NEW_START);
 
   if (d < oldS) return null;
@@ -85,7 +88,7 @@ function getLessonInfo(date) {
   var dateStr = '' + y + mo + dd;
 
   // 舊排程：L1-L7（2026-09-04 到 2026-09-10）
-  if (d < newS) {
+  if (d < oldE) {
     var N_old = Math.round((d - oldS) / 86400000);
     if (N_old % 11 === 10) {
       var r = Math.floor(N_old / 11) + 1;
@@ -99,11 +102,14 @@ function getLessonInfo(date) {
     }
   }
 
-  // 新排程：每週一主題
+  // 空白期（2026-09-11 到 2026-10-04）
+  if (d < newS) return null;
+
+  // 新排程：每週一主題（衣物起）
   var N = Math.round((d - newS) / 86400000);
   var weekNum = Math.floor(N / 7) + 1;
   var dayInWeek = N % 7;
-  var themeIdx = (Math.floor(N / 7) % 20) + 1;
+  var themeIdx = ((Math.floor(N / 7) + THEME_OFFSET) % 20) + 1;
   var theme = OLD_THEMES[themeIdx];
 
   if (dayInWeek <= 4) {

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1週 週日挑戰：衣物</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .card-flip { transition: all 0.2s; }
+  .correct-flash { animation: flashGreen 0.5s; }
+  .wrong-flash { animation: flashRed 0.5s; }
+  @keyframes flashGreen { 0%,100%{background:inherit} 50%{background:#bbf7d0} }
+  @keyframes flashRed { 0%,100%{background:inherit} 50%{background:#fecaca} }
+  .opt-btn { transition: all 0.15s; }
+  .opt-btn:hover:not(:disabled) { filter: brightness(0.92); }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- HEADER -->
+<div class="bg-gradient-to-r from-yellow-500 via-orange-400 to-red-500 p-6 text-center shadow-lg">
+  <p class="text-white font-semibold text-sm opacity-90">🇫🇷 French Study Planner · 第1週</p>
+  <h1 class="text-2xl font-bold text-white mt-1">週日挑戰 · 衣物</h1>
+  <p class="text-yellow-100 text-sm mt-1">2026-10-11</p>
+  <!-- Progress bar -->
+  <div class="flex justify-center gap-1 mt-3 flex-wrap">
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-30 text-white">D1</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-30 text-white">D2</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-30 text-white">D3</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-30 text-white">D4</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-30 text-white">D5</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-white bg-opacity-30 text-white">R1</span>
+    <span class="px-2 py-1 rounded text-xs font-bold bg-yellow-200 text-yellow-800 ring-2 ring-white">R2</span>
+  </div>
+</div>
+
+<div class="max-w-3xl mx-auto p-4">
+
+<!-- SECTION 1: 詞彙總覽 -->
+<div class="bg-white rounded-2xl shadow p-5 mb-6">
+  <h2 class="text-lg font-bold text-gray-800 mb-3">📚 本週詞彙總覽（20個）</h2>
+  <div class="grid grid-cols-2 gap-2" id="vocab-cards"></div>
+</div>
+
+<!-- SECTION 2: 填空練習 -->
+<div class="bg-white rounded-2xl shadow p-5 mb-6">
+  <h2 class="text-lg font-bold text-gray-800 mb-1">✏️ 填空練習（10題）</h2>
+  <p class="text-xs text-gray-400 mb-3">根據中文和首字母提示，拼出正確法文單字</p>
+  <div id="fill-questions"></div>
+  <div class="mt-4 flex gap-3">
+    <button onclick="checkFill()" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2 rounded-xl transition">批改答案</button>
+    <span id="fill-score" class="hidden text-gray-700 font-bold self-center"></span>
+  </div>
+</div>
+
+<!-- SECTION 3: 30題綜合挑戰 -->
+<div class="bg-white rounded-2xl shadow p-5 mb-6">
+  <h2 class="text-lg font-bold text-gray-800 mb-1">🏆 30題週日大挑戰</h2>
+  <p class="text-xs text-gray-400 mb-3">本週所有內容的最終測驗——加油！</p>
+  <div id="quiz-progress" class="text-sm text-gray-500 mb-3">題目 <span id="qnum">1</span> / 30</div>
+  <div class="w-full bg-gray-100 rounded-full h-2 mb-4">
+    <div id="progress-bar" class="bg-orange-400 h-2 rounded-full transition-all" style="width:3.3%"></div>
+  </div>
+  <div id="quiz-area"></div>
+  <div id="quiz-result" class="hidden text-center py-6">
+    <div id="badge-display" class="text-6xl mb-2"></div>
+    <div id="result-score" class="text-3xl font-bold text-gray-800 mb-2"></div>
+    <div id="result-comment" class="text-gray-600 mb-4"></div>
+    <button onclick="retryQuiz()" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-xl transition">重新挑戰</button>
+  </div>
+</div>
+
+</div><!-- end max-w -->
+
+<script>
+// ── SPEAK ─────────────────────────────────────────────────────
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR'; u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+// ── VOCABULARY ────────────────────────────────────────────────
+var VOCAB = [
+  { fr: 'le manteau',      zh: '大衣' },
+  { fr: 'la robe',         zh: '洋裝' },
+  { fr: 'le pantalon',     zh: '長褲' },
+  { fr: 'la chemise',      zh: '襯衫' },
+  { fr: 'les chaussures',  zh: '鞋子' },
+  { fr: 'le pull',         zh: '毛衣' },
+  { fr: 'la jupe',         zh: '裙子' },
+  { fr: 'le chapeau',      zh: '帽子' },
+  { fr: 'les chaussettes', zh: '襪子' },
+  { fr: 'la veste',        zh: '外套/夾克' },
+  { fr: 'le t-shirt',      zh: 'T恤' },
+  { fr: 'le short',        zh: '短褲' },
+  { fr: 'le costume',      zh: '西裝' },
+  { fr: "l'imperméable",   zh: '雨衣' },
+  { fr: 'la ceinture',     zh: '皮帶' },
+  { fr: "l'écharpe",       zh: '圍巾' },
+  { fr: 'les gants',       zh: '手套' },
+  { fr: 'le collant',      zh: '褲襪' },
+  { fr: 'le trench-coat',  zh: '風衣' },
+  { fr: 'la salopette',    zh: '吊帶褲' },
+];
+
+(function buildVocab(){
+  var container = document.getElementById('vocab-cards');
+  VOCAB.forEach(function(v){
+    var div = document.createElement('div');
+    div.className = 'flex items-center justify-between bg-orange-50 rounded-xl px-3 py-2';
+    div.innerHTML = '<span class="font-semibold text-orange-800 text-sm">' + v.fr + '</span>' +
+      '<span class="text-gray-600 text-sm mx-2">' + v.zh + '</span>' +
+      '<button onclick="speak(this)" data-text="' + v.fr + '" class="text-orange-400 hover:text-orange-600 text-base">🔊</button>';
+    container.appendChild(div);
+  });
+})();
+
+// ── FILL IN THE BLANK ─────────────────────────────────────────
+var FILL_Q = [
+  { zh: '大衣', hint: 'm', answer: 'manteau',    full: 'le manteau' },
+  { zh: '洋裝', hint: 'r', answer: 'robe',       full: 'la robe' },
+  { zh: '長褲', hint: 'p', answer: 'pantalon',   full: 'le pantalon' },
+  { zh: '圍巾', hint: 'é', answer: 'écharpe',    full: "l'écharpe" },
+  { zh: '手套', hint: 'g', answer: 'gants',      full: 'les gants' },
+  { zh: '西裝', hint: 'c', answer: 'costume',    full: 'le costume' },
+  { zh: '皮帶', hint: 'c', answer: 'ceinture',   full: 'la ceinture' },
+  { zh: '短褲', hint: 's', answer: 'short',      full: 'le short' },
+  { zh: '風衣', hint: 't', answer: 'trench-coat',full: 'le trench-coat' },
+  { zh: '吊帶褲', hint: 's', answer: 'salopette', full: 'la salopette' },
+];
+
+(function buildFill(){
+  var container = document.getElementById('fill-questions');
+  FILL_Q.forEach(function(q, i){
+    var div = document.createElement('div');
+    div.className = 'flex items-center gap-2 mb-3';
+    div.innerHTML = '<span class="w-6 text-gray-400 text-sm font-bold">' + (i+1) + '.</span>' +
+      '<span class="text-gray-700 font-semibold w-16">' + q.zh + '</span>' +
+      '<span class="text-gray-400 text-sm">(' + q.hint + '...)</span>' +
+      '<input id="fill-' + i + '" type="text" placeholder="輸入法文" class="border rounded-lg px-3 py-1 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-orange-300">' +
+      '<span id="fill-fb-' + i + '" class="text-sm w-24"></span>';
+    container.appendChild(div);
+  });
+})();
+
+function checkFill(){
+  var score = 0;
+  FILL_Q.forEach(function(q, i){
+    var inp = document.getElementById('fill-' + i);
+    var fb  = document.getElementById('fill-fb-' + i);
+    var val = inp.value.trim().toLowerCase().replace(/^(le |la |les |l')/,'');
+    var ans = q.answer.toLowerCase();
+    if(val === ans){
+      score++;
+      fb.textContent = '✅ 正確';
+      fb.className = 'text-sm w-24 text-green-600 font-semibold';
+      inp.classList.add('bg-green-50');
+    } else {
+      fb.textContent = '❌ ' + q.full;
+      fb.className = 'text-sm w-28 text-red-500 font-semibold';
+      inp.classList.add('bg-red-50');
+    }
+    inp.disabled = true;
+  });
+  var el = document.getElementById('fill-score');
+  el.textContent = '得分：' + score + ' / 10';
+  el.className = 'text-gray-700 font-bold self-center';
+  el.classList.remove('hidden');
+}
+
+// ── 30-QUESTION QUIZ ─────────────────────────────────────────
+var IDIOMS = [
+  { fr: 'être bien habillé', zh: '穿著得體' },
+  { fr: 'se mettre sur son trente et un', zh: '盛裝打扮' },
+  { fr: 'avoir du style', zh: '有品味' },
+];
+
+var CONJ_METTRE = [
+  { pro: 'je', form: 'mets' }, { pro: 'tu', form: 'mets' },
+  { pro: 'il', form: 'met' },  { pro: 'nous', form: 'mettons' },
+  { pro: 'vous', form: 'mettez' }, { pro: 'ils', form: 'mettent' },
+];
+var CONJ_PORTER = [
+  { pro: 'je', form: 'porte' }, { pro: 'tu', form: 'portes' },
+  { pro: 'elle', form: 'porte' }, { pro: 'nous', form: 'portons' },
+  { pro: 'vous', form: 'portez' }, { pro: 'elles', form: 'portent' },
+];
+
+function shuffle(arr){ return arr.slice().sort(function(){ return Math.random()-0.5; }); }
+function rand(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+function buildQuestions(){
+  var qs = [];
+
+  // Q1-8: French→Chinese
+  var pool = shuffle(VOCAB).slice(0,8);
+  pool.forEach(function(v){
+    var wrong = shuffle(VOCAB.filter(function(x){ return x.zh !== v.zh; })).slice(0,3).map(function(x){ return x.zh; });
+    var opts = shuffle([v.zh].concat(wrong));
+    qs.push({ type:'mc', q: v.fr, speak: v.fr, prompt:'這個法文單字的中文是？', opts: opts, ans: v.zh });
+  });
+
+  // Q9-14: Chinese→French
+  var pool2 = shuffle(VOCAB).slice(0,6);
+  pool2.forEach(function(v){
+    var wrong = shuffle(VOCAB.filter(function(x){ return x.fr !== v.fr; })).slice(0,3).map(function(x){ return x.fr; });
+    var opts = shuffle([v.fr].concat(wrong));
+    qs.push({ type:'mc', q: v.zh, prompt:'「' + v.zh + '」的法文是？', opts: opts, ans: v.fr });
+  });
+
+  // Q15-16: Verb conjugation fill
+  var cq1 = rand(CONJ_METTRE);
+  qs.push({ type:'fill', prompt: '填入正確動詞形態：' + cq1.pro + ' _____ (mettre)', ans: cq1.form });
+  var cq2 = rand(CONJ_PORTER);
+  qs.push({ type:'fill', prompt: '填入正確動詞形態：' + cq2.pro + ' _____ (porter)', ans: cq2.form });
+
+  // Q17-18: Gender/article
+  var gq = [
+    { prompt: '選擇正確冠詞：_____ robe（洋裝）', opts:['le','la','les','un'], ans:'la' },
+    { prompt: '選擇正確冠詞：_____ manteau（大衣）', opts:['le','la','les','une'], ans:'le' },
+  ];
+  gq.forEach(function(q){ qs.push({ type:'mc', prompt: q.prompt, opts: q.opts, ans: q.ans }); });
+
+  // Q19-21: Idiom matching
+  IDIOMS.forEach(function(id){
+    var wrong = shuffle(IDIOMS.filter(function(x){ return x.zh !== id.zh; })).slice(0,2).map(function(x){ return x.zh; });
+    var distractor = '穿著隨意';
+    var opts = shuffle([id.zh].concat(wrong).concat([distractor])).slice(0,4);
+    if(!opts.includes(id.zh)){ opts[3] = id.zh; }
+    qs.push({ type:'mc', prompt:'「' + id.fr + '」的意思是？', opts: opts, ans: id.zh });
+  });
+
+  // Q22-24: Sentence completion
+  var sc = [
+    { prompt: '她穿了一件美麗的洋裝。Elle porte une belle _____.',  opts:['robe','jupe','chemise','veste'], ans:'robe' },
+    { prompt: '今天很冷，我穿了大衣。Il fait froid, je mets mon _____.', opts:['manteau','short','pull','chapeau'], ans:'manteau' },
+    { prompt: '他戴著帽子。Il porte un _____.', opts:['chapeau','gants','écharpe','pull'], ans:'chapeau' },
+  ];
+  sc.forEach(function(q){ qs.push({ type:'mc', prompt: q.prompt, opts: q.opts, ans: q.ans }); });
+
+  // Q25-27: Listen & choose
+  var listenPool = shuffle(VOCAB).slice(0,3);
+  listenPool.forEach(function(v){
+    var wrong = shuffle(VOCAB.filter(function(x){ return x.fr !== v.fr; })).slice(0,3).map(function(x){ return x.fr; });
+    var opts = shuffle([v.fr].concat(wrong));
+    qs.push({ type:'listen', speakText: v.fr, prompt:'🔊 聆聽後，選出正確的法文單字：', opts: opts, ans: v.fr });
+  });
+
+  // Q28-30: Situational dialogue
+  var sit = [
+    { prompt:'你在店裡想試穿衣服，你說：', opts:['Je voudrais essayer cette robe.','Je déteste les vêtements.','Il fait beau aujourd\'hui.','Où est la boulangerie?'], ans:'Je voudrais essayer cette robe.' },
+    { prompt:'褲子太小了，你跟店員說：', opts:['C\'est trop petit.','C\'est parfait.','Je ne veux pas.','C\'est trop cher.'], ans:'C\'est trop petit.' },
+    { prompt:'你想問衣服多少錢，你說：', opts:['C\'est combien?','Quelle est votre taille?','Je prends le rouge.','Avez-vous d\'autres couleurs?'], ans:'C\'est combien?' },
+  ];
+  sit.forEach(function(q){ qs.push({ type:'mc', prompt: q.prompt, opts: q.opts, ans: q.ans }); });
+
+  return qs.slice(0,30);
+}
+
+var QUESTIONS = buildQuestions();
+var qIdx = 0, score30 = 0;
+
+function renderQuestion(){
+  if(qIdx >= QUESTIONS.length){
+    showResult();
+    return;
+  }
+  var q = QUESTIONS[qIdx];
+  document.getElementById('qnum').textContent = qIdx+1;
+  document.getElementById('progress-bar').style.width = ((qIdx+1)/30*100).toFixed(1)+'%';
+  var area = document.getElementById('quiz-area');
+  area.innerHTML = '';
+
+  var promptDiv = document.createElement('div');
+  promptDiv.className = 'text-gray-800 font-semibold text-base mb-4 leading-relaxed';
+
+  if(q.type === 'listen'){
+    promptDiv.innerHTML = q.prompt + '<button onclick="speak(this)" data-text="' + q.speakText + '" class="ml-2 text-2xl">🔊</button>';
+  } else {
+    promptDiv.textContent = q.prompt;
+    if(q.speak){
+      var spBtn = document.createElement('button');
+      spBtn.onclick = function(){ speak(q.speak); };
+      spBtn.className = 'ml-2 text-xl';
+      spBtn.textContent = '🔊';
+      promptDiv.appendChild(spBtn);
+    }
+  }
+  area.appendChild(promptDiv);
+
+  if(q.type === 'fill'){
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.placeholder = '輸入答案';
+    inp.className = 'border-2 border-gray-200 rounded-xl px-4 py-2 text-base w-full focus:outline-none focus:ring-2 focus:ring-orange-300 mb-3';
+    inp.id = 'fill-quiz-inp';
+    area.appendChild(inp);
+
+    var btn = document.createElement('button');
+    btn.textContent = '確認';
+    btn.className = 'bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-xl transition';
+    btn.onclick = function(){
+      var val = inp.value.trim().toLowerCase();
+      var ans = q.ans.toLowerCase();
+      checkFillQuiz(val === ans, q.ans);
+    };
+    area.appendChild(btn);
+
+    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') btn.click(); });
+  } else {
+    var grid = document.createElement('div');
+    grid.className = 'grid grid-cols-1 gap-2';
+    q.opts.forEach(function(opt){
+      var btn = document.createElement('button');
+      btn.className = 'opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-gray-100 bg-gray-50 hover:bg-orange-50 hover:border-orange-200 text-gray-700 font-medium transition';
+      btn.textContent = opt;
+      btn.onclick = function(){ selectOpt(btn, opt, q.ans, grid); };
+      grid.appendChild(btn);
+    });
+    area.appendChild(grid);
+  }
+}
+
+function selectOpt(btn, val, ans, grid){
+  Array.from(grid.children).forEach(function(b){ b.disabled = true; });
+  if(val === ans){
+    btn.className = 'opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-green-400 bg-green-100 text-green-800 font-bold transition';
+    score30++;
+  } else {
+    btn.className = 'opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-red-400 bg-red-100 text-red-800 font-bold transition';
+    Array.from(grid.children).forEach(function(b){
+      if(b.textContent === ans){
+        b.className = 'opt-btn w-full text-left px-4 py-3 rounded-xl border-2 border-green-400 bg-green-100 text-green-800 font-bold transition';
+      }
+    });
+  }
+  setTimeout(function(){ qIdx++; renderQuestion(); }, 900);
+}
+
+function checkFillQuiz(correct, ans){
+  var area = document.getElementById('quiz-area');
+  var fb = document.createElement('div');
+  fb.className = 'mt-3 font-semibold ' + (correct ? 'text-green-600' : 'text-red-500');
+  fb.textContent = correct ? '✅ 正確！' : '❌ 正確答案：' + ans;
+  area.appendChild(fb);
+  if(correct) score30++;
+  var inp = document.getElementById('fill-quiz-inp');
+  if(inp) inp.disabled = true;
+  setTimeout(function(){ qIdx++; renderQuestion(); }, 1100);
+}
+
+function showResult(){
+  document.getElementById('quiz-area').classList.add('hidden');
+  document.getElementById('progress-bar').style.width = '100%';
+  var pct = Math.round(score30/30*100);
+  var badge = pct>=90 ? '🥇' : pct>=70 ? '🥈' : pct>=50 ? '🥉' : '📚';
+  var comment = pct>=90 ? '太棒了！你完全掌握了本週「衣物」的所有內容，法語時尚達人非你莫屬！' :
+                pct>=70 ? '表現優秀！大部分詞彙和句型都掌握得很好，繼續加油！' :
+                pct>=50 ? '不錯的開始！建議複習一下難記的詞彙，下週會更好！' :
+                '加油！建議從 D1 和 D2 重新複習基礎詞彙和語法。';
+  document.getElementById('badge-display').textContent = badge;
+  document.getElementById('result-score').textContent = score30 + ' / 30（' + pct + '%）';
+  document.getElementById('result-comment').textContent = comment;
+  document.getElementById('quiz-result').classList.remove('hidden');
+}
+
+function retryQuiz(){
+  qIdx = 0; score30 = 0;
+  QUESTIONS = buildQuestions();
+  document.getElementById('quiz-area').classList.remove('hidden');
+  document.getElementById('quiz-result').classList.add('hidden');
+  renderQuestion();
+}
+
+// init
+renderQuestion();
+
+// play listen audio automatically when question loads
+var _origRender = renderQuestion;
+</script>
+</body>
+</html>

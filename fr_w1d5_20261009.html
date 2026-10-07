@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第1週 Day5：衣物・本週整理</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .card-flip { transition: all 0.2s; }
+  .match-item { cursor: pointer; transition: all 0.15s; user-select: none; }
+  .match-item:hover { filter: brightness(0.92); }
+  .match-selected { ring: 2px; }
+  .locked-green { background-color: #22c55e !important; color: white !important; pointer-events: none; }
+  .flash-red { background-color: #ef4444 !important; color: white !important; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- Header -->
+<div class="bg-gradient-to-r from-blue-800 via-white to-red-600 p-6 text-center shadow-lg">
+  <p class="text-blue-900 font-semibold text-sm">🇫🇷 French Study Planner</p>
+  <h1 class="text-2xl font-bold text-blue-900">第1週 · Day5 · 衣物 · 本週整理</h1>
+  <p class="text-blue-800 text-sm mt-1">2026-10-09</p>
+  <div class="flex justify-center gap-2 mt-3">
+    <span class="px-3 py-1 rounded text-xs font-bold bg-gray-200 text-gray-500">D1</span>
+    <span class="px-3 py-1 rounded text-xs font-bold bg-gray-200 text-gray-500">D2</span>
+    <span class="px-3 py-1 rounded text-xs font-bold bg-gray-200 text-gray-500">D3</span>
+    <span class="px-3 py-1 rounded text-xs font-bold bg-gray-200 text-gray-500">D4</span>
+    <span class="px-3 py-1 rounded text-xs font-bold bg-blue-600 text-white">D5</span>
+  </div>
+</div>
+
+<div class="max-w-3xl mx-auto p-4 space-y-6">
+
+<!-- Week Summary Cards -->
+<section>
+  <h2 class="text-xl font-bold text-gray-800 mb-3">📅 本週回顧</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4">
+      <div class="flex items-center gap-2 mb-2"><span class="bg-blue-500 text-white px-2 py-0.5 rounded text-xs font-bold">D1 詞彙入門</span></div>
+      <p class="text-sm text-blue-900 font-medium mb-1">10個基礎衣物單字</p>
+      <p class="text-xs text-blue-700">le manteau · la robe · le pantalon · la chemise · les chaussures · le pull · la jupe · le chapeau · les chaussettes · la veste</p>
+    </div>
+    <div class="bg-green-50 border border-green-200 rounded-2xl p-4">
+      <div class="flex items-center gap-2 mb-2"><span class="bg-green-500 text-white px-2 py-0.5 rounded text-xs font-bold">D2 語法深入</span></div>
+      <p class="text-sm text-green-900 font-medium mb-1">動詞變化 + 冠詞規則</p>
+      <p class="text-xs text-green-700">mettre（穿戴）· porter（穿著）· 冠詞 le / la / les / l'（母音前）</p>
+    </div>
+    <div class="bg-purple-50 border border-purple-200 rounded-2xl p-4">
+      <div class="flex items-center gap-2 mb-2"><span class="bg-purple-500 text-white px-2 py-0.5 rounded text-xs font-bold">D3 情境對話</span></div>
+      <p class="text-sm text-purple-900 font-medium mb-1">購衣 / 試穿 5組對話</p>
+      <p class="text-xs text-purple-700">試穿衣服 · 詢問尺寸 · 詢問價格 · 描述穿著 · 準備出門討論穿搭</p>
+    </div>
+    <div class="bg-orange-50 border border-orange-200 rounded-2xl p-4">
+      <div class="flex items-center gap-2 mb-2"><span class="bg-orange-500 text-white px-2 py-0.5 rounded text-xs font-bold">D4 進階表達</span></div>
+      <p class="text-sm text-orange-900 font-medium mb-1">慣用語 + 文化知識</p>
+      <p class="text-xs text-orange-700">le costume · l'écharpe · être bien habillé · se mettre sur son trente et un · avoir du style</p>
+    </div>
+  </div>
+</section>
+
+<!-- 20 Vocabulary Review -->
+<section>
+  <h2 class="text-xl font-bold text-gray-800 mb-3">📚 本週20個核心詞彙</h2>
+  <div class="bg-white rounded-2xl shadow p-4">
+    <div class="grid grid-cols-2 gap-2">
+      <!-- column 1: D1 vocab -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">le manteau</span><span class="text-gray-500 text-sm ml-2">大衣</span></div>
+          <button onclick="speak(this)" data-text="le manteau" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">la robe</span><span class="text-gray-500 text-sm ml-2">洋裝</span></div>
+          <button onclick="speak(this)" data-text="la robe" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">le pantalon</span><span class="text-gray-500 text-sm ml-2">褲子</span></div>
+          <button onclick="speak(this)" data-text="le pantalon" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">la chemise</span><span class="text-gray-500 text-sm ml-2">襯衫</span></div>
+          <button onclick="speak(this)" data-text="la chemise" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">les chaussures</span><span class="text-gray-500 text-sm ml-2">鞋子</span></div>
+          <button onclick="speak(this)" data-text="les chaussures" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">le pull</span><span class="text-gray-500 text-sm ml-2">毛衣</span></div>
+          <button onclick="speak(this)" data-text="le pull" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">la jupe</span><span class="text-gray-500 text-sm ml-2">裙子</span></div>
+          <button onclick="speak(this)" data-text="la jupe" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">le chapeau</span><span class="text-gray-500 text-sm ml-2">帽子</span></div>
+          <button onclick="speak(this)" data-text="le chapeau" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">les chaussettes</span><span class="text-gray-500 text-sm ml-2">襪子</span></div>
+          <button onclick="speak(this)" data-text="les chaussettes" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-blue-800">la veste</span><span class="text-gray-500 text-sm ml-2">外套</span></div>
+          <button onclick="speak(this)" data-text="la veste" class="text-blue-500 hover:text-blue-700">🔊</button>
+        </div>
+      </div>
+      <!-- column 2: D2-D4 vocab -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">le t-shirt</span><span class="text-gray-500 text-sm ml-2">T恤</span></div>
+          <button onclick="speak(this)" data-text="le t-shirt" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">le short</span><span class="text-gray-500 text-sm ml-2">短褲</span></div>
+          <button onclick="speak(this)" data-text="le short" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">le costume</span><span class="text-gray-500 text-sm ml-2">西裝</span></div>
+          <button onclick="speak(this)" data-text="le costume" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">l'imperméable</span><span class="text-gray-500 text-sm ml-2">雨衣</span></div>
+          <button onclick="speak(this)" data-text="l'imperméable" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">la ceinture</span><span class="text-gray-500 text-sm ml-2">腰帶</span></div>
+          <button onclick="speak(this)" data-text="la ceinture" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">l'écharpe</span><span class="text-gray-500 text-sm ml-2">圍巾</span></div>
+          <button onclick="speak(this)" data-text="l'écharpe" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">les gants</span><span class="text-gray-500 text-sm ml-2">手套</span></div>
+          <button onclick="speak(this)" data-text="les gants" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">le collant</span><span class="text-gray-500 text-sm ml-2">褲襪</span></div>
+          <button onclick="speak(this)" data-text="le collant" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">le trench-coat</span><span class="text-gray-500 text-sm ml-2">風衣</span></div>
+          <button onclick="speak(this)" data-text="le trench-coat" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-green-50 rounded-xl px-3 py-2">
+          <div><span class="font-bold text-green-800">la salopette</span><span class="text-gray-500 text-sm ml-2">吊帶褲</span></div>
+          <button onclick="speak(this)" data-text="la salopette" class="text-green-500 hover:text-green-700">🔊</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Grammar Review -->
+<section>
+  <h2 class="text-xl font-bold text-gray-800 mb-3">📖 文法回顧</h2>
+  <div class="space-y-4">
+    <!-- mettre -->
+    <div class="bg-white rounded-2xl shadow p-4">
+      <h3 class="font-bold text-blue-700 mb-2">動詞 mettre（穿戴）變化</h3>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex items-center justify-between bg-blue-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">je</span> <span class="font-bold text-blue-800">mets</span></span><button onclick="speak(this)" data-text="je mets" class="text-blue-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">nous</span> <span class="font-bold text-blue-800">mettons</span></span><button onclick="speak(this)" data-text="nous mettons" class="text-blue-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">tu</span> <span class="font-bold text-blue-800">mets</span></span><button onclick="speak(this)" data-text="tu mets" class="text-blue-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">vous</span> <span class="font-bold text-blue-800">mettez</span></span><button onclick="speak(this)" data-text="vous mettez" class="text-blue-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">il/elle</span> <span class="font-bold text-blue-800">met</span></span><button onclick="speak(this)" data-text="il met" class="text-blue-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-blue-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">ils/elles</span> <span class="font-bold text-blue-800">mettent</span></span><button onclick="speak(this)" data-text="ils mettent" class="text-blue-500 text-xs">🔊</button></div>
+      </div>
+    </div>
+    <!-- porter -->
+    <div class="bg-white rounded-2xl shadow p-4">
+      <h3 class="font-bold text-green-700 mb-2">動詞 porter（穿著）變化</h3>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex items-center justify-between bg-green-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">je</span> <span class="font-bold text-green-800">porte</span></span><button onclick="speak(this)" data-text="je porte" class="text-green-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-green-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">nous</span> <span class="font-bold text-green-800">portons</span></span><button onclick="speak(this)" data-text="nous portons" class="text-green-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-green-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">tu</span> <span class="font-bold text-green-800">portes</span></span><button onclick="speak(this)" data-text="tu portes" class="text-green-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-green-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">vous</span> <span class="font-bold text-green-800">portez</span></span><button onclick="speak(this)" data-text="vous portez" class="text-green-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-green-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">il/elle</span> <span class="font-bold text-green-800">porte</span></span><button onclick="speak(this)" data-text="il porte" class="text-green-500 text-xs">🔊</button></div>
+        <div class="flex items-center justify-between bg-green-50 rounded-lg px-3 py-1"><span class="text-sm"><span class="text-gray-500">ils/elles</span> <span class="font-bold text-green-800">portent</span></span><button onclick="speak(this)" data-text="ils portent" class="text-green-500 text-xs">🔊</button></div>
+      </div>
+    </div>
+    <!-- Articles -->
+    <div class="bg-white rounded-2xl shadow p-4">
+      <h3 class="font-bold text-purple-700 mb-2">冠詞規則</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <div class="bg-purple-50 rounded-lg p-2"><span class="font-bold text-purple-800">le</span> <span class="text-gray-600">+ 陽性名詞</span><br><span class="text-xs text-purple-600">ex: le manteau</span></div>
+        <div class="bg-purple-50 rounded-lg p-2"><span class="font-bold text-purple-800">la</span> <span class="text-gray-600">+ 陰性名詞</span><br><span class="text-xs text-purple-600">ex: la robe</span></div>
+        <div class="bg-purple-50 rounded-lg p-2"><span class="font-bold text-purple-800">les</span> <span class="text-gray-600">+ 複數名詞</span><br><span class="text-xs text-purple-600">ex: les chaussures</span></div>
+        <div class="bg-purple-50 rounded-lg p-2"><span class="font-bold text-purple-800">l'</span> <span class="text-gray-600">+ 母音開頭</span><br><span class="text-xs text-purple-600">ex: l'écharpe</span></div>
+      </div>
+    </div>
+    <!-- Idioms -->
+    <div class="bg-white rounded-2xl shadow p-4">
+      <h3 class="font-bold text-orange-700 mb-2">3個重要慣用語</h3>
+      <div class="space-y-2">
+        <div class="flex items-center justify-between bg-orange-50 rounded-xl px-3 py-2">
+          <div><p class="font-bold text-orange-800">être bien habillé(e)</p><p class="text-xs text-gray-600">穿著得體</p></div>
+          <button onclick="speak(this)" data-text="être bien habillé" class="text-orange-500">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-orange-50 rounded-xl px-3 py-2">
+          <div><p class="font-bold text-orange-800">se mettre sur son trente et un</p><p class="text-xs text-gray-600">盛裝打扮</p></div>
+          <button onclick="speak(this)" data-text="se mettre sur son trente et un" class="text-orange-500">🔊</button>
+        </div>
+        <div class="flex items-center justify-between bg-orange-50 rounded-xl px-3 py-2">
+          <div><p class="font-bold text-orange-800">avoir du style</p><p class="text-xs text-gray-600">有品味 / 有風格</p></div>
+          <button onclick="speak(this)" data-text="avoir du style" class="text-orange-500">🔊</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Grammar Tip -->
+<section class="bg-yellow-50 border border-yellow-200 rounded-2xl p-4">
+  <h2 class="font-bold text-yellow-800 mb-2">💡 文法小提示</h2>
+  <p class="text-sm text-yellow-900 mb-1">① <strong>mettre</strong> 強調「穿上」動作（穿戴的過程），<strong>porter</strong> 強調「穿著狀態」（身上穿著）。Je <em>mets</em> mon manteau（我正在穿上大衣）vs. Je <em>porte</em> un manteau（我身上穿著大衣）。</p>
+  <p class="text-sm text-yellow-900">② 母音或 h muet 開頭的名詞，冠詞 le/la 縮寫為 l'，但 les 不縮寫：l'écharpe、l'imperméable。</p>
+</section>
+
+<!-- Matching Game -->
+<section>
+  <h2 class="text-xl font-bold text-gray-800 mb-3">🎯 配對遊戲</h2>
+  <div class="bg-white rounded-2xl shadow p-4">
+    <div class="flex justify-between items-center mb-3">
+      <p class="text-sm text-gray-500">點選法文再點選中文完成配對</p>
+      <span id="match-score" class="font-bold text-blue-600">0/10</span>
+    </div>
+    <div class="grid grid-cols-2 gap-2" id="match-area"></div>
+    <button onclick="resetMatch()" class="mt-3 text-xs text-gray-400 underline">重新開始</button>
+  </div>
+</section>
+
+<!-- 30-Question Quiz -->
+<section>
+  <h2 class="text-xl font-bold text-gray-800 mb-3">🏆 30題綜合測驗</h2>
+  <div class="bg-white rounded-2xl shadow p-4">
+    <div class="flex justify-between items-center mb-4">
+      <span id="quiz-progress" class="text-sm text-gray-500">第 1 / 30 題</span>
+      <span id="quiz-score-live" class="font-bold text-blue-600">得分: 0</span>
+    </div>
+    <div id="quiz-area"></div>
+    <div id="quiz-result" class="hidden text-center py-6">
+      <div id="quiz-badge" class="text-6xl mb-3"></div>
+      <p id="quiz-final-score" class="text-3xl font-bold text-gray-800 mb-2"></p>
+      <p id="quiz-comment" class="text-gray-600 mb-4"></p>
+      <button onclick="restartQuiz()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-8 py-3 rounded-xl">🔄 重新挑戰</button>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+function speak(el) {
+  var text = typeof el === 'string' ? el : el.dataset.text;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR'; u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+// ─── MATCHING GAME ───────────────────────────────────────────
+var matchPairs = [
+  ['le manteau','大衣'], ['la robe','洋裝'], ['le pantalon','褲子'],
+  ['la chemise','襯衫'], ['les chaussures','鞋子'], ['le pull','毛衣'],
+  ['la jupe','裙子'], ['le chapeau','帽子'], ['l\'écharpe','圍巾'],
+  ['la veste','外套']
+];
+var matchSelected = null;
+var matchDone = 0;
+
+function shuffle(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+function buildMatch() {
+  var lefts = shuffle(matchPairs.map(function(p){ return p[0]; }));
+  var rights = shuffle(matchPairs.map(function(p){ return p[1]; }));
+  var area = document.getElementById('match-area');
+  area.innerHTML = '';
+  lefts.forEach(function(fr, i) {
+    var lDiv = document.createElement('div');
+    lDiv.className = 'match-item bg-blue-100 text-blue-800 rounded-xl px-3 py-2 text-sm font-medium text-center';
+    lDiv.textContent = fr;
+    lDiv.dataset.val = fr;
+    lDiv.dataset.side = 'left';
+    lDiv.onclick = function(){ matchClick(this); };
+    area.appendChild(lDiv);
+
+    var rDiv = document.createElement('div');
+    rDiv.className = 'match-item bg-purple-100 text-purple-800 rounded-xl px-3 py-2 text-sm font-medium text-center';
+    rDiv.textContent = rights[i];
+    rDiv.dataset.val = rights[i];
+    rDiv.dataset.side = 'right';
+    rDiv.onclick = function(){ matchClick(this); };
+    area.appendChild(rDiv);
+  });
+}
+
+function matchClick(el) {
+  if (el.classList.contains('locked-green')) return;
+  if (!matchSelected) {
+    el.classList.add('ring-2', 'ring-gray-500');
+    matchSelected = el;
+  } else {
+    if (matchSelected === el) { matchSelected.classList.remove('ring-2','ring-gray-500'); matchSelected = null; return; }
+    var a = matchSelected, b = el;
+    var frEl = a.dataset.side === 'left' ? a : b;
+    var zhEl = a.dataset.side === 'right' ? a : b;
+    if (frEl.dataset.side !== 'left' || zhEl.dataset.side !== 'right') {
+      a.classList.remove('ring-2','ring-gray-500');
+      matchSelected = null; return;
+    }
+    var correct = matchPairs.find(function(p){ return p[0] === frEl.dataset.val && p[1] === zhEl.dataset.val; });
+    if (correct) {
+      [frEl, zhEl].forEach(function(x){ x.className = 'match-item locked-green rounded-xl px-3 py-2 text-sm font-medium text-center'; });
+      matchDone++;
+      document.getElementById('match-score').textContent = matchDone + '/10';
+    } else {
+      [frEl, zhEl].forEach(function(x){ x.classList.add('flash-red'); });
+      setTimeout(function(){ [frEl, zhEl].forEach(function(x){ x.classList.remove('flash-red'); }); }, 500);
+    }
+    a.classList.remove('ring-2','ring-gray-500');
+    matchSelected = null;
+  }
+}
+
+function resetMatch() { matchDone = 0; document.getElementById('match-score').textContent = '0/10'; buildMatch(); }
+buildMatch();
+
+// ─── QUIZ ─────────────────────────────────────────────────────
+var quizData = [
+  // 1-5: French→Chinese
+  {type:'mc', q:'「le manteau」是什麼意思？', opts:['大衣','裙子','帽子','手套'], ans:0},
+  {type:'mc', q:'「la robe」是什麼意思？', opts:['洋裝','褲子','圍巾','雨衣'], ans:0},
+  {type:'mc', q:'「les chaussures」是什麼意思？', opts:['鞋子','帽子','圍巾','手套'], ans:0},
+  {type:'mc', q:'「l\'écharpe」是什麼意思？', opts:['圍巾','裙子','外套','腰帶'], ans:0},
+  {type:'mc', q:'「le costume」是什麼意思？', opts:['西裝','大衣','T恤','短褲'], ans:0},
+  // 6-10: Chinese→French
+  {type:'mc', q:'「毛衣」的法文是？', opts:['le pull','le short','la veste','la jupe'], ans:0},
+  {type:'mc', q:'「圍巾」的法文是？', opts:['l\'écharpe','les gants','la ceinture','le collant'], ans:0},
+  {type:'mc', q:'「吊帶褲」的法文是？', opts:['la salopette','le trench-coat','le short','le costume'], ans:0},
+  {type:'mc', q:'「手套」的法文是？', opts:['les gants','les chaussettes','les chaussures','les collants'], ans:0},
+  {type:'mc', q:'「風衣」的法文是？', opts:['le trench-coat','le manteau','l\'imperméable','la veste'], ans:0},
+  // 11-16: Verb conjugation
+  {type:'fill', q:'Je ___ un manteau. (mettre)', ans:'mets', hint:'mets'},
+  {type:'fill', q:'Elle ___ une robe. (porter)', ans:'porte', hint:'porte'},
+  {type:'fill', q:'Nous ___ nos chaussures. (mettre)', ans:'mettons', hint:'mettons'},
+  {type:'fill', q:'Vous ___ un pull. (porter)', ans:'portez', hint:'portez'},
+  {type:'fill', q:'Ils ___ le chapeau. (mettre)', ans:'mettent', hint:'mettent'},
+  {type:'fill', q:'Tu ___ la chemise. (porter)', ans:'portes', hint:'portes'},
+  // 17-20: Gender (le/la/les/l')
+  {type:'mc', q:'___ pantalon（陽性）', opts:['le','la','les','l\''], ans:0},
+  {type:'mc', q:'___ jupe（陰性）', opts:['la','le','les','l\''], ans:0},
+  {type:'mc', q:'___ imperméable（母音開頭）', opts:["l'","le","la","les"], ans:0},
+  {type:'mc', q:'___ chaussettes（複數）', opts:['les','le','la',"l'"], ans:0},
+  // 21-23: Idiom matching
+  {type:'mc', q:'「穿著得體」的慣用語是？', opts:['être bien habillé','avoir du style','mettre son chapeau','porter chance'], ans:0},
+  {type:'mc', q:'「盛裝打扮」的慣用語是？', opts:['se mettre sur son trente et un','être bien habillé','avoir du style','se mettre en robe'], ans:0},
+  {type:'mc', q:'「avoir du style」的中文意思是？', opts:['有品味/有風格','穿著得體','盛裝打扮','流行時尚'], ans:0},
+  // 24-26: Spelling fill-in
+  {type:'fill', q:'法文「裙子」怎麼拼？（la ___）', ans:'jupe', hint:'jupe'},
+  {type:'fill', q:'法文「腰帶」怎麼拼？（la ___）', ans:'ceinture', hint:'ceinture'},
+  {type:'fill', q:'法文「西裝」怎麼拼？（le ___）', ans:'costume', hint:'costume'},
+  // 27-28: Listen & choose
+  {type:'listen', q:'聆聽發音，選出正確的法文單字', audio:'le chapeau', opts:['le chapeau','la chemise','le collant','la ceinture'], ans:0},
+  {type:'listen', q:'聆聽發音，選出正確的法文單字', audio:'les chaussettes', opts:['les chaussures','les chaussettes','les gants','les collants'], ans:0},
+  // 29-30: Situational
+  {type:'mc', q:'在店裡說「我想試穿這件」，應該說哪句？', opts:['Je voudrais essayer ceci.','Je mets cette robe.','C\'est trop grand.','Vous portez bien.'], ans:0},
+  {type:'mc', q:'想說「這件太小了」，應該說哪句？', opts:["C'est trop petit.",'C\'est trop grand.','Je le prends.','C\'est parfait.'], ans:0},
+];
+
+var quizIdx = 0, quizScore = 0;
+
+function renderQuiz() {
+  var area = document.getElementById('quiz-area');
+  if (quizIdx >= quizData.length) { showResult(); return; }
+  var q = quizData[quizIdx];
+  document.getElementById('quiz-progress').textContent = '第 ' + (quizIdx+1) + ' / 30 題';
+  var html = '<p class="font-semibold text-gray-800 mb-3">' + (quizIdx+1) + '. ' + q.q + '</p>';
+  if (q.type === 'listen') {
+    html += '<button onclick="speak(\'' + q.audio.replace(/'/g,"\\'") + '\')" class="mb-3 bg-indigo-100 hover:bg-indigo-200 text-indigo-800 font-bold px-4 py-2 rounded-xl">🔊 播放發音</button><br>';
+    html += '<div class="grid grid-cols-2 gap-2">';
+    q.opts.forEach(function(o, i) {
+      html += '<button class="quiz-opt bg-gray-100 hover:bg-gray-200 rounded-xl px-3 py-2 text-sm font-medium" onclick="checkAns(' + i + ')">' + o + '</button>';
+    });
+    html += '</div>';
+  } else if (q.type === 'mc') {
+    html += '<div class="grid grid-cols-2 gap-2">';
+    q.opts.forEach(function(o, i) {
+      html += '<button class="quiz-opt bg-gray-100 hover:bg-gray-200 rounded-xl px-3 py-2 text-sm font-medium" onclick="checkAns(' + i + ')">' + o + '</button>';
+    });
+    html += '</div>';
+  } else if (q.type === 'fill') {
+    html += '<div class="flex gap-2"><input id="fill-input" type="text" class="border-2 border-gray-300 rounded-xl px-3 py-2 flex-1 text-sm" placeholder="輸入答案..." onkeydown="if(event.key===\'Enter\')checkFill()"><button onclick="checkFill()" class="bg-blue-500 text-white px-4 py-2 rounded-xl text-sm font-bold">確認</button></div>';
+    html += '<p class="text-xs text-gray-400 mt-1">提示：' + q.hint + '</p>';
+  }
+  area.innerHTML = html;
+  if (q.type === 'fill') setTimeout(function(){ var el = document.getElementById('fill-input'); if(el) el.focus(); }, 100);
+}
+
+function checkAns(chosen) {
+  var q = quizData[quizIdx];
+  var correct = chosen === q.ans;
+  if (correct) quizScore++;
+  document.getElementById('quiz-score-live').textContent = '得分: ' + quizScore;
+  var opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(function(btn, i) {
+    btn.disabled = true;
+    if (i === q.ans) btn.className = btn.className + ' bg-green-400 text-white';
+    else if (i === chosen && !correct) btn.className = btn.className + ' bg-red-400 text-white';
+  });
+  setTimeout(function(){ quizIdx++; renderQuiz(); }, 900);
+}
+
+function checkFill() {
+  var q = quizData[quizIdx];
+  var inp = document.getElementById('fill-input');
+  if (!inp) return;
+  var val = inp.value.trim().toLowerCase();
+  var correct = val === q.ans.toLowerCase();
+  if (correct) quizScore++;
+  document.getElementById('quiz-score-live').textContent = '得分: ' + quizScore;
+  inp.disabled = true;
+  inp.style.background = correct ? '#bbf7d0' : '#fecaca';
+  var fb = document.createElement('p');
+  fb.className = 'mt-2 text-sm font-bold ' + (correct ? 'text-green-700' : 'text-red-700');
+  fb.textContent = correct ? '✅ 正確！' : '❌ 正確答案：' + q.ans;
+  inp.parentNode.parentNode.appendChild(fb);
+  setTimeout(function(){ quizIdx++; renderQuiz(); }, 1200);
+}
+
+function showResult() {
+  document.getElementById('quiz-area').innerHTML = '';
+  document.getElementById('quiz-result').classList.remove('hidden');
+  var pct = quizScore / 30;
+  var badge = pct >= 0.9 ? '🥇' : pct >= 0.7 ? '🥈' : pct >= 0.5 ? '🥉' : '📚';
+  var comment = pct >= 0.9 ? '太厲害了！衣物主題全面掌握，法式品味滿分！' :
+                pct >= 0.7 ? '表現很好！再加強幾個單字就完美了。' :
+                pct >= 0.5 ? '有進步空間，建議複習 D1-D4 後再挑戰！' : '加油！從 D1 詞彙入門重新出發！';
+  document.getElementById('quiz-badge').textContent = badge;
+  document.getElementById('quiz-final-score').textContent = quizScore + ' / 30 分';
+  document.getElementById('quiz-comment').textContent = comment;
+}
+
+function restartQuiz() {
+  quizIdx = 0; quizScore = 0;
+  document.getElementById('quiz-score-live').textContent = '得分: 0';
+  document.getElementById('quiz-result').classList.add('hidden');
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>
